@@ -80,18 +80,18 @@
             gap: 1rem;
         }
 
-        .logo-icon {
-            width: 50px;
+        .logo-img {
             height: 50px;
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--bg-primary);
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .logo-unila {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 0.5rem;
         }
 
         .logo-text h1 {
@@ -834,6 +834,39 @@
             .stat-value { font-size: 2rem; }
             .model-types-grid { grid-template-columns: 1fr; }
         }
+
+        /* Author Signature */
+        .author-signature {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .author-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin-bottom: 0.25rem;
+        }
+
+        .author-email {
+            font-size: 0.9rem;
+            color: var(--accent-orange);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .author-email:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .author-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -846,13 +879,14 @@
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo-icon">UN</div>
+                <img src="https://raw.githubusercontent.com/Gabrielaragaosantos/Dashboards/main/Imagens%20Salas%20de%20Aulas/logo-consorcio.png" alt="Logo Consórcio MPD/Ankara" class="logo-img">
                 <div class="logo-text">
                     <h1>Reengenharia de Disciplinas</h1>
                     <span>UNILA • Campus Arandu</span>
                 </div>
             </div>
             <div class="header-actions">
+                <img src="https://raw.githubusercontent.com/Gabrielaragaosantos/Dashboards/main/Imagens%20Salas%20de%20Aulas/Logo_UNILA.png" alt="Logo UNILA" class="logo-unila">
                 <div class="sync-status">
                     <div class="sync-dot" id="syncDot"></div>
                     <span id="syncText">Conectado</span>
@@ -940,6 +974,13 @@
                 </div>
             </div>
         </div>
+
+        <!-- Assinatura -->
+        <div class="author-signature">
+            <div class="author-name">Gabriel Aragão Santos</div>
+            <a href="/cdn-cgi/l/email-protection#bcdbdddeced5d9d092cfddd2c8d3cffcddd2d7ddceddd9d2dbd9d2d4ddced5dd92dfd3d192dece" class="author-email"><span class="__cf_email__" data-cfemail="385f595a4a515d54164b59564c574b78595653594a595d565f5d5650594a5159165b5755165a4a">[email&#160;protected]</span></a>
+            <div class="author-role">Arquiteto</div>
+        </div>
     </main>
 
     <div class="toast" id="toast">
@@ -952,7 +993,7 @@
     </div>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
@@ -1660,16 +1701,4 @@
         }
 
         function render() {
-            renderBuildingTabs();
-            renderBuildings();
-            updateStats();
-        }
-
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', async () => {
-            await initializeData();
-            setupRealtimeListener();
-        });
-    </script>
-</body>
-</html>
+            renderBuildingTabs()
