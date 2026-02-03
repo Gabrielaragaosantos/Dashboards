@@ -31,6 +31,11 @@
             --status-progress: #FFB800;
             --status-issues: #FF6B00;
             --status-approved: #4CAF50;
+            --status-na: #404040;
+            --mode-color: #2196F3;
+            --ajus-color: #9C27B0;
+            --reng-color: #FF6B00;
+            --asbt-color: #4CAF50;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -253,16 +258,13 @@
         }
 
         .disciplines-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        @media (max-width: 520px) {
-            .disciplines-grid { grid-template-columns: 1fr; }
-        }
-
+        /* Discipline Card - Nova estrutura */
         .discipline-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -290,6 +292,8 @@
             justify-content: space-between;
             border-bottom: 1px solid var(--border-color);
             position: relative;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .card-header::before {
@@ -327,146 +331,226 @@
             color: var(--text-secondary);
         }
 
-        .card-progress { text-align: right; }
-
-        .progress-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .progress-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .phases-container { padding: 1.25rem; }
-
-        .phases-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .phases-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-        }
-
-        .phase-counter {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .phases-timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-
-        .phase-item {
+        /* Status geral de Reengenharia */
+        .reengineering-status {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.6rem 0.75rem;
             background: var(--bg-secondary);
-            border: 1px solid transparent;
-            border-radius: 10px;
-            transition: all 0.2s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
-        .phase-item:hover {
-            border-color: var(--border-color);
-            background: var(--bg-primary);
-        }
-
-        .phase-status {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.2s ease;
-        }
-
-        .phase-status.pending { background: var(--status-pending); }
-        .phase-status.progress {
-            background: var(--status-progress);
-            box-shadow: 0 0 10px rgba(255, 184, 0, 0.4);
-            animation: pulse 2s infinite;
-        }
-        .phase-status.issues {
-            background: var(--status-issues);
-            box-shadow: 0 0 10px rgba(255, 107, 0, 0.4);
-            animation: pulse 1.5s infinite;
-        }
-        .phase-status.approved { background: var(--status-approved); }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .phase-status svg {
-            width: 14px;
-            height: 14px;
-            stroke: var(--bg-primary);
-            stroke-width: 2.5;
-            fill: none;
-        }
-
-        .phase-content { flex: 1; min-width: 0; }
-
-        .phase-name {
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 0.1rem;
-            color: var(--text-primary);
-        }
-
-        .phase-desc {
+        .reengineering-status label {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-muted);
         }
 
-        .phase-status-select {
+        .reengineering-status select {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             padding: 0.35rem 0.5rem;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             background: var(--bg-primary);
             color: var(--text-primary);
             cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 120px;
         }
 
-        .phase-status-select:focus {
+        .reengineering-status select:focus {
             outline: none;
             border-color: var(--accent-orange);
         }
 
-        .phase-status-select option {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            padding: 0.5rem;
+        .reengineering-status select.pending { border-color: var(--status-pending); }
+        .reengineering-status select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.1); }
+        .reengineering-status select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.1); }
+
+        /* Model Types Container */
+        .model-types-container {
+            padding: 1.25rem;
         }
 
-        .phase-status-select.pending { border-color: var(--status-pending); }
-        .phase-status-select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.1); }
-        .phase-status-select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.1); }
-        .phase-status-select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.1); }
+        .model-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
 
+        /* Model Type Card */
+        .model-type-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .model-type-card.not-applicable {
+            opacity: 0.5;
+        }
+
+        .model-type-header {
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .model-type-header.mode { background: rgba(33, 150, 243, 0.15); border-left: 3px solid var(--mode-color); }
+        .model-type-header.ajus { background: rgba(156, 39, 176, 0.15); border-left: 3px solid var(--ajus-color); }
+        .model-type-header.reng { background: rgba(255, 107, 0, 0.15); border-left: 3px solid var(--reng-color); }
+        .model-type-header.asbt { background: rgba(76, 175, 80, 0.15); border-left: 3px solid var(--asbt-color); }
+
+        .model-type-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .model-type-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .model-type-code.mode { background: var(--mode-color); color: white; }
+        .model-type-code.ajus { background: var(--ajus-color); color: white; }
+        .model-type-code.reng { background: var(--reng-color); color: white; }
+        .model-type-code.asbt { background: var(--asbt-color); color: white; }
+
+        .model-type-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .na-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .na-toggle label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .na-toggle input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .model-type-content {
+            padding: 0.75rem 1rem;
+        }
+
+        .model-type-content.disabled {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* Projetista field */
+        .projetista-field {
+            margin-bottom: 0.75rem;
+        }
+
+        .projetista-field label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .projetista-field input {
+            width: 100%;
+            padding: 0.4rem 0.6rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        .projetista-field input:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+
+        .projetista-field textarea.model-notes {
+            width: 100%;
+            padding: 0.4rem 0.6rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            resize: vertical;
+            min-height: 40px;
+        }
+
+        .projetista-field textarea.model-notes:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+
+        /* Phases mini grid */
+        .phases-mini-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .phase-mini-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.4rem 0.5rem;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            gap: 0.5rem;
+        }
+
+        .phase-mini-name {
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .phase-mini-select {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.25rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            min-width: 100px;
+        }
+
+        .phase-mini-select:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+
+        .phase-mini-select.pending { border-color: var(--status-pending); }
+        .phase-mini-select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.15); }
+        .phase-mini-select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
+        .phase-mini-select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
+
+        /* Card Footer */
         .card-footer {
             padding: 1rem 1.25rem;
             border-top: 1px solid var(--border-color);
@@ -475,19 +559,85 @@
             gap: 0.75rem;
         }
 
-        .footer-row { display: flex; gap: 0.75rem; }
-        .footer-field { flex: 1; }
+        .footer-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-        .footer-label {
+        .revision-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 107, 0, 0.1);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .revision-info svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent-orange);
+            flex-shrink: 0;
+        }
+
+        .revision-info span {
+            font-size: 0.75rem;
+            color: var(--accent-orange);
+        }
+
+        .revision-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+
+        .revision-edit-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 107, 0, 0.5);
+            border-radius: 4px;
+            padding: 0.2rem 0.4rem;
+            color: var(--accent-orange);
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            transition: all 0.2s ease;
+        }
+
+        .revision-edit-btn:hover { background: rgba(255, 107, 0, 0.2); }
+
+        .revision-input {
+            width: 50px;
+            padding: 0.2rem 0.4rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-orange);
+            border-radius: 4px;
+            color: var(--accent-orange);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .revision-input:focus { outline: none; }
+
+        .notes-field {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .notes-field label {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 0.35rem;
+            display: block;
+            margin-bottom: 0.25rem;
         }
 
-        .footer-input {
+        .notes-field textarea {
             width: 100%;
             padding: 0.5rem 0.75rem;
             background: var(--bg-secondary);
@@ -496,16 +646,14 @@
             color: var(--text-primary);
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.8rem;
-            transition: border-color 0.2s ease;
+            resize: vertical;
+            min-height: 50px;
         }
 
-        .footer-input:focus {
+        .notes-field textarea:focus {
             outline: none;
             border-color: var(--accent-orange);
         }
-
-        .footer-input::placeholder { color: var(--text-muted); }
-        .notes-input { resize: vertical; min-height: 60px; }
 
         .card-timestamp {
             font-family: 'JetBrains Mono', monospace;
@@ -514,6 +662,39 @@
             text-align: right;
         }
 
+        /* Building filter */
+        .building-filter {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .building-tab {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .building-tab:hover {
+            border-color: var(--accent-orange);
+            color: var(--text-primary);
+        }
+
+        .building-tab.active {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta));
+            border-color: transparent;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Footer Info */
         .footer-info {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -524,7 +705,7 @@
 
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
@@ -556,6 +737,7 @@
             border-radius: 3px;
         }
 
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -592,150 +774,36 @@
             stroke-width: 3;
         }
 
-        @media (max-width: 768px) {
-            .header { padding: 1rem; }
-            .main-content { padding: 1rem; }
-            .stat-value { font-size: 2rem; }
-            .phases-container { padding: 1rem; }
-        }
-
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-orange); }
 
-        .progress-bar-container {
-            width: 100%;
-            height: 4px;
-            background: var(--bg-secondary);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .progress-bar {
-            height: 100%;
-            border-radius: 2px;
-            transition: width 0.5s ease;
-        }
-
+        /* Cores das disciplinas no header */
         .card-hvac .card-header::before { background: var(--hvac-color); }
         .card-hvac .discipline-code { background: rgba(255, 107, 0, 0.2); color: var(--hvac-color); }
-        .card-hvac .progress-value { color: var(--hvac-color); }
-        .card-hvac .progress-bar { background: var(--hvac-color); }
 
         .card-hid .card-header::before { background: var(--hid-color); }
         .card-hid .discipline-code { background: rgba(0, 168, 204, 0.2); color: var(--hid-color); }
-        .card-hid .progress-value { color: var(--hid-color); }
-        .card-hid .progress-bar { background: var(--hid-color); }
 
         .card-esg .card-header::before { background: var(--esg-color); }
         .card-esg .discipline-code { background: rgba(255, 184, 0, 0.2); color: var(--esg-color); }
-        .card-esg .progress-value { color: var(--esg-color); }
-        .card-esg .progress-bar { background: var(--esg-color); }
 
         .card-spr .card-header::before { background: var(--spr-color); }
         .card-spr .discipline-code { background: rgba(255, 61, 0, 0.2); color: var(--spr-color); }
-        .card-spr .progress-value { color: var(--spr-color); }
-        .card-spr .progress-bar { background: var(--spr-color); }
 
         .card-inc .card-header::before { background: var(--inc-color); }
         .card-inc .discipline-code { background: rgba(233, 30, 99, 0.2); color: var(--inc-color); }
-        .card-inc .progress-value { color: var(--inc-color); }
-        .card-inc .progress-bar { background: var(--inc-color); }
 
         .card-ele .card-header::before { background: var(--ele-color); }
         .card-ele .discipline-code { background: rgba(156, 39, 176, 0.2); color: var(--ele-color); }
-        .card-ele .progress-value { color: var(--ele-color); }
-        .card-ele .progress-bar { background: var(--ele-color); }
 
-        .revision-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            background: rgba(255, 107, 0, 0.1);
-            border: 1px solid rgba(255, 107, 0, 0.3);
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
-        }
-
-        .revision-info svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--accent-orange);
-            flex-shrink: 0;
-        }
-
-        .revision-info span {
-            font-size: 0.75rem;
-            color: var(--accent-orange);
-        }
-
-        .revision-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-        }
-
-        .revision-edit-btn {
-            margin-left: auto;
-            background: transparent;
-            border: 1px solid rgba(255, 107, 0, 0.5);
-            border-radius: 4px;
-            padding: 0.2rem 0.4rem;
-            color: var(--accent-orange);
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            transition: all 0.2s ease;
-        }
-
-        .revision-edit-btn:hover { background: rgba(255, 107, 0, 0.2); }
-
-        .revision-input {
-            width: 50px;
-            padding: 0.2rem 0.4rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--accent-orange);
-            border-radius: 4px;
-            color: var(--accent-orange);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .revision-input:focus { outline: none; }
-
-        .building-filter {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .building-tab {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .building-tab:hover {
-            border-color: var(--accent-orange);
-            color: var(--text-primary);
-        }
-
-        .building-tab.active {
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta));
-            border-color: transparent;
-            color: var(--text-primary);
-            font-weight: 600;
+        @media (max-width: 768px) {
+            .header { padding: 1rem; }
+            .main-content { padding: 1rem; }
+            .stat-value { font-size: 2rem; }
+            .model-types-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -798,27 +866,46 @@
         <div class="footer-info">
             <div class="footer-grid">
                 <div class="footer-section">
+                    <h3>Tipos de Modelo</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--mode-color)"></div>
+                        <span><strong>MODE</strong> - Modelos originais (Alto QI)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--ajus-color)"></div>
+                        <span><strong>AJUS</strong> - Ajustes (NERKPE)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--reng-color)"></div>
+                        <span><strong>RENG</strong> - Reengenharia</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--asbt-color)"></div>
+                        <span><strong>ASBT</strong> - As Built</span>
+                    </div>
+                </div>
+                <div class="footer-section">
                     <h3>Legenda de Status</h3>
                     <div class="legend-item">
                         <div class="legend-color" style="background: var(--status-pending)"></div>
-                        <span>Pendente - Aguardando início</span>
+                        <span>Pendente</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background: var(--status-progress)"></div>
-                        <span>Em Andamento - Em execução</span>
+                        <span>Em Andamento</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background: var(--status-issues)"></div>
-                        <span>Com Pendências - Retorno ao projetista</span>
+                        <span>Com Pendências</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background: var(--status-approved)"></div>
-                        <span>Concluído - Fase finalizada</span>
+                        <span>Concluído</span>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h3>Instruções</h3>
-                    <p>Selecione o status de cada fase no dropdown. O ciclo de revisão é incrementado quando: Reengenharia "Em Andamento" + IFC "Concluído" + Pranchas "Concluído". Clique em "Editar" para ajustar manualmente.</p>
+                    <p>AJUS e RENG são mutuamente exclusivos. Marque "N/A" no tipo que não se aplica. Cada tipo de modelo tem seu projetista responsável.</p>
                 </div>
             </div>
         </div>
@@ -850,12 +937,18 @@
             { id: 'ele', code: 'ELE', name: 'Elétrica', fullName: 'Instalações Elétricas' }
         ];
 
+        const modelTypes = [
+            { id: 'mode', code: 'MODE', name: 'Modelos Originais', defaultResponsible: 'Alto QI' },
+            { id: 'ajus', code: 'AJUS', name: 'Ajustes (NERKPE)', defaultResponsible: '', canBeNA: true },
+            { id: 'reng', code: 'RENG', name: 'Reengenharia', defaultResponsible: '', canBeNA: true },
+            { id: 'asbt', code: 'ASBT', name: 'As Built', defaultResponsible: '' }
+        ];
+
         const phaseTemplates = [
-            { id: 'reengineering', name: 'Projeto em Reengenharia', description: 'Projetista ajustando o modelo' },
-            { id: 'ifc_delivered', name: 'IFC Entregue', description: 'Modelo enviado para compatibilização' },
-            { id: 'compatibility', name: 'Em Compatibilização', description: 'Analisando interferências' },
-            { id: 'drawings', name: 'Pranchas Geradas', description: 'Documentação técnica elaborada' },
-            { id: 'released', name: 'Liberado para Obra', description: 'Aprovado e liberado para execução' }
+            { id: 'ifc', name: 'IFC' },
+            { id: 'compatibility', name: 'Compatibilização' },
+            { id: 'docs2d', name: 'Documentações 2D' },
+            { id: 'released', name: 'Liberado para Obra' }
         ];
 
         function generateInitialData() {
@@ -865,53 +958,71 @@
                     name: building.name,
                     disciplines: disciplineTemplates.map(disc => ({
                         ...disc,
-                        responsible: '',
+                        reengineeringStatus: 'pending', // Status geral da disciplina
                         notes: '',
                         lastUpdate: null,
                         revisionCount: 0,
                         _lastCycleState: null,
-                        phases: phaseTemplates.map(phase => ({
-                            ...phase,
-                            status: 'pending'
-                        }))
+                        modelTypes: {}
                     }))
                 };
+
+                // Inicializa os tipos de modelo para cada disciplina
+                data[building.id].disciplines.forEach(disc => {
+                    modelTypes.forEach(mt => {
+                        disc.modelTypes[mt.id] = {
+                            responsible: mt.defaultResponsible,
+                            notes: '',
+                            notApplicable: false,
+                            phases: phaseTemplates.map(phase => ({
+                                ...phase,
+                                status: 'pending'
+                            }))
+                        };
+                    });
+                });
             });
             return data;
         }
 
         let projectData = {};
         let activeBuilding = 'all';
-        const STORAGE_KEY = 'unila-reengenharia-data-v4';
+        const STORAGE_KEY = 'unila-reengenharia-data-v5';
 
         function loadData() {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 try {
-                    const parsed = JSON.parse(saved);
+                    projectData = JSON.parse(saved);
+                    // Merge com estrutura inicial para novos campos
                     const initial = generateInitialData();
                     Object.keys(initial).forEach(buildingId => {
-                        if (!parsed[buildingId]) {
-                            parsed[buildingId] = initial[buildingId];
+                        if (!projectData[buildingId]) {
+                            projectData[buildingId] = initial[buildingId];
                         } else {
-                            parsed[buildingId].name = initial[buildingId].name;
-                            parsed[buildingId].disciplines = initial[buildingId].disciplines.map(initDisc => {
-                                const savedDisc = parsed[buildingId].disciplines?.find(d => d.id === initDisc.id);
-                                if (savedDisc) {
-                                    return {
-                                        ...initDisc,
-                                        ...savedDisc,
-                                        phases: initDisc.phases.map((phase, idx) => ({
-                                            ...phase,
-                                            status: savedDisc.phases?.[idx]?.status || 'pending'
-                                        }))
-                                    };
+                            projectData[buildingId].name = initial[buildingId].name;
+                            // Merge disciplinas
+                            initial[buildingId].disciplines.forEach((initDisc, idx) => {
+                                if (!projectData[buildingId].disciplines[idx]) {
+                                    projectData[buildingId].disciplines[idx] = initDisc;
+                                } else {
+                                    const savedDisc = projectData[buildingId].disciplines[idx];
+                                    // Garantir que tem todos os campos
+                                    savedDisc.reengineeringStatus = savedDisc.reengineeringStatus || 'pending';
+                                    // Garantir modelTypes
+                                    if (!savedDisc.modelTypes) {
+                                        savedDisc.modelTypes = initDisc.modelTypes;
+                                    } else {
+                                        modelTypes.forEach(mt => {
+                                            if (!savedDisc.modelTypes[mt.id]) {
+                                                savedDisc.modelTypes[mt.id] = initDisc.modelTypes[mt.id];
+                                            }
+                                        });
+                                    }
                                 }
-                                return initDisc;
                             });
                         }
                     });
-                    projectData = parsed;
                 } catch (e) {
                     projectData = generateInitialData();
                 }
@@ -936,16 +1047,28 @@
             showToast('Dados salvos com sucesso!');
         }
 
-        function calculateProgress(discipline) {
-            const completed = discipline.phases.filter(p => p.status === 'approved').length;
-            return Math.round((completed / discipline.phases.length) * 100);
+        function calculateDisciplineProgress(discipline) {
+            let total = 0;
+            let completed = 0;
+            
+            Object.keys(discipline.modelTypes).forEach(mtId => {
+                const mt = discipline.modelTypes[mtId];
+                if (!mt.notApplicable) {
+                    mt.phases.forEach(phase => {
+                        total++;
+                        if (phase.status === 'approved') completed++;
+                    });
+                }
+            });
+            
+            return total > 0 ? Math.round((completed / total) * 100) : 0;
         }
 
         function calculateBuildingProgress(buildingId) {
             const building = projectData[buildingId];
             if (!building) return 0;
             let total = 0;
-            building.disciplines.forEach(d => { total += calculateProgress(d); });
+            building.disciplines.forEach(d => { total += calculateDisciplineProgress(d); });
             return Math.round(total / building.disciplines.length);
         }
 
@@ -954,99 +1077,114 @@
             let inProgress = 0;
             let issues = 0;
             let approved = 0;
-            let buildingCount = 0;
+            let disciplineCount = 0;
 
             Object.keys(projectData).forEach(buildingId => {
                 const building = projectData[buildingId];
-                buildingCount++;
                 building.disciplines.forEach(d => {
-                    totalProgress += calculateProgress(d);
-                    d.phases.forEach(p => {
-                        if (p.status === 'progress') inProgress++;
-                        if (p.status === 'issues') issues++;
-                        if (p.status === 'approved') approved++;
+                    disciplineCount++;
+                    totalProgress += calculateDisciplineProgress(d);
+                    Object.keys(d.modelTypes).forEach(mtId => {
+                        const mt = d.modelTypes[mtId];
+                        if (!mt.notApplicable) {
+                            mt.phases.forEach(p => {
+                                if (p.status === 'progress') inProgress++;
+                                if (p.status === 'issues') issues++;
+                                if (p.status === 'approved') approved++;
+                            });
+                        }
                     });
                 });
             });
 
-            const totalDisciplines = buildingCount * disciplineTemplates.length;
             document.getElementById('overallProgress').innerHTML = 
-                `${Math.round(totalProgress / totalDisciplines)}<span>%</span>`;
+                `${Math.round(totalProgress / disciplineCount)}<span>%</span>`;
             document.getElementById('inProgressCount').textContent = inProgress;
             document.getElementById('issuesCount').textContent = issues;
             document.getElementById('approvedCount').textContent = approved;
         }
 
+        function updateReengineeringStatus(buildingId, disciplineId, status) {
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (disc) {
+                disc.reengineeringStatus = status;
+                disc.lastUpdate = new Date().toISOString();
+                checkRevisionCycle(buildingId, disciplineId);
+                saveData();
+                render();
+            }
+        }
+
+        function updatePhaseStatus(buildingId, disciplineId, modelTypeId, phaseIndex, newStatus) {
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (disc && disc.modelTypes[modelTypeId]) {
+                disc.modelTypes[modelTypeId].phases[phaseIndex].status = newStatus;
+                disc.lastUpdate = new Date().toISOString();
+                checkRevisionCycle(buildingId, disciplineId);
+                saveData();
+                render();
+            }
+        }
+
+        function updateResponsible(buildingId, disciplineId, modelTypeId, value) {
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (disc && disc.modelTypes[modelTypeId]) {
+                disc.modelTypes[modelTypeId].responsible = value;
+                disc.lastUpdate = new Date().toISOString();
+                saveData();
+            }
+        }
+
+        function updateModelNotes(buildingId, disciplineId, modelTypeId, value) {
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (disc && disc.modelTypes[modelTypeId]) {
+                disc.modelTypes[modelTypeId].notes = value;
+                disc.lastUpdate = new Date().toISOString();
+                saveData();
+            }
+        }
+
+        function toggleNotApplicable(buildingId, disciplineId, modelTypeId, isNA) {
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (disc && disc.modelTypes[modelTypeId]) {
+                disc.modelTypes[modelTypeId].notApplicable = isNA;
+                disc.lastUpdate = new Date().toISOString();
+                saveData();
+                render();
+            }
+        }
+
         function checkRevisionCycle(buildingId, disciplineId) {
-            const discipline = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (!discipline) return;
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (!disc) return;
 
-            const reengineering = discipline.phases.find(p => p.id === 'reengineering');
-            const ifc = discipline.phases.find(p => p.id === 'ifc_delivered');
-            const drawings = discipline.phases.find(p => p.id === 'drawings');
+            // Novo ciclo: Reengenharia "Em Andamento" + verificar RENG: IFC "Concluído" + Docs2D "Concluído"
+            const reng = disc.modelTypes.reng;
+            if (reng && !reng.notApplicable) {
+                const ifcApproved = reng.phases.find(p => p.id === 'ifc')?.status === 'approved';
+                const docs2dApproved = reng.phases.find(p => p.id === 'docs2d')?.status === 'approved';
+                const reengineeringInProgress = disc.reengineeringStatus === 'progress';
 
-            // Novo ciclo: Reengenharia "Em Andamento" + IFC "Concluído" + Pranchas "Concluído"
-            if (reengineering?.status === 'progress' && 
-                ifc?.status === 'approved' && 
-                drawings?.status === 'approved') {
-                
-                const currentCycle = `${reengineering.status}-${ifc.status}-${drawings.status}`;
-                const lastCycle = discipline._lastCycleState;
-                
-                if (lastCycle !== currentCycle) {
-                    discipline.revisionCount = (discipline.revisionCount || 0) + 1;
-                    discipline._lastCycleState = currentCycle;
-                    return true;
-                }
-            } else {
-                // Reset do estado quando sai da condição
-                if (discipline._lastCycleState && 
-                    !(reengineering?.status === 'progress' && 
-                      ifc?.status === 'approved' && 
-                      drawings?.status === 'approved')) {
-                    discipline._lastCycleState = null;
+                if (reengineeringInProgress && ifcApproved && docs2dApproved) {
+                    const currentCycle = `${disc.reengineeringStatus}-${ifcApproved}-${docs2dApproved}`;
+                    if (disc._lastCycleState !== currentCycle) {
+                        disc.revisionCount = (disc.revisionCount || 0) + 1;
+                        disc._lastCycleState = currentCycle;
+                        return true;
+                    }
+                } else {
+                    disc._lastCycleState = null;
                 }
             }
             return false;
         }
 
-        function updatePhaseStatus(buildingId, disciplineId, phaseIndex, newStatus) {
-            const discipline = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (!discipline) return;
-
-            discipline.phases[phaseIndex].status = newStatus;
-            discipline.lastUpdate = new Date().toISOString();
-
-            checkRevisionCycle(buildingId, disciplineId);
-
-            saveData();
-            render();
-        }
-
-        function updateResponsible(buildingId, disciplineId, value) {
-            const discipline = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (discipline) {
-                discipline.responsible = value;
-                discipline.lastUpdate = new Date().toISOString();
-                saveData();
-            }
-        }
-
-        function updateNotes(buildingId, disciplineId, value) {
-            const discipline = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (discipline) {
-                discipline.notes = value;
-                discipline.lastUpdate = new Date().toISOString();
-                saveData();
-            }
-        }
-
         function editRevisionCount(buildingId, disciplineId) {
-            const discipline = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (!discipline) return;
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (!disc) return;
 
             const container = document.getElementById(`revision-${buildingId}-${disciplineId}`);
-            const currentCount = discipline.revisionCount || 0;
+            const currentCount = disc.revisionCount || 0;
             
             container.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1063,10 +1201,10 @@
         }
 
         function saveRevisionCount(buildingId, disciplineId, value) {
-            const discipline = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (discipline) {
-                discipline.revisionCount = Math.max(0, parseInt(value) || 0);
-                discipline.lastUpdate = new Date().toISOString();
+            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            if (disc) {
+                disc.revisionCount = Math.max(0, parseInt(value) || 0);
+                disc.lastUpdate = new Date().toISOString();
                 saveData();
                 render();
             }
@@ -1084,19 +1222,6 @@
             });
         }
 
-        function getStatusIcon(status) {
-            switch (status) {
-                case 'approved':
-                    return '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
-                case 'progress':
-                    return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg>';
-                case 'issues':
-                    return '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
-                default:
-                    return '';
-            }
-        }
-
         function getStatusText(status) {
             switch (status) {
                 case 'pending': return 'Pendente';
@@ -1112,9 +1237,8 @@
             render();
         }
 
-        // Função para gerar e abrir relatório
         function openReport() {
-            const reportWindow = window.open('', '_blank', 'width=1200,height=800');
+            const reportWindow = window.open('', '_blank', 'width=1400,height=900');
             const now = new Date().toLocaleString('pt-BR');
             
             let totalProgress = 0;
@@ -1127,11 +1251,16 @@
                 const building = projectData[buildingId];
                 building.disciplines.forEach(d => {
                     totalDisciplines++;
-                    totalProgress += calculateProgress(d);
-                    d.phases.forEach(p => {
-                        if (p.status === 'progress') inProgress++;
-                        if (p.status === 'issues') issues++;
-                        if (p.status === 'approved') approved++;
+                    totalProgress += calculateDisciplineProgress(d);
+                    Object.keys(d.modelTypes).forEach(mtId => {
+                        const mt = d.modelTypes[mtId];
+                        if (!mt.notApplicable) {
+                            mt.phases.forEach(p => {
+                                if (p.status === 'progress') inProgress++;
+                                if (p.status === 'issues') issues++;
+                                if (p.status === 'approved') approved++;
+                            });
+                        }
                     });
                 });
             });
@@ -1148,47 +1277,64 @@
                 buildingsHtml += `
                     <div class="building-section">
                         <h2>🏢 ${building.name} <span class="progress-badge">${buildingProgress}%</span></h2>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Disciplina</th>
-                                    <th>Projetista</th>
-                                    <th>Progresso</th>
-                                    <th>Revisões</th>
-                                    <th>Status das Fases</th>
-                                    <th>Observações</th>
-                                    <th>Última Atualização</th>
-                                </tr>
-                            </thead>
-                            <tbody>
                 `;
 
                 buildingData.disciplines.forEach(disc => {
-                    const progress = calculateProgress(disc);
-                    const phasesStatus = disc.phases.map(p => {
-                        const statusClass = p.status;
-                        const statusText = getStatusText(p.status);
-                        return `<span class="phase-badge ${statusClass}" title="${p.name}">${p.name.split(' ')[0]}: ${statusText}</span>`;
-                    }).join('');
+                    const progress = calculateDisciplineProgress(disc);
+                    
+                    buildingsHtml += `
+                        <div class="discipline-block">
+                            <div class="discipline-header-report">
+                                <strong>${disc.code} - ${disc.fullName}</strong>
+                                <span class="status-badge ${disc.reengineeringStatus}">Reengenharia: ${getStatusText(disc.reengineeringStatus)}</span>
+                                <span class="progress-small">${progress}%</span>
+                                <span class="revision-badge">Rev: ${disc.revisionCount || 0}</span>
+                            </div>
+                            <table class="model-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Projetista</th>
+                                        <th>IFC</th>
+                                        <th>Compat.</th>
+                                        <th>Doc. 2D</th>
+                                        <th>Liberado</th>
+                                        <th>Observações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+
+                    modelTypes.forEach(mt => {
+                        const mtData = disc.modelTypes[mt.id];
+                        if (mtData.notApplicable) {
+                            buildingsHtml += `
+                                <tr class="na-row">
+                                    <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
+                                    <td colspan="6" class="na-cell">Não se aplica</td>
+                                </tr>
+                            `;
+                        } else {
+                            buildingsHtml += `
+                                <tr>
+                                    <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
+                                    <td>${mtData.responsible || '<em>-</em>'}</td>
+                                    ${mtData.phases.map(p => `<td><span class="phase-badge ${p.status}">${getStatusText(p.status)}</span></td>`).join('')}
+                                    <td class="obs-cell">${mtData.notes || '-'}</td>
+                                </tr>
+                            `;
+                        }
+                    });
 
                     buildingsHtml += `
-                        <tr>
-                            <td><strong>${disc.code}</strong> - ${disc.fullName}</td>
-                            <td>${disc.responsible || '<em>Não definido</em>'}</td>
-                            <td><div class="progress-cell"><div class="mini-progress"><div class="mini-bar" style="width: ${progress}%"></div></div> ${progress}%</div></td>
-                            <td class="center">${disc.revisionCount || 0}</td>
-                            <td class="phases-cell">${phasesStatus}</td>
-                            <td class="notes-cell">${disc.notes || '-'}</td>
-                            <td class="date-cell">${formatDate(disc.lastUpdate)}</td>
-                        </tr>
+                                </tbody>
+                            </table>
+                            <div class="update-info">Última atualização: ${formatDate(disc.lastUpdate)}</div>
+                        </div>
                     `;
                 });
 
-                buildingsHtml += `
-                            </tbody>
-                        </table>
-                    </div>
-                `;
+                buildingsHtml += `</div>`;
             });
 
             const reportHtml = `
@@ -1200,220 +1346,69 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .header {
-            background: linear-gradient(135deg, #FF6B00, #C65D07);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }
-        .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .header .subtitle {
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-        .header .date {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .summary-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        .summary-card .value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #FF6B00;
-        }
-        .summary-card .label {
-            font-size: 0.85rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; font-size: 12px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+        .header { background: linear-gradient(135deg, #FF6B00, #C65D07); color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; }
+        .header h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+        .header .subtitle { opacity: 0.9; font-size: 0.9rem; }
+        .header .date { margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8; }
+        .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .summary-card { background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center; }
+        .summary-card .value { font-size: 2rem; font-weight: 700; color: #FF6B00; }
+        .summary-card .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
         .summary-card.progress .value { color: #FFB800; }
         .summary-card.issues .value { color: #FF6B00; }
         .summary-card.approved .value { color: #4CAF50; }
-        .building-section {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .building-section h2 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #FF6B00;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .progress-badge {
-            background: #FF6B00;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-        th {
-            background: #f8f8f8;
-            padding: 0.75rem;
-            text-align: left;
-            font-weight: 600;
-            color: #555;
-            border-bottom: 2px solid #eee;
-        }
-        td {
-            padding: 0.75rem;
-            border-bottom: 1px solid #eee;
-            vertical-align: top;
-        }
-        tr:hover { background: #fafafa; }
-        .progress-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .mini-progress {
-            width: 60px;
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .mini-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #FF6B00, #FFB800);
-            border-radius: 4px;
-        }
-        .center { text-align: center; }
-        .phases-cell {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.25rem;
-        }
-        .phase-badge {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
+        .building-section { background: white; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .building-section h2 { font-size: 1.1rem; color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #FF6B00; display: flex; align-items: center; gap: 0.5rem; }
+        .progress-badge { background: #FF6B00; color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-left: auto; }
+        .discipline-block { border: 1px solid #eee; border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem; }
+        .discipline-header-report { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+        .discipline-header-report strong { font-size: 0.9rem; }
+        .status-badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .status-badge.pending { background: #e0e0e0; color: #666; }
+        .status-badge.progress { background: #fff3cd; color: #856404; }
+        .status-badge.approved { background: #d4edda; color: #155724; }
+        .progress-small { font-size: 0.8rem; color: #FF6B00; font-weight: 600; }
+        .revision-badge { font-size: 0.7rem; background: #ffe5d0; color: #C65D07; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .model-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-bottom: 0.5rem; }
+        .model-table th { background: #f8f8f8; padding: 0.4rem; text-align: left; font-weight: 600; color: #555; border-bottom: 1px solid #ddd; }
+        .model-table td { padding: 0.4rem; border-bottom: 1px solid #eee; }
+        .type-badge { font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 3px; color: white; font-weight: 600; }
+        .type-badge.mode { background: #2196F3; }
+        .type-badge.ajus { background: #9C27B0; }
+        .type-badge.reng { background: #FF6B00; }
+        .type-badge.asbt { background: #4CAF50; }
+        .phase-badge { font-size: 0.65rem; padding: 0.15rem 0.35rem; border-radius: 3px; }
         .phase-badge.pending { background: #e0e0e0; color: #666; }
         .phase-badge.progress { background: #fff3cd; color: #856404; }
         .phase-badge.issues { background: #ffe5d0; color: #C65D07; }
         .phase-badge.approved { background: #d4edda; color: #155724; }
-        .notes-cell {
-            max-width: 200px;
-            font-size: 0.8rem;
-            color: #666;
-        }
-        .date-cell {
-            font-size: 0.8rem;
-            color: #888;
-            white-space: nowrap;
-        }
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: #888;
-            font-size: 0.85rem;
-        }
-        @media print {
-            body { background: white; }
-            .container { padding: 0; }
-            .building-section { box-shadow: none; border: 1px solid #ddd; }
-        }
-        .btn-print {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            background: #FF6B00;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
-        }
+        .na-row { opacity: 0.5; }
+        .na-cell { font-style: italic; color: #999; }
+        .obs-cell { font-size: 0.7rem; color: #666; max-width: 150px; }
+        .update-info { font-size: 0.7rem; color: #999; text-align: right; }
+        .footer { text-align: center; padding: 1.5rem; color: #888; font-size: 0.8rem; }
+        .btn-print { position: fixed; top: 1rem; right: 1rem; background: #FF6B00; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); }
         .btn-print:hover { background: #e55f00; }
-        @media print { .btn-print { display: none; } }
+        @media print { .btn-print { display: none; } body { background: white; } .building-section { box-shadow: none; border: 1px solid #ddd; } }
     </style>
 </head>
 <body>
-    <button class="btn-print" onclick="window.print()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 6 2 18 2 18 9"/>
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-            <rect x="6" y="14" width="12" height="8"/>
-        </svg>
-        Imprimir
-    </button>
-
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
     <div class="container">
         <div class="header">
             <h1>📊 Relatório de Progresso - Reengenharia de Disciplinas</h1>
             <div class="subtitle">UNILA Campus Arandu</div>
             <div class="date">Gerado em: ${now}</div>
         </div>
-
         <div class="summary">
-            <div class="summary-card">
-                <div class="value">${overallProgress}%</div>
-                <div class="label">Progresso Geral</div>
-            </div>
-            <div class="summary-card progress">
-                <div class="value">${inProgress}</div>
-                <div class="label">Em Andamento</div>
-            </div>
-            <div class="summary-card issues">
-                <div class="value">${issues}</div>
-                <div class="label">Com Pendências</div>
-            </div>
-            <div class="summary-card approved">
-                <div class="value">${approved}</div>
-                <div class="label">Liberados</div>
-            </div>
+            <div class="summary-card"><div class="value">${overallProgress}%</div><div class="label">Progresso Geral</div></div>
+            <div class="summary-card progress"><div class="value">${inProgress}</div><div class="label">Em Andamento</div></div>
+            <div class="summary-card issues"><div class="value">${issues}</div><div class="label">Com Pendências</div></div>
+            <div class="summary-card approved"><div class="value">${approved}</div><div class="label">Liberados</div></div>
         </div>
-
         ${buildingsHtml}
-
         <div class="footer">
             <p>Relatório gerado automaticamente pelo Sistema de Controle de Reengenharia - UNILA Campus Arandu</p>
             <p>Consórcio MPD/Ankara</p>
@@ -1430,11 +1425,9 @@
         function renderBuildingTabs() {
             const container = document.getElementById('buildingFilter');
             let html = `<button class="building-tab ${activeBuilding === 'all' ? 'active' : ''}" onclick="setActiveBuilding('all')">Todos</button>`;
-            
             buildings.forEach(building => {
                 html += `<button class="building-tab ${activeBuilding === building.id ? 'active' : ''}" onclick="setActiveBuilding('${building.id}')">${building.name}</button>`;
             });
-            
             container.innerHTML = html;
         }
 
@@ -1456,16 +1449,13 @@
                     <div class="building-section">
                         <div class="building-header">
                             <h2>🏢 ${building.name}</h2>
-                            <div class="building-progress">
-                                Progresso: <strong>${buildingProgress}%</strong>
-                            </div>
+                            <div class="building-progress">Progresso: <strong>${buildingProgress}%</strong></div>
                         </div>
                         <div class="disciplines-grid">
                 `;
 
                 buildingData.disciplines.forEach((discipline, disciplineIndex) => {
-                    const progress = calculateProgress(discipline);
-                    const completedPhases = discipline.phases.filter(p => p.status === 'approved').length;
+                    const progress = calculateDisciplineProgress(discipline);
                     const revisionCount = discipline.revisionCount || 0;
 
                     html += `
@@ -1478,70 +1468,89 @@
                                         <span>${discipline.fullName}</span>
                                     </div>
                                 </div>
-                                <div class="card-progress">
-                                    <div class="progress-value">${progress}%</div>
-                                    <div class="progress-label">Progresso</div>
-                                    <div class="progress-bar-container">
-                                        <div class="progress-bar" style="width: ${progress}%"></div>
-                                    </div>
+                                <div class="reengineering-status">
+                                    <label>Projeto em Reengenharia:</label>
+                                    <select class="${discipline.reengineeringStatus}" 
+                                        onchange="updateReengineeringStatus('${building.id}', '${discipline.id}', this.value)">
+                                        <option value="pending" ${discipline.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option>
+                                        <option value="progress" ${discipline.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option>
+                                        <option value="approved" ${discipline.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="phases-container">
-                                <div class="phases-header">
-                                    <span class="phases-title">Fases do Projeto</span>
-                                    <span class="phase-counter">${completedPhases}/${discipline.phases.length} concluídas</span>
-                                </div>
+                            <div class="model-types-container">
+                                <div class="model-types-grid">
+                    `;
 
-                                <div class="revision-info" id="revision-${building.id}-${discipline.id}">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="23 4 23 10 17 10"/>
-                                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-                                    </svg>
-                                    <span>Ciclos de revisão: <span class="revision-count">${revisionCount}</span></span>
-                                    <button class="revision-edit-btn" onclick="editRevisionCount('${building.id}', '${discipline.id}')">Editar</button>
-                                </div>
+                    modelTypes.forEach(mt => {
+                        const mtData = discipline.modelTypes[mt.id];
+                        const isNA = mtData.notApplicable;
 
-                                <div class="phases-timeline">
-                                    ${discipline.phases.map((phase, phaseIndex) => `
-                                        <div class="phase-item">
-                                            <div class="phase-status ${phase.status}">
-                                                ${getStatusIcon(phase.status)}
-                                            </div>
-                                            <div class="phase-content">
-                                                <div class="phase-name">${phase.name}</div>
-                                                <div class="phase-desc">${phase.description}</div>
-                                            </div>
-                                            <select class="phase-status-select ${phase.status}" 
-                                                onchange="updatePhaseStatus('${building.id}', '${discipline.id}', ${phaseIndex}, this.value)">
-                                                <option value="pending" ${phase.status === 'pending' ? 'selected' : ''}>Pendente</option>
-                                                <option value="progress" ${phase.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                                <option value="issues" ${phase.status === 'issues' ? 'selected' : ''}>Pendências</option>
-                                                <option value="approved" ${phase.status === 'approved' ? 'selected' : ''}>Concluído</option>
-                                            </select>
+                        html += `
+                            <div class="model-type-card ${isNA ? 'not-applicable' : ''}">
+                                <div class="model-type-header ${mt.id}">
+                                    <div class="model-type-title">
+                                        <span class="model-type-code ${mt.id}">${mt.code}</span>
+                                        <span class="model-type-name">${mt.name}</span>
+                                    </div>
+                                    ${mt.canBeNA ? `
+                                        <div class="na-toggle">
+                                            <label>N/A</label>
+                                            <input type="checkbox" ${isNA ? 'checked' : ''} 
+                                                onchange="toggleNotApplicable('${building.id}', '${discipline.id}', '${mt.id}', this.checked)">
                                         </div>
-                                    `).join('')}
+                                    ` : ''}
+                                </div>
+                                <div class="model-type-content ${isNA ? 'disabled' : ''}">
+                                    <div class="projetista-field">
+                                        <label>Projetista Responsável</label>
+                                        <input type="text" value="${mtData.responsible || ''}" 
+                                            placeholder="${mt.defaultResponsible || 'Nome do projetista'}"
+                                            onchange="updateResponsible('${building.id}', '${discipline.id}', '${mt.id}', this.value)"
+                                            ${isNA ? 'disabled' : ''}>
+                                    </div>
+                                    <div class="projetista-field">
+                                        <label>Observações</label>
+                                        <textarea class="model-notes" placeholder="Observações..."
+                                            onchange="updateModelNotes('${building.id}', '${discipline.id}', '${mt.id}', this.value)"
+                                            ${isNA ? 'disabled' : ''}>${mtData.notes || ''}</textarea>
+                                    </div>
+                                    <div class="phases-mini-grid">
+                                        ${mtData.phases.map((phase, phaseIndex) => `
+                                            <div class="phase-mini-item">
+                                                <span class="phase-mini-name">${phase.name}</span>
+                                                <select class="phase-mini-select ${phase.status}"
+                                                    onchange="updatePhaseStatus('${building.id}', '${discipline.id}', '${mt.id}', ${phaseIndex}, this.value)"
+                                                    ${isNA ? 'disabled' : ''}>
+                                                    <option value="pending" ${phase.status === 'pending' ? 'selected' : ''}>Pendente</option>
+                                                    <option value="progress" ${phase.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
+                                                    <option value="issues" ${phase.status === 'issues' ? 'selected' : ''}>Pendências</option>
+                                                    <option value="approved" ${phase.status === 'approved' ? 'selected' : ''}>Concluído</option>
+                                                </select>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `
                                 </div>
                             </div>
 
                             <div class="card-footer">
                                 <div class="footer-row">
-                                    <div class="footer-field">
-                                        <div class="footer-label">Projetista Responsável</div>
-                                        <input type="text" class="footer-input" 
-                                            placeholder="Nome do projetista"
-                                            value="${discipline.responsible || ''}"
-                                            onchange="updateResponsible('${building.id}', '${discipline.id}', this.value)">
+                                    <div class="revision-info" id="revision-${building.id}-${discipline.id}">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="23 4 23 10 17 10"/>
+                                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                                        </svg>
+                                        <span>Ciclos de revisão: <span class="revision-count">${revisionCount}</span></span>
+                                        <button class="revision-edit-btn" onclick="editRevisionCount('${building.id}', '${discipline.id}')">Editar</button>
                                     </div>
-                                </div>
-                                <div class="footer-field">
-                                    <div class="footer-label">Observações</div>
-                                    <textarea class="footer-input notes-input" 
-                                        placeholder="Registre pendências, interferências identificadas, observações..."
-                                        onchange="updateNotes('${building.id}', '${discipline.id}', this.value)">${discipline.notes || ''}</textarea>
-                                </div>
-                                <div class="card-timestamp">
-                                    Última atualização: ${formatDate(discipline.lastUpdate)}
+                                    <div class="card-timestamp">Última atualização: ${formatDate(discipline.lastUpdate)}</div>
                                 </div>
                             </div>
                         </div>
