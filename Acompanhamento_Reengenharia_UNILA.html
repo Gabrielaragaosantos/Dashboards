@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reengenharia de Disciplinas | UNILA Campus Arandu</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -113,6 +115,43 @@
             display: flex;
             gap: 0.75rem;
             flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .sync-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--status-approved);
+            animation: pulse-dot 2s infinite;
+        }
+
+        .sync-dot.offline {
+            background: var(--status-issues);
+            animation: none;
+        }
+
+        .sync-dot.syncing {
+            background: var(--status-progress);
+            animation: pulse-dot 0.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .btn {
@@ -264,7 +303,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Discipline Card - Nova estrutura */
         .discipline-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -331,7 +369,6 @@
             color: var(--text-secondary);
         }
 
-        /* Status geral de Reengenharia */
         .reengineering-status {
             display: flex;
             align-items: center;
@@ -370,7 +407,6 @@
         .reengineering-status select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.1); }
         .reengineering-status select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.1); }
 
-        /* Model Types Container */
         .model-types-container {
             padding: 1.25rem;
         }
@@ -381,7 +417,6 @@
             gap: 1rem;
         }
 
-        /* Model Type Card */
         .model-type-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
@@ -456,7 +491,6 @@
             opacity: 0.4;
         }
 
-        /* Projetista field */
         .projetista-field {
             margin-bottom: 0.75rem;
         }
@@ -505,7 +539,6 @@
             border-color: var(--accent-orange);
         }
 
-        /* Phases mini grid */
         .phases-mini-grid {
             display: flex;
             flex-direction: column;
@@ -550,7 +583,6 @@
         .phase-mini-select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
         .phase-mini-select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
 
-        /* Card Footer */
         .card-footer {
             padding: 1rem 1.25rem;
             border-top: 1px solid var(--border-color);
@@ -622,47 +654,14 @@
 
         .revision-input:focus { outline: none; }
 
-        .notes-field {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .notes-field label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .notes-field textarea {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.8rem;
-            resize: vertical;
-            min-height: 50px;
-        }
-
-        .notes-field textarea:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-        }
-
         .card-timestamp {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.65rem;
             color: var(--text-muted);
             text-align: right;
+            flex: 1;
         }
 
-        /* Building filter */
         .building-filter {
             display: flex;
             gap: 0.5rem;
@@ -694,7 +693,6 @@
             font-weight: 600;
         }
 
-        /* Footer Info */
         .footer-info {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -737,7 +735,6 @@
             border-radius: 3px;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -774,13 +771,45 @@
             stroke-width: 3;
         }
 
-        /* Scrollbar */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-orange); }
 
-        /* Cores das disciplinas no header */
         .card-hvac .card-header::before { background: var(--hvac-color); }
         .card-hvac .discipline-code { background: rgba(255, 107, 0, 0.2); color: var(--hvac-color); }
 
@@ -808,6 +837,12 @@
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Conectando ao servidor...</div>
+    </div>
+
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
@@ -818,6 +853,10 @@
                 </div>
             </div>
             <div class="header-actions">
+                <div class="sync-status">
+                    <div class="sync-dot" id="syncDot"></div>
+                    <span id="syncText">Conectado</span>
+                </div>
                 <button class="btn btn-report" onclick="openReport()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -827,14 +866,6 @@
                         <polyline points="10 9 9 9 8 9"/>
                     </svg>
                     Relatório
-                </button>
-                <button class="btn btn-primary" onclick="saveAllData()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                        <polyline points="17 21 17 13 7 13 7 21"/>
-                        <polyline points="7 3 7 8 15 8"/>
-                    </svg>
-                    Salvar
                 </button>
             </div>
         </div>
@@ -904,8 +935,8 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h3>Instruções</h3>
-                    <p>AJUS e RENG são mutuamente exclusivos. Marque "N/A" no tipo que não se aplica. Cada tipo de modelo tem seu projetista responsável.</p>
+                    <h3>Sincronização</h3>
+                    <p>Os dados são sincronizados automaticamente em tempo real. Todas as alterações são salvas e visíveis para todos os usuários instantaneamente.</p>
                 </div>
             </div>
         </div>
@@ -917,10 +948,23 @@
                 <polyline points="20 6 9 17 4 12"/>
             </svg>
         </div>
-        <span id="toastMessage">Dados salvos com sucesso!</span>
+        <span id="toastMessage">Dados sincronizados!</span>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            databaseURL: "https://unila-reengenharia-default-rtdb.firebaseio.com"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         const buildings = [
             { id: 'salas', name: 'Bloco de Salas de Aula' },
             { id: 'central', name: 'Edifício Central/ADM' },
@@ -956,29 +1000,32 @@
             buildings.forEach(building => {
                 data[building.id] = {
                     name: building.name,
-                    disciplines: disciplineTemplates.map(disc => ({
-                        ...disc,
-                        reengineeringStatus: 'pending', // Status geral da disciplina
-                        notes: '',
-                        lastUpdate: null,
-                        revisionCount: 0,
-                        _lastCycleState: null,
-                        modelTypes: {}
-                    }))
+                    disciplines: {}
                 };
 
-                // Inicializa os tipos de modelo para cada disciplina
-                data[building.id].disciplines.forEach(disc => {
+                disciplineTemplates.forEach(disc => {
+                    data[building.id].disciplines[disc.id] = {
+                        ...disc,
+                        reengineeringStatus: 'pending',
+                        lastUpdate: null,
+                        revisionCount: 0,
+                        modelTypes: {}
+                    };
+
                     modelTypes.forEach(mt => {
-                        disc.modelTypes[mt.id] = {
+                        data[building.id].disciplines[disc.id].modelTypes[mt.id] = {
                             responsible: mt.defaultResponsible,
                             notes: '',
                             notApplicable: false,
-                            phases: phaseTemplates.map(phase => ({
-                                ...phase,
-                                status: 'pending'
-                            }))
+                            phases: {}
                         };
+
+                        phaseTemplates.forEach(phase => {
+                            data[building.id].disciplines[disc.id].modelTypes[mt.id].phases[phase.id] = {
+                                name: phase.name,
+                                status: 'pending'
+                            };
+                        });
                     });
                 });
             });
@@ -987,52 +1034,32 @@
 
         let projectData = {};
         let activeBuilding = 'all';
-        const STORAGE_KEY = 'unila-reengenharia-data-v5';
+        let isConnected = false;
 
-        function loadData() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                try {
-                    projectData = JSON.parse(saved);
-                    // Merge com estrutura inicial para novos campos
-                    const initial = generateInitialData();
-                    Object.keys(initial).forEach(buildingId => {
-                        if (!projectData[buildingId]) {
-                            projectData[buildingId] = initial[buildingId];
-                        } else {
-                            projectData[buildingId].name = initial[buildingId].name;
-                            // Merge disciplinas
-                            initial[buildingId].disciplines.forEach((initDisc, idx) => {
-                                if (!projectData[buildingId].disciplines[idx]) {
-                                    projectData[buildingId].disciplines[idx] = initDisc;
-                                } else {
-                                    const savedDisc = projectData[buildingId].disciplines[idx];
-                                    // Garantir que tem todos os campos
-                                    savedDisc.reengineeringStatus = savedDisc.reengineeringStatus || 'pending';
-                                    // Garantir modelTypes
-                                    if (!savedDisc.modelTypes) {
-                                        savedDisc.modelTypes = initDisc.modelTypes;
-                                    } else {
-                                        modelTypes.forEach(mt => {
-                                            if (!savedDisc.modelTypes[mt.id]) {
-                                                savedDisc.modelTypes[mt.id] = initDisc.modelTypes[mt.id];
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    });
-                } catch (e) {
-                    projectData = generateInitialData();
-                }
-            } else {
-                projectData = generateInitialData();
+        function updateSyncStatus(status) {
+            const dot = document.getElementById('syncDot');
+            const text = document.getElementById('syncText');
+            
+            dot.className = 'sync-dot';
+            
+            switch(status) {
+                case 'connected':
+                    dot.classList.remove('offline', 'syncing');
+                    text.textContent = 'Conectado';
+                    break;
+                case 'syncing':
+                    dot.classList.add('syncing');
+                    text.textContent = 'Sincronizando...';
+                    break;
+                case 'offline':
+                    dot.classList.add('offline');
+                    text.textContent = 'Offline';
+                    break;
             }
         }
 
-        function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(projectData));
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
         }
 
         function showToast(message) {
@@ -1042,34 +1069,83 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        function saveAllData() {
-            saveData();
-            showToast('Dados salvos com sucesso!');
+        // Inicializar dados no Firebase se não existirem
+        async function initializeData() {
+            const snapshot = await database.ref('projectData').once('value');
+            if (!snapshot.exists()) {
+                const initialData = generateInitialData();
+                await database.ref('projectData').set(initialData);
+            }
+        }
+
+        // Listener para mudanças em tempo real
+        function setupRealtimeListener() {
+            database.ref('projectData').on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    projectData = snapshot.val();
+                    render();
+                    updateSyncStatus('connected');
+                }
+                hideLoading();
+                isConnected = true;
+            }, (error) => {
+                console.error('Erro ao conectar:', error);
+                updateSyncStatus('offline');
+                hideLoading();
+            });
+
+            // Monitor de conexão
+            database.ref('.info/connected').on('value', (snapshot) => {
+                if (snapshot.val() === true) {
+                    updateSyncStatus('connected');
+                } else {
+                    updateSyncStatus('offline');
+                }
+            });
+        }
+
+        // Salvar dados no Firebase
+        async function saveToFirebase(path, value) {
+            updateSyncStatus('syncing');
+            try {
+                await database.ref(path).set(value);
+                updateSyncStatus('connected');
+            } catch (error) {
+                console.error('Erro ao salvar:', error);
+                updateSyncStatus('offline');
+                showToast('Erro ao salvar. Verifique sua conexão.');
+            }
         }
 
         function calculateDisciplineProgress(discipline) {
             let total = 0;
             let completed = 0;
             
-            Object.keys(discipline.modelTypes).forEach(mtId => {
-                const mt = discipline.modelTypes[mtId];
-                if (!mt.notApplicable) {
-                    mt.phases.forEach(phase => {
-                        total++;
-                        if (phase.status === 'approved') completed++;
-                    });
-                }
-            });
+            if (discipline.modelTypes) {
+                Object.keys(discipline.modelTypes).forEach(mtId => {
+                    const mt = discipline.modelTypes[mtId];
+                    if (!mt.notApplicable && mt.phases) {
+                        Object.keys(mt.phases).forEach(phaseId => {
+                            total++;
+                            if (mt.phases[phaseId].status === 'approved') completed++;
+                        });
+                    }
+                });
+            }
             
             return total > 0 ? Math.round((completed / total) * 100) : 0;
         }
 
         function calculateBuildingProgress(buildingId) {
             const building = projectData[buildingId];
-            if (!building) return 0;
+            if (!building || !building.disciplines) return 0;
             let total = 0;
-            building.disciplines.forEach(d => { total += calculateDisciplineProgress(d); });
-            return Math.round(total / building.disciplines.length);
+            let count = 0;
+            Object.keys(building.disciplines).forEach(discId => {
+                total += calculateDisciplineProgress(building.disciplines[discId]);
+                count++;
+            });
+            return count > 0 ? Math.round(total / count) : 0;
         }
 
         function updateStats() {
@@ -1081,106 +1157,106 @@
 
             Object.keys(projectData).forEach(buildingId => {
                 const building = projectData[buildingId];
-                building.disciplines.forEach(d => {
-                    disciplineCount++;
-                    totalProgress += calculateDisciplineProgress(d);
-                    Object.keys(d.modelTypes).forEach(mtId => {
-                        const mt = d.modelTypes[mtId];
-                        if (!mt.notApplicable) {
-                            mt.phases.forEach(p => {
-                                if (p.status === 'progress') inProgress++;
-                                if (p.status === 'issues') issues++;
-                                if (p.status === 'approved') approved++;
+                if (building.disciplines) {
+                    Object.keys(building.disciplines).forEach(discId => {
+                        const d = building.disciplines[discId];
+                        disciplineCount++;
+                        totalProgress += calculateDisciplineProgress(d);
+                        if (d.modelTypes) {
+                            Object.keys(d.modelTypes).forEach(mtId => {
+                                const mt = d.modelTypes[mtId];
+                                if (!mt.notApplicable && mt.phases) {
+                                    Object.keys(mt.phases).forEach(phaseId => {
+                                        const status = mt.phases[phaseId].status;
+                                        if (status === 'progress') inProgress++;
+                                        if (status === 'issues') issues++;
+                                        if (status === 'approved') approved++;
+                                    });
+                                }
                             });
                         }
                     });
-                });
+                }
             });
 
             document.getElementById('overallProgress').innerHTML = 
-                `${Math.round(totalProgress / disciplineCount)}<span>%</span>`;
+                `${disciplineCount > 0 ? Math.round(totalProgress / disciplineCount) : 0}<span>%</span>`;
             document.getElementById('inProgressCount').textContent = inProgress;
             document.getElementById('issuesCount').textContent = issues;
             document.getElementById('approvedCount').textContent = approved;
         }
 
         function updateReengineeringStatus(buildingId, disciplineId, status) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            const path = `projectData/${buildingId}/disciplines/${disciplineId}`;
+            const updates = {
+                reengineeringStatus: status,
+                lastUpdate: new Date().toISOString()
+            };
+            
+            // Verificar ciclo de revisão
+            const disc = projectData[buildingId]?.disciplines?.[disciplineId];
             if (disc) {
-                disc.reengineeringStatus = status;
-                disc.lastUpdate = new Date().toISOString();
-                checkRevisionCycle(buildingId, disciplineId);
-                saveData();
-                render();
+                const reng = disc.modelTypes?.reng;
+                if (reng && !reng.notApplicable && reng.phases) {
+                    const ifcApproved = reng.phases.ifc?.status === 'approved';
+                    const docs2dApproved = reng.phases.docs2d?.status === 'approved';
+                    if (status === 'progress' && ifcApproved && docs2dApproved) {
+                        updates.revisionCount = (disc.revisionCount || 0) + 1;
+                    }
+                }
             }
+            
+            database.ref(path).update(updates);
         }
 
-        function updatePhaseStatus(buildingId, disciplineId, modelTypeId, phaseIndex, newStatus) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (disc && disc.modelTypes[modelTypeId]) {
-                disc.modelTypes[modelTypeId].phases[phaseIndex].status = newStatus;
-                disc.lastUpdate = new Date().toISOString();
-                checkRevisionCycle(buildingId, disciplineId);
-                saveData();
-                render();
-            }
+        function updatePhaseStatus(buildingId, disciplineId, modelTypeId, phaseId, newStatus) {
+            const path = `projectData/${buildingId}/disciplines/${disciplineId}`;
+            database.ref(`${path}/modelTypes/${modelTypeId}/phases/${phaseId}/status`).set(newStatus);
+            database.ref(`${path}/lastUpdate`).set(new Date().toISOString());
+            
+            // Verificar ciclo de revisão
+            setTimeout(() => {
+                const disc = projectData[buildingId]?.disciplines?.[disciplineId];
+                if (disc && modelTypeId === 'reng') {
+                    const reng = disc.modelTypes?.reng;
+                    if (reng && !reng.notApplicable && reng.phases) {
+                        const ifcApproved = reng.phases.ifc?.status === 'approved';
+                        const docs2dApproved = reng.phases.docs2d?.status === 'approved';
+                        const reengineeringInProgress = disc.reengineeringStatus === 'progress';
+                        
+                        if (reengineeringInProgress && ifcApproved && docs2dApproved) {
+                            // Verificar se já não contou este ciclo
+                            const currentCycle = `${ifcApproved}-${docs2dApproved}`;
+                            if (disc._lastCycleState !== currentCycle) {
+                                database.ref(`${path}/revisionCount`).set((disc.revisionCount || 0) + 1);
+                                database.ref(`${path}/_lastCycleState`).set(currentCycle);
+                            }
+                        }
+                    }
+                }
+            }, 500);
         }
 
         function updateResponsible(buildingId, disciplineId, modelTypeId, value) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (disc && disc.modelTypes[modelTypeId]) {
-                disc.modelTypes[modelTypeId].responsible = value;
-                disc.lastUpdate = new Date().toISOString();
-                saveData();
-            }
+            const path = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/responsible`;
+            database.ref(path).set(value);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function updateModelNotes(buildingId, disciplineId, modelTypeId, value) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (disc && disc.modelTypes[modelTypeId]) {
-                disc.modelTypes[modelTypeId].notes = value;
-                disc.lastUpdate = new Date().toISOString();
-                saveData();
-            }
+            const path = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/notes`;
+            database.ref(path).set(value);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function toggleNotApplicable(buildingId, disciplineId, modelTypeId, isNA) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (disc && disc.modelTypes[modelTypeId]) {
-                disc.modelTypes[modelTypeId].notApplicable = isNA;
-                disc.lastUpdate = new Date().toISOString();
-                saveData();
-                render();
-            }
-        }
-
-        function checkRevisionCycle(buildingId, disciplineId) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (!disc) return;
-
-            // Novo ciclo: Reengenharia "Em Andamento" + verificar RENG: IFC "Concluído" + Docs2D "Concluído"
-            const reng = disc.modelTypes.reng;
-            if (reng && !reng.notApplicable) {
-                const ifcApproved = reng.phases.find(p => p.id === 'ifc')?.status === 'approved';
-                const docs2dApproved = reng.phases.find(p => p.id === 'docs2d')?.status === 'approved';
-                const reengineeringInProgress = disc.reengineeringStatus === 'progress';
-
-                if (reengineeringInProgress && ifcApproved && docs2dApproved) {
-                    const currentCycle = `${disc.reengineeringStatus}-${ifcApproved}-${docs2dApproved}`;
-                    if (disc._lastCycleState !== currentCycle) {
-                        disc.revisionCount = (disc.revisionCount || 0) + 1;
-                        disc._lastCycleState = currentCycle;
-                        return true;
-                    }
-                } else {
-                    disc._lastCycleState = null;
-                }
-            }
-            return false;
+            const path = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/notApplicable`;
+            database.ref(path).set(isNA);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function editRevisionCount(buildingId, disciplineId) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
+            const disc = projectData[buildingId]?.disciplines?.[disciplineId];
             if (!disc) return;
 
             const container = document.getElementById(`revision-${buildingId}-${disciplineId}`);
@@ -1201,13 +1277,9 @@
         }
 
         function saveRevisionCount(buildingId, disciplineId, value) {
-            const disc = projectData[buildingId].disciplines.find(d => d.id === disciplineId);
-            if (disc) {
-                disc.revisionCount = Math.max(0, parseInt(value) || 0);
-                disc.lastUpdate = new Date().toISOString();
-                saveData();
-                render();
-            }
+            const path = `projectData/${buildingId}/disciplines/${disciplineId}/revisionCount`;
+            database.ref(path).set(Math.max(0, parseInt(value) || 0));
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function formatDate(isoString) {
@@ -1249,28 +1321,34 @@
 
             Object.keys(projectData).forEach(buildingId => {
                 const building = projectData[buildingId];
-                building.disciplines.forEach(d => {
-                    totalDisciplines++;
-                    totalProgress += calculateDisciplineProgress(d);
-                    Object.keys(d.modelTypes).forEach(mtId => {
-                        const mt = d.modelTypes[mtId];
-                        if (!mt.notApplicable) {
-                            mt.phases.forEach(p => {
-                                if (p.status === 'progress') inProgress++;
-                                if (p.status === 'issues') issues++;
-                                if (p.status === 'approved') approved++;
+                if (building.disciplines) {
+                    Object.keys(building.disciplines).forEach(discId => {
+                        const d = building.disciplines[discId];
+                        totalDisciplines++;
+                        totalProgress += calculateDisciplineProgress(d);
+                        if (d.modelTypes) {
+                            Object.keys(d.modelTypes).forEach(mtId => {
+                                const mt = d.modelTypes[mtId];
+                                if (!mt.notApplicable && mt.phases) {
+                                    Object.keys(mt.phases).forEach(phaseId => {
+                                        const status = mt.phases[phaseId].status;
+                                        if (status === 'progress') inProgress++;
+                                        if (status === 'issues') issues++;
+                                        if (status === 'approved') approved++;
+                                    });
+                                }
                             });
                         }
                     });
-                });
+                }
             });
 
-            const overallProgress = Math.round(totalProgress / totalDisciplines);
+            const overallProgress = totalDisciplines > 0 ? Math.round(totalProgress / totalDisciplines) : 0;
 
             let buildingsHtml = '';
             buildings.forEach(building => {
                 const buildingData = projectData[building.id];
-                if (!buildingData) return;
+                if (!buildingData || !buildingData.disciplines) return;
 
                 const buildingProgress = calculateBuildingProgress(building.id);
 
@@ -1279,7 +1357,10 @@
                         <h2>🏢 ${building.name} <span class="progress-badge">${buildingProgress}%</span></h2>
                 `;
 
-                buildingData.disciplines.forEach(disc => {
+                disciplineTemplates.forEach(discTemplate => {
+                    const disc = buildingData.disciplines[discTemplate.id];
+                    if (!disc) return;
+                    
                     const progress = calculateDisciplineProgress(disc);
                     
                     buildingsHtml += `
@@ -1306,7 +1387,9 @@
                     `;
 
                     modelTypes.forEach(mt => {
-                        const mtData = disc.modelTypes[mt.id];
+                        const mtData = disc.modelTypes?.[mt.id];
+                        if (!mtData) return;
+                        
                         if (mtData.notApplicable) {
                             buildingsHtml += `
                                 <tr class="na-row">
@@ -1315,11 +1398,15 @@
                                 </tr>
                             `;
                         } else {
+                            const phases = mtData.phases || {};
                             buildingsHtml += `
                                 <tr>
                                     <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
                                     <td>${mtData.responsible || '<em>-</em>'}</td>
-                                    ${mtData.phases.map(p => `<td><span class="phase-badge ${p.status}">${getStatusText(p.status)}</span></td>`).join('')}
+                                    <td><span class="phase-badge ${phases.ifc?.status || 'pending'}">${getStatusText(phases.ifc?.status || 'pending')}</span></td>
+                                    <td><span class="phase-badge ${phases.compatibility?.status || 'pending'}">${getStatusText(phases.compatibility?.status || 'pending')}</span></td>
+                                    <td><span class="phase-badge ${phases.docs2d?.status || 'pending'}">${getStatusText(phases.docs2d?.status || 'pending')}</span></td>
+                                    <td><span class="phase-badge ${phases.released?.status || 'pending'}">${getStatusText(phases.released?.status || 'pending')}</span></td>
                                     <td class="obs-cell">${mtData.notes || '-'}</td>
                                 </tr>
                             `;
@@ -1441,7 +1528,7 @@
 
             buildingsToRender.forEach((building, buildingIndex) => {
                 const buildingData = projectData[building.id];
-                if (!buildingData) return;
+                if (!buildingData || !buildingData.disciplines) return;
 
                 const buildingProgress = calculateBuildingProgress(building.id);
 
@@ -1454,7 +1541,10 @@
                         <div class="disciplines-grid">
                 `;
 
-                buildingData.disciplines.forEach((discipline, disciplineIndex) => {
+                disciplineTemplates.forEach((discTemplate, disciplineIndex) => {
+                    const discipline = buildingData.disciplines[discTemplate.id];
+                    if (!discipline) return;
+
                     const progress = calculateDisciplineProgress(discipline);
                     const revisionCount = discipline.revisionCount || 0;
 
@@ -1484,7 +1574,7 @@
                     `;
 
                     modelTypes.forEach(mt => {
-                        const mtData = discipline.modelTypes[mt.id];
+                        const mtData = discipline.modelTypes?.[mt.id] || { notApplicable: false, responsible: '', notes: '', phases: {} };
                         const isNA = mtData.notApplicable;
 
                         html += `
@@ -1517,19 +1607,22 @@
                                             ${isNA ? 'disabled' : ''}>${mtData.notes || ''}</textarea>
                                     </div>
                                     <div class="phases-mini-grid">
-                                        ${mtData.phases.map((phase, phaseIndex) => `
-                                            <div class="phase-mini-item">
-                                                <span class="phase-mini-name">${phase.name}</span>
-                                                <select class="phase-mini-select ${phase.status}"
-                                                    onchange="updatePhaseStatus('${building.id}', '${discipline.id}', '${mt.id}', ${phaseIndex}, this.value)"
-                                                    ${isNA ? 'disabled' : ''}>
-                                                    <option value="pending" ${phase.status === 'pending' ? 'selected' : ''}>Pendente</option>
-                                                    <option value="progress" ${phase.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                                    <option value="issues" ${phase.status === 'issues' ? 'selected' : ''}>Pendências</option>
-                                                    <option value="approved" ${phase.status === 'approved' ? 'selected' : ''}>Concluído</option>
-                                                </select>
-                                            </div>
-                                        `).join('')}
+                                        ${phaseTemplates.map(phase => {
+                                            const phaseData = mtData.phases?.[phase.id] || { status: 'pending' };
+                                            return `
+                                                <div class="phase-mini-item">
+                                                    <span class="phase-mini-name">${phase.name}</span>
+                                                    <select class="phase-mini-select ${phaseData.status}"
+                                                        onchange="updatePhaseStatus('${building.id}', '${discipline.id}', '${mt.id}', '${phase.id}', this.value)"
+                                                        ${isNA ? 'disabled' : ''}>
+                                                        <option value="pending" ${phaseData.status === 'pending' ? 'selected' : ''}>Pendente</option>
+                                                        <option value="progress" ${phaseData.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
+                                                        <option value="issues" ${phaseData.status === 'issues' ? 'selected' : ''}>Pendências</option>
+                                                        <option value="approved" ${phaseData.status === 'approved' ? 'selected' : ''}>Concluído</option>
+                                                    </select>
+                                                </div>
+                                            `;
+                                        }).join('')}
                                     </div>
                                 </div>
                             </div>
@@ -1572,9 +1665,10 @@
             updateStats();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            render();
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializeData();
+            setupRealtimeListener();
         });
     </script>
 </body>
