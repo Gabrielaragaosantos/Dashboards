@@ -20,7 +20,6 @@
             --text-muted: #808080;
             --accent-orange: #FF6B00;
             --accent-yellow: #FFB800;
-            --accent-brown: #8B4513;
             --accent-terracotta: #C65D07;
             --grid-line: rgba(255, 107, 0, 0.08);
             --hvac-color: #FF6B00;
@@ -33,27 +32,20 @@
             --status-progress: #FFB800;
             --status-issues: #FF6B00;
             --status-approved: #4CAF50;
-            --status-na: #404040;
             --mode-color: #2196F3;
             --ajus-color: #9C27B0;
             --reng-color: #FF6B00;
             --asbt-color: #4CAF50;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Space Grotesk', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            background-image: 
-                linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
             background-size: 50px 50px;
-            background-position: -1px -1px;
         }
-
         .header {
             background: linear-gradient(180deg, var(--bg-secondary) 0%, transparent 100%);
             border-bottom: 1px solid var(--border-color);
@@ -63,7 +55,6 @@
             z-index: 100;
             backdrop-filter: blur(20px);
         }
-
         .header-content {
             max-width: 1800px;
             margin: 0 auto;
@@ -73,51 +64,23 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-img {
-            height: 50px;
-            width: auto;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-
-        .logo-unila {
-            height: 45px;
-            width: auto;
-            object-fit: contain;
-            margin-right: 0.5rem;
-        }
-
+        .logo-section { display: flex; align-items: center; gap: 1rem; }
+        .logo-img { height: 50px; width: auto; object-fit: contain; border-radius: 8px; }
+        .logo-unila { height: 45px; width: auto; object-fit: contain; margin-right: 0.5rem; }
         .logo-text h1 {
             font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
             background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
         .logo-text span {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             color: var(--text-secondary);
             letter-spacing: 2px;
         }
-
-        .header-actions {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
+        .header-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
         .sync-status {
             display: flex;
             align-items: center;
@@ -130,30 +93,10 @@
             border-radius: 6px;
             border: 1px solid var(--border-color);
         }
-
-        .sync-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--status-approved);
-            animation: pulse-dot 2s infinite;
-        }
-
-        .sync-dot.offline {
-            background: var(--status-issues);
-            animation: none;
-        }
-
-        .sync-dot.syncing {
-            background: var(--status-progress);
-            animation: pulse-dot 0.5s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
+        .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--status-approved); animation: pulse-dot 2s infinite; }
+        .sync-dot.offline { background: var(--status-issues); animation: none; }
+        .sync-dot.syncing { background: var(--status-progress); animation: pulse-dot 0.5s infinite; }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .btn {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.8rem;
@@ -168,51 +111,15 @@
             align-items: center;
             gap: 0.5rem;
         }
-
-        .btn:hover {
-            background: var(--border-color);
-            border-color: var(--accent-orange);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta));
-            border: none;
-            color: var(--text-primary);
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.25);
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
+        .btn:hover { background: var(--border-color); border-color: var(--accent-orange); }
         .btn-report {
             background: linear-gradient(135deg, #2196F3, #1565C0);
             border: none;
-            color: var(--text-primary);
             font-weight: 600;
             box-shadow: 0 4px 15px rgba(33, 150, 243, 0.25);
         }
-
-        .btn-report:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .main-content {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .stats-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 2.5rem;
-        }
-
+        .main-content { max-width: 1800px; margin: 0 auto; padding: 2rem; }
+        .stats-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
         .stat-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -222,50 +129,15 @@
             overflow: hidden;
             transition: all 0.3s ease;
         }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow));
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-orange);
-            box-shadow: 0 8px 30px rgba(255, 107, 0, 0.15);
-        }
-
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); }
+        .stat-card:hover { transform: translateY(-2px); border-color: var(--accent-orange); box-shadow: 0 8px 30px rgba(255, 107, 0, 0.15); }
         .stat-card.progress-card::before { background: var(--status-progress); }
         .stat-card.issues-card::before { background: var(--status-issues); }
         .stat-card.approved-card::before { background: var(--status-approved); }
-
-        .stat-label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1;
-        }
-
-        .stat-value span {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-        }
-
+        .stat-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; line-height: 1; }
+        .stat-value span { font-size: 1.2rem; color: var(--text-muted); }
         .building-section { margin-bottom: 3rem; }
-
         .building-header {
             display: flex;
             align-items: center;
@@ -277,32 +149,10 @@
             border-radius: 12px;
             border-left: 4px solid var(--accent-orange);
         }
-
-        .building-header h2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--accent-yellow);
-        }
-
-        .building-header .building-progress {
-            margin-left: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .building-header .building-progress strong {
-            color: var(--accent-orange);
-            font-size: 1.1rem;
-        }
-
-        .disciplines-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
+        .building-header h2 { font-size: 1.2rem; font-weight: 600; color: var(--accent-yellow); }
+        .building-header .building-progress { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-secondary); }
+        .building-header .building-progress strong { color: var(--accent-orange); font-size: 1.1rem; }
+        .disciplines-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
         .discipline-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -312,17 +162,8 @@
             animation: fadeInUp 0.5s ease forwards;
             opacity: 0;
         }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .discipline-card:hover {
-            border-color: var(--accent-orange);
-            box-shadow: 0 10px 40px rgba(255, 107, 0, 0.15);
-        }
-
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .discipline-card:hover { border-color: var(--accent-orange); box-shadow: 0 10px 40px rgba(255, 107, 0, 0.15); }
         .card-header {
             padding: 1.25rem;
             display: flex;
@@ -333,544 +174,112 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
-        .card-header::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-        }
-
-        .discipline-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .discipline-code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            font-weight: 700;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            letter-spacing: 1px;
-        }
-
-        .discipline-name h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.15rem;
-        }
-
-        .discipline-name span {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .reengineering-status {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: var(--bg-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .reengineering-status label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-        }
-
-        .reengineering-status select {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            padding: 0.35rem 0.5rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            cursor: pointer;
-        }
-
-        .reengineering-status select:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-        }
-
+        .card-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+        .discipline-info { display: flex; align-items: center; gap: 1rem; }
+        .discipline-code { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 8px; letter-spacing: 1px; }
+        .discipline-name h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .discipline-name span { font-size: 0.75rem; color: var(--text-secondary); }
+        .reengineering-status { display: flex; align-items: center; gap: 0.75rem; background: var(--bg-secondary); padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); }
+        .reengineering-status label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .reengineering-status select { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; padding: 0.35rem 0.5rem; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; }
+        .reengineering-status select:focus { outline: none; border-color: var(--accent-orange); }
         .reengineering-status select.pending { border-color: var(--status-pending); }
         .reengineering-status select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.1); }
         .reengineering-status select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.1); }
-
-        .model-types-container {
-            padding: 1.25rem;
-        }
-
-        .model-types-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .model-type-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .model-type-card.not-applicable {
-            opacity: 0.5;
-        }
-
-        .model-type-header {
-            padding: 0.75rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-        }
-
+        .model-types-container { padding: 1.25rem; }
+        .model-types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .model-type-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
+        .model-type-card.not-applicable { opacity: 0.5; }
+        .model-type-header { padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
         .model-type-header.mode { background: rgba(33, 150, 243, 0.15); border-left: 3px solid var(--mode-color); }
         .model-type-header.ajus { background: rgba(156, 39, 176, 0.15); border-left: 3px solid var(--ajus-color); }
         .model-type-header.reng { background: rgba(255, 107, 0, 0.15); border-left: 3px solid var(--reng-color); }
         .model-type-header.asbt { background: rgba(76, 175, 80, 0.15); border-left: 3px solid var(--asbt-color); }
-
-        .model-type-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .model-type-code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        }
-
+        .model-type-title { display: flex; align-items: center; gap: 0.5rem; }
+        .model-type-code { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
         .model-type-code.mode { background: var(--mode-color); color: white; }
         .model-type-code.ajus { background: var(--ajus-color); color: white; }
         .model-type-code.reng { background: var(--reng-color); color: white; }
         .model-type-code.asbt { background: var(--asbt-color); color: white; }
-
-        .model-type-name {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .na-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .na-toggle label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        .na-toggle input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .model-type-content {
-            padding: 0.75rem 1rem;
-        }
-
-        .model-type-content.disabled {
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        .projetista-field {
-            margin-bottom: 0.75rem;
-        }
-
-        .projetista-field label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .projetista-field input {
-            width: 100%;
-            padding: 0.4rem 0.6rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.8rem;
-        }
-
-        .projetista-field input:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-        }
-
-        .projetista-field textarea.model-notes {
-            width: 100%;
-            padding: 0.4rem 0.6rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.75rem;
-            resize: vertical;
-            min-height: 40px;
-        }
-
-        .projetista-field textarea.model-notes:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-        }
-
-        .phases-mini-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .phase-mini-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.4rem 0.5rem;
-            background: var(--bg-primary);
-            border-radius: 6px;
-            gap: 0.5rem;
-        }
-
-        .phase-mini-name {
-            font-size: 0.75rem;
-            color: var(--text-primary);
-            flex: 1;
-        }
-
-        .phase-mini-select {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            padding: 0.25rem 0.4rem;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            cursor: pointer;
-            min-width: 100px;
-        }
-
-        .phase-mini-select:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-        }
-
+        .model-type-name { font-size: 0.75rem; color: var(--text-secondary); }
+        .na-toggle { display: flex; align-items: center; gap: 0.5rem; }
+        .na-toggle label { font-size: 0.7rem; color: var(--text-muted); }
+        .na-toggle input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+        .model-type-content { padding: 0.75rem 1rem; }
+        .model-type-content.disabled { pointer-events: none; opacity: 0.4; }
+        .projetista-field { margin-bottom: 0.75rem; }
+        .projetista-field label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); display: block; margin-bottom: 0.25rem; }
+        .projetista-field input { width: 100%; padding: 0.4rem 0.6rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; }
+        .projetista-field input:focus { outline: none; border-color: var(--accent-orange); }
+        .projetista-field textarea.model-notes { width: 100%; padding: 0.4rem 0.6rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.75rem; resize: vertical; min-height: 40px; }
+        .projetista-field textarea.model-notes:focus { outline: none; border-color: var(--accent-orange); }
+        .phases-mini-grid { display: flex; flex-direction: column; gap: 0.4rem; }
+        .phase-mini-item { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 0.5rem; background: var(--bg-primary); border-radius: 6px; gap: 0.5rem; }
+        .phase-mini-name { font-size: 0.75rem; color: var(--text-primary); flex: 1; }
+        .phase-mini-select { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; padding: 0.25rem 0.4rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; min-width: 100px; }
+        .phase-mini-select:focus { outline: none; border-color: var(--accent-orange); }
         .phase-mini-select.pending { border-color: var(--status-pending); }
         .phase-mini-select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.15); }
         .phase-mini-select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
         .phase-mini-select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
-
-        .card-footer {
-            padding: 1rem 1.25rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-row {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .revision-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.75rem;
-            background: rgba(255, 107, 0, 0.1);
-            border: 1px solid rgba(255, 107, 0, 0.3);
-            border-radius: 8px;
-        }
-
-        .revision-info svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--accent-orange);
-            flex-shrink: 0;
-        }
-
-        .revision-info span {
-            font-size: 0.75rem;
-            color: var(--accent-orange);
-        }
-
-        .revision-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-        }
-
-        .revision-edit-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 107, 0, 0.5);
-            border-radius: 4px;
-            padding: 0.2rem 0.4rem;
-            color: var(--accent-orange);
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            transition: all 0.2s ease;
-        }
-
+        .card-footer { padding: 1rem 1.25rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .revision-info { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); border-radius: 8px; }
+        .revision-info svg { width: 16px; height: 16px; stroke: var(--accent-orange); flex-shrink: 0; }
+        .revision-info span { font-size: 0.75rem; color: var(--accent-orange); }
+        .revision-count { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+        .revision-edit-btn { background: transparent; border: 1px solid rgba(255, 107, 0, 0.5); border-radius: 4px; padding: 0.2rem 0.4rem; color: var(--accent-orange); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; }
         .revision-edit-btn:hover { background: rgba(255, 107, 0, 0.2); }
-
-        .revision-input {
-            width: 50px;
-            padding: 0.2rem 0.4rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--accent-orange);
-            border-radius: 4px;
-            color: var(--accent-orange);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .revision-input:focus { outline: none; }
-
-        .card-timestamp {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            text-align: right;
-            flex: 1;
-        }
-
-        .building-filter {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .building-tab {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .building-tab:hover {
-            border-color: var(--accent-orange);
-            color: var(--text-primary);
-        }
-
-        .building-tab.active {
-            background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta));
-            border-color: transparent;
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .footer-info {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--accent-yellow);
-        }
-
-        .footer-section p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--status-approved);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1001;
-        }
-
+        .revision-input { width: 50px; padding: 0.2rem 0.4rem; background: var(--bg-primary); border: 1px solid var(--accent-orange); border-radius: 4px; color: var(--accent-orange); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; text-align: center; }
+        .card-timestamp { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); text-align: right; flex: 1; }
+        .building-filter { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .building-tab { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 0.6rem 1.2rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; }
+        .building-tab:hover { border-color: var(--accent-orange); color: var(--text-primary); }
+        .building-tab.active { background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta)); border-color: transparent; color: var(--text-primary); font-weight: 600; }
+        .footer-info { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-top: 2rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .footer-section h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--accent-yellow); }
+        .footer-section p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.8rem; color: var(--text-secondary); }
+        .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid var(--status-approved); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1001; }
         .toast.show { transform: translateY(0); opacity: 1; }
-
-        .toast-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--status-approved);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .toast-icon svg {
-            width: 14px;
-            height: 14px;
-            stroke: var(--bg-primary);
-            stroke-width: 3;
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--accent-orange);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            margin-top: 1rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
+        .toast-icon { width: 24px; height: 24px; background: var(--status-approved); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .toast-icon svg { width: 14px; height: 14px; stroke: var(--bg-primary); stroke-width: 3; }
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; }
+        .loading-spinner { width: 50px; height: 50px; border: 4px solid var(--border-color); border-top-color: var(--accent-orange); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-secondary); }
+        .author-signature { text-align: center; padding: 2rem; margin-top: 1.5rem; }
+        .author-name { font-size: 1rem; font-weight: 600; color: var(--accent-orange); margin-bottom: 0.25rem; }
+        .author-email { font-size: 0.9rem; color: var(--accent-orange); text-decoration: none; }
+        .author-email:hover { opacity: 0.8; text-decoration: underline; }
+        .author-role { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; font-style: italic; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-orange); }
-
         .card-hvac .card-header::before { background: var(--hvac-color); }
         .card-hvac .discipline-code { background: rgba(255, 107, 0, 0.2); color: var(--hvac-color); }
-
         .card-hid .card-header::before { background: var(--hid-color); }
         .card-hid .discipline-code { background: rgba(0, 168, 204, 0.2); color: var(--hid-color); }
-
         .card-esg .card-header::before { background: var(--esg-color); }
         .card-esg .discipline-code { background: rgba(255, 184, 0, 0.2); color: var(--esg-color); }
-
         .card-spr .card-header::before { background: var(--spr-color); }
         .card-spr .discipline-code { background: rgba(255, 61, 0, 0.2); color: var(--spr-color); }
-
         .card-inc .card-header::before { background: var(--inc-color); }
         .card-inc .discipline-code { background: rgba(233, 30, 99, 0.2); color: var(--inc-color); }
-
         .card-ele .card-header::before { background: var(--ele-color); }
         .card-ele .discipline-code { background: rgba(156, 39, 176, 0.2); color: var(--ele-color); }
-
         @media (max-width: 768px) {
             .header { padding: 1rem; }
             .main-content { padding: 1rem; }
             .stat-value { font-size: 2rem; }
             .model-types-grid { grid-template-columns: 1fr; }
         }
-
-        /* Author Signature */
-        .author-signature {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 1.5rem;
-        }
-
-        .author-name {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--accent-orange);
-            margin-bottom: 0.25rem;
-        }
-
-        .author-email {
-            font-size: 0.9rem;
-            color: var(--accent-orange);
-            text-decoration: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .author-email:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .author-role {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-            font-style: italic;
-        }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <div class="loading-text">Conectando ao servidor...</div>
@@ -879,7 +288,7 @@
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
-                <img src="https://raw.githubusercontent.com/Gabrielaragaosantos/Dashboards/main/Imagens%20Salas%20de%20Aulas/logo-consorcio.png" alt="Logo Consórcio MPD/Ankara" class="logo-img">
+                <img src="https://raw.githubusercontent.com/Gabrielaragaosantos/Dashboards/main/Imagens%20Salas%20de%20Aulas/logo-consorcio.png" alt="Logo Consórcio" class="logo-img">
                 <div class="logo-text">
                     <h1>Reengenharia de Disciplinas</h1>
                     <span>UNILA • Campus Arandu</span>
@@ -895,9 +304,6 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                        <polyline points="10 9 9 9 8 9"/>
                     </svg>
                     Relatório
                 </button>
@@ -932,41 +338,17 @@
             <div class="footer-grid">
                 <div class="footer-section">
                     <h3>Tipos de Modelo</h3>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--mode-color)"></div>
-                        <span><strong>MODE</strong> - Modelos originais (Alto QI)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--ajus-color)"></div>
-                        <span><strong>AJUS</strong> - Ajustes (NERKPE)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--reng-color)"></div>
-                        <span><strong>RENG</strong> - Reengenharia</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--asbt-color)"></div>
-                        <span><strong>ASBT</strong> - As Built</span>
-                    </div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--mode-color)"></div><span><strong>MODE</strong> - Modelos originais (Alto QI)</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--ajus-color)"></div><span><strong>AJUS</strong> - Ajustes (NERKPE)</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--reng-color)"></div><span><strong>RENG</strong> - Reengenharia</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--asbt-color)"></div><span><strong>ASBT</strong> - As Built</span></div>
                 </div>
                 <div class="footer-section">
                     <h3>Legenda de Status</h3>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--status-pending)"></div>
-                        <span>Pendente</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--status-progress)"></div>
-                        <span>Em Andamento</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--status-issues)"></div>
-                        <span>Com Pendências</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: var(--status-approved)"></div>
-                        <span>Concluído</span>
-                    </div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--status-pending)"></div><span>Pendente</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--status-progress)"></div><span>Em Andamento</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--status-issues)"></div><span>Com Pendências</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--status-approved)"></div><span>Concluído</span></div>
                 </div>
                 <div class="footer-section">
                     <h3>Sincronização</h3>
@@ -975,34 +357,21 @@
             </div>
         </div>
 
-        <!-- Assinatura -->
         <div class="author-signature">
             <div class="author-name">Gabriel Aragão Santos</div>
-            <a href="/cdn-cgi/l/email-protection#bcdbdddeced5d9d092cfddd2c8d3cffcddd2d7ddceddd9d2dbd9d2d4ddced5dd92dfd3d192dece" class="author-email"><span class="__cf_email__" data-cfemail="385f595a4a515d54164b59564c574b78595653594a595d565f5d5650594a5159165b5755165a4a">[email&#160;protected]</span></a>
+            <a href="mailto:gabriel.santos@ankaraengenharia.com.br" class="author-email">gabriel.santos@ankaraengenharia.com.br</a>
             <div class="author-role">Arquiteto</div>
         </div>
     </main>
 
     <div class="toast" id="toast">
-        <div class="toast-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <polyline points="20 6 9 17 4 12"/>
-            </svg>
-        </div>
+        <div class="toast-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></div>
         <span id="toastMessage">Dados sincronizados!</span>
     </div>
 
-    <!-- Firebase SDK -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
     <script>
-        // Configuração do Firebase
-        const firebaseConfig = {
-            databaseURL: "https://unila-reengenharia-default-rtdb.firebaseio.com"
-        };
-
-        // Inicializar Firebase
+        // Firebase Config
+        const firebaseConfig = { databaseURL: "https://unila-reengenharia-default-rtdb.firebaseio.com" };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
@@ -1036,36 +405,23 @@
             { id: 'released', name: 'Liberado para Obra' }
         ];
 
+        let projectData = {};
+        let activeBuilding = 'all';
+
         function generateInitialData() {
             const data = {};
             buildings.forEach(building => {
-                data[building.id] = {
-                    name: building.name,
-                    disciplines: {}
-                };
-
+                data[building.id] = { name: building.name, disciplines: {} };
                 disciplineTemplates.forEach(disc => {
                     data[building.id].disciplines[disc.id] = {
-                        ...disc,
-                        reengineeringStatus: 'pending',
-                        lastUpdate: null,
-                        revisionCount: 0,
-                        modelTypes: {}
+                        ...disc, reengineeringStatus: 'pending', lastUpdate: null, revisionCount: 0, modelTypes: {}
                     };
-
                     modelTypes.forEach(mt => {
                         data[building.id].disciplines[disc.id].modelTypes[mt.id] = {
-                            responsible: mt.defaultResponsible,
-                            notes: '',
-                            notApplicable: false,
-                            phases: {}
+                            responsible: mt.defaultResponsible, notes: '', notApplicable: false, phases: {}
                         };
-
                         phaseTemplates.forEach(phase => {
-                            data[building.id].disciplines[disc.id].modelTypes[mt.id].phases[phase.id] = {
-                                name: phase.name,
-                                status: 'pending'
-                            };
+                            data[building.id].disciplines[disc.id].modelTypes[mt.id].phases[phase.id] = { name: phase.name, status: 'pending' };
                         });
                     });
                 });
@@ -1073,35 +429,16 @@
             return data;
         }
 
-        let projectData = {};
-        let activeBuilding = 'all';
-        let isConnected = false;
-
         function updateSyncStatus(status) {
             const dot = document.getElementById('syncDot');
             const text = document.getElementById('syncText');
-            
             dot.className = 'sync-dot';
-            
-            switch(status) {
-                case 'connected':
-                    dot.classList.remove('offline', 'syncing');
-                    text.textContent = 'Conectado';
-                    break;
-                case 'syncing':
-                    dot.classList.add('syncing');
-                    text.textContent = 'Sincronizando...';
-                    break;
-                case 'offline':
-                    dot.classList.add('offline');
-                    text.textContent = 'Offline';
-                    break;
-            }
+            if (status === 'connected') { text.textContent = 'Conectado'; }
+            else if (status === 'syncing') { dot.classList.add('syncing'); text.textContent = 'Sincronizando...'; }
+            else { dot.classList.add('offline'); text.textContent = 'Offline'; }
         }
 
-        function hideLoading() {
-            document.getElementById('loadingOverlay').style.display = 'none';
-        }
+        function hideLoading() { document.getElementById('loadingOverlay').style.display = 'none'; }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -1110,16 +447,13 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Inicializar dados no Firebase se não existirem
         async function initializeData() {
             const snapshot = await database.ref('projectData').once('value');
             if (!snapshot.exists()) {
-                const initialData = generateInitialData();
-                await database.ref('projectData').set(initialData);
+                await database.ref('projectData').set(generateInitialData());
             }
         }
 
-        // Listener para mudanças em tempo real
         function setupRealtimeListener() {
             database.ref('projectData').on('value', (snapshot) => {
                 if (snapshot.exists()) {
@@ -1128,40 +462,19 @@
                     updateSyncStatus('connected');
                 }
                 hideLoading();
-                isConnected = true;
             }, (error) => {
-                console.error('Erro ao conectar:', error);
+                console.error('Erro:', error);
+                document.querySelector('.loading-text').textContent = 'Erro: ' + error.message;
                 updateSyncStatus('offline');
-                hideLoading();
             });
 
-            // Monitor de conexão
             database.ref('.info/connected').on('value', (snapshot) => {
-                if (snapshot.val() === true) {
-                    updateSyncStatus('connected');
-                } else {
-                    updateSyncStatus('offline');
-                }
+                updateSyncStatus(snapshot.val() ? 'connected' : 'offline');
             });
-        }
-
-        // Salvar dados no Firebase
-        async function saveToFirebase(path, value) {
-            updateSyncStatus('syncing');
-            try {
-                await database.ref(path).set(value);
-                updateSyncStatus('connected');
-            } catch (error) {
-                console.error('Erro ao salvar:', error);
-                updateSyncStatus('offline');
-                showToast('Erro ao salvar. Verifique sua conexão.');
-            }
         }
 
         function calculateDisciplineProgress(discipline) {
-            let total = 0;
-            let completed = 0;
-            
+            let total = 0, completed = 0;
             if (discipline.modelTypes) {
                 Object.keys(discipline.modelTypes).forEach(mtId => {
                     const mt = discipline.modelTypes[mtId];
@@ -1173,15 +486,13 @@
                     }
                 });
             }
-            
             return total > 0 ? Math.round((completed / total) * 100) : 0;
         }
 
         function calculateBuildingProgress(buildingId) {
             const building = projectData[buildingId];
             if (!building || !building.disciplines) return 0;
-            let total = 0;
-            let count = 0;
+            let total = 0, count = 0;
             Object.keys(building.disciplines).forEach(discId => {
                 total += calculateDisciplineProgress(building.disciplines[discId]);
                 count++;
@@ -1190,12 +501,7 @@
         }
 
         function updateStats() {
-            let totalProgress = 0;
-            let inProgress = 0;
-            let issues = 0;
-            let approved = 0;
-            let disciplineCount = 0;
-
+            let totalProgress = 0, inProgress = 0, issues = 0, approved = 0, disciplineCount = 0;
             Object.keys(projectData).forEach(buildingId => {
                 const building = projectData[buildingId];
                 if (building.disciplines) {
@@ -1219,146 +525,71 @@
                     });
                 }
             });
-
-            document.getElementById('overallProgress').innerHTML = 
-                `${disciplineCount > 0 ? Math.round(totalProgress / disciplineCount) : 0}<span>%</span>`;
+            document.getElementById('overallProgress').innerHTML = `${disciplineCount > 0 ? Math.round(totalProgress / disciplineCount) : 0}<span>%</span>`;
             document.getElementById('inProgressCount').textContent = inProgress;
             document.getElementById('issuesCount').textContent = issues;
             document.getElementById('approvedCount').textContent = approved;
         }
 
         function updateReengineeringStatus(buildingId, disciplineId, status) {
-            const path = `projectData/${buildingId}/disciplines/${disciplineId}`;
-            const updates = {
-                reengineeringStatus: status,
-                lastUpdate: new Date().toISOString()
-            };
-            
-            // Verificar ciclo de revisão
-            const disc = projectData[buildingId]?.disciplines?.[disciplineId];
-            if (disc) {
-                const reng = disc.modelTypes?.reng;
-                if (reng && !reng.notApplicable && reng.phases) {
-                    const ifcApproved = reng.phases.ifc?.status === 'approved';
-                    const docs2dApproved = reng.phases.docs2d?.status === 'approved';
-                    if (status === 'progress' && ifcApproved && docs2dApproved) {
-                        updates.revisionCount = (disc.revisionCount || 0) + 1;
-                    }
-                }
-            }
-            
-            database.ref(path).update(updates);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}`).update({
+                reengineeringStatus: status, lastUpdate: new Date().toISOString()
+            });
         }
 
         function updatePhaseStatus(buildingId, disciplineId, modelTypeId, phaseId, newStatus) {
-            const path = `projectData/${buildingId}/disciplines/${disciplineId}`;
-            database.ref(`${path}/modelTypes/${modelTypeId}/phases/${phaseId}/status`).set(newStatus);
-            database.ref(`${path}/lastUpdate`).set(new Date().toISOString());
-            
-            // Verificar ciclo de revisão
-            setTimeout(() => {
-                const disc = projectData[buildingId]?.disciplines?.[disciplineId];
-                if (disc && modelTypeId === 'reng') {
-                    const reng = disc.modelTypes?.reng;
-                    if (reng && !reng.notApplicable && reng.phases) {
-                        const ifcApproved = reng.phases.ifc?.status === 'approved';
-                        const docs2dApproved = reng.phases.docs2d?.status === 'approved';
-                        const reengineeringInProgress = disc.reengineeringStatus === 'progress';
-                        
-                        if (reengineeringInProgress && ifcApproved && docs2dApproved) {
-                            // Verificar se já não contou este ciclo
-                            const currentCycle = `${ifcApproved}-${docs2dApproved}`;
-                            if (disc._lastCycleState !== currentCycle) {
-                                database.ref(`${path}/revisionCount`).set((disc.revisionCount || 0) + 1);
-                                database.ref(`${path}/_lastCycleState`).set(currentCycle);
-                            }
-                        }
-                    }
-                }
-            }, 500);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/phases/${phaseId}/status`).set(newStatus);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function updateResponsible(buildingId, disciplineId, modelTypeId, value) {
-            const path = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/responsible`;
-            database.ref(path).set(value);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/responsible`).set(value);
             database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function updateModelNotes(buildingId, disciplineId, modelTypeId, value) {
-            const path = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/notes`;
-            database.ref(path).set(value);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/notes`).set(value);
             database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function toggleNotApplicable(buildingId, disciplineId, modelTypeId, isNA) {
-            const path = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/notApplicable`;
-            database.ref(path).set(isNA);
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}/notApplicable`).set(isNA);
             database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function editRevisionCount(buildingId, disciplineId) {
             const disc = projectData[buildingId]?.disciplines?.[disciplineId];
             if (!disc) return;
-
             const container = document.getElementById(`revision-${buildingId}-${disciplineId}`);
-            const currentCount = disc.revisionCount || 0;
-            
             container.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="23 4 23 10 17 10"/>
-                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                 <span>Ciclos de revisão:</span>
-                <input type="number" class="revision-input" value="${currentCount}" min="0" 
-                    onchange="saveRevisionCount('${buildingId}', '${disciplineId}', this.value)"
-                    onkeypress="if(event.key==='Enter') this.blur()"
-                    autofocus>
+                <input type="number" class="revision-input" value="${disc.revisionCount || 0}" min="0" onchange="saveRevisionCount('${buildingId}', '${disciplineId}', this.value)" onkeypress="if(event.key==='Enter') this.blur()">
             `;
             container.querySelector('input').focus();
         }
 
         function saveRevisionCount(buildingId, disciplineId, value) {
-            const path = `projectData/${buildingId}/disciplines/${disciplineId}/revisionCount`;
-            database.ref(path).set(Math.max(0, parseInt(value) || 0));
+            database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/revisionCount`).set(Math.max(0, parseInt(value) || 0));
             database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
         }
 
         function formatDate(isoString) {
             if (!isoString) return 'Nunca atualizado';
-            const date = new Date(isoString);
-            return date.toLocaleString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            return new Date(isoString).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function getStatusText(status) {
-            switch (status) {
-                case 'pending': return 'Pendente';
-                case 'progress': return 'Em Andamento';
-                case 'issues': return 'Pendências';
-                case 'approved': return 'Concluído';
-                default: return status;
-            }
+            const map = { pending: 'Pendente', progress: 'Em Andamento', issues: 'Pendências', approved: 'Concluído' };
+            return map[status] || status;
         }
 
-        function setActiveBuilding(buildingId) {
-            activeBuilding = buildingId;
-            render();
-        }
+        function setActiveBuilding(buildingId) { activeBuilding = buildingId; render(); }
 
         function openReport() {
             const reportWindow = window.open('', '_blank', 'width=1400,height=900');
             const now = new Date().toLocaleString('pt-BR');
-            
-            let totalProgress = 0;
-            let totalDisciplines = 0;
-            let inProgress = 0;
-            let issues = 0;
-            let approved = 0;
+            let totalProgress = 0, totalDisciplines = 0, inProgress = 0, issues = 0, approved = 0;
 
             Object.keys(projectData).forEach(buildingId => {
                 const building = projectData[buildingId];
@@ -1385,25 +616,18 @@
             });
 
             const overallProgress = totalDisciplines > 0 ? Math.round(totalProgress / totalDisciplines) : 0;
-
             let buildingsHtml = '';
+
             buildings.forEach(building => {
                 const buildingData = projectData[building.id];
                 if (!buildingData || !buildingData.disciplines) return;
-
                 const buildingProgress = calculateBuildingProgress(building.id);
-
-                buildingsHtml += `
-                    <div class="building-section">
-                        <h2>🏢 ${building.name} <span class="progress-badge">${buildingProgress}%</span></h2>
-                `;
+                buildingsHtml += `<div class="building-section"><h2>🏢 ${building.name} <span class="progress-badge">${buildingProgress}%</span></h2>`;
 
                 disciplineTemplates.forEach(discTemplate => {
                     const disc = buildingData.disciplines[discTemplate.id];
                     if (!disc) return;
-                    
                     const progress = calculateDisciplineProgress(disc);
-                    
                     buildingsHtml += `
                         <div class="discipline-block">
                             <div class="discipline-header-report">
@@ -1413,292 +637,164 @@
                                 <span class="revision-badge">Rev: ${disc.revisionCount || 0}</span>
                             </div>
                             <table class="model-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tipo</th>
-                                        <th>Projetista</th>
-                                        <th>IFC</th>
-                                        <th>Compat.</th>
-                                        <th>Doc. 2D</th>
-                                        <th>Liberado</th>
-                                        <th>Observações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                    `;
+                                <thead><tr><th>Tipo</th><th>Projetista</th><th>IFC</th><th>Compat.</th><th>Doc. 2D</th><th>Liberado</th><th>Obs.</th></tr></thead>
+                                <tbody>`;
 
                     modelTypes.forEach(mt => {
                         const mtData = disc.modelTypes?.[mt.id];
                         if (!mtData) return;
-                        
                         if (mtData.notApplicable) {
-                            buildingsHtml += `
-                                <tr class="na-row">
-                                    <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
-                                    <td colspan="6" class="na-cell">Não se aplica</td>
-                                </tr>
-                            `;
+                            buildingsHtml += `<tr class="na-row"><td><span class="type-badge ${mt.id}">${mt.code}</span></td><td colspan="6" class="na-cell">Não se aplica</td></tr>`;
                         } else {
                             const phases = mtData.phases || {};
-                            buildingsHtml += `
-                                <tr>
-                                    <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
-                                    <td>${mtData.responsible || '<em>-</em>'}</td>
-                                    <td><span class="phase-badge ${phases.ifc?.status || 'pending'}">${getStatusText(phases.ifc?.status || 'pending')}</span></td>
-                                    <td><span class="phase-badge ${phases.compatibility?.status || 'pending'}">${getStatusText(phases.compatibility?.status || 'pending')}</span></td>
-                                    <td><span class="phase-badge ${phases.docs2d?.status || 'pending'}">${getStatusText(phases.docs2d?.status || 'pending')}</span></td>
-                                    <td><span class="phase-badge ${phases.released?.status || 'pending'}">${getStatusText(phases.released?.status || 'pending')}</span></td>
-                                    <td class="obs-cell">${mtData.notes || '-'}</td>
-                                </tr>
-                            `;
+                            buildingsHtml += `<tr>
+                                <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
+                                <td>${mtData.responsible || '-'}</td>
+                                <td><span class="phase-badge ${phases.ifc?.status || 'pending'}">${getStatusText(phases.ifc?.status || 'pending')}</span></td>
+                                <td><span class="phase-badge ${phases.compatibility?.status || 'pending'}">${getStatusText(phases.compatibility?.status || 'pending')}</span></td>
+                                <td><span class="phase-badge ${phases.docs2d?.status || 'pending'}">${getStatusText(phases.docs2d?.status || 'pending')}</span></td>
+                                <td><span class="phase-badge ${phases.released?.status || 'pending'}">${getStatusText(phases.released?.status || 'pending')}</span></td>
+                                <td class="obs-cell">${mtData.notes || '-'}</td>
+                            </tr>`;
                         }
                     });
-
-                    buildingsHtml += `
-                                </tbody>
-                            </table>
-                            <div class="update-info">Última atualização: ${formatDate(disc.lastUpdate)}</div>
-                        </div>
-                    `;
+                    buildingsHtml += `</tbody></table><div class="update-info">Última atualização: ${formatDate(disc.lastUpdate)}</div></div>`;
                 });
-
                 buildingsHtml += `</div>`;
             });
 
-            const reportHtml = `
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Relatório de Progresso - UNILA Campus Arandu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f5f5f5; color: #333; line-height: 1.5; font-size: 12px; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
-        .header { background: linear-gradient(135deg, #FF6B00, #C65D07); color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; }
-        .header h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
-        .header .subtitle { opacity: 0.9; font-size: 0.9rem; }
-        .header .date { margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8; }
-        .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-        .summary-card { background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center; }
-        .summary-card .value { font-size: 2rem; font-weight: 700; color: #FF6B00; }
-        .summary-card .label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
-        .summary-card.progress .value { color: #FFB800; }
-        .summary-card.issues .value { color: #FF6B00; }
-        .summary-card.approved .value { color: #4CAF50; }
-        .building-section { background: white; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .building-section h2 { font-size: 1.1rem; color: #333; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #FF6B00; display: flex; align-items: center; gap: 0.5rem; }
-        .progress-badge { background: #FF6B00; color: white; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-left: auto; }
-        .discipline-block { border: 1px solid #eee; border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem; }
-        .discipline-header-report { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-        .discipline-header-report strong { font-size: 0.9rem; }
-        .status-badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .status-badge.pending { background: #e0e0e0; color: #666; }
-        .status-badge.progress { background: #fff3cd; color: #856404; }
-        .status-badge.approved { background: #d4edda; color: #155724; }
-        .progress-small { font-size: 0.8rem; color: #FF6B00; font-weight: 600; }
-        .revision-badge { font-size: 0.7rem; background: #ffe5d0; color: #C65D07; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .model-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-bottom: 0.5rem; }
-        .model-table th { background: #f8f8f8; padding: 0.4rem; text-align: left; font-weight: 600; color: #555; border-bottom: 1px solid #ddd; }
-        .model-table td { padding: 0.4rem; border-bottom: 1px solid #eee; }
-        .type-badge { font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 3px; color: white; font-weight: 600; }
-        .type-badge.mode { background: #2196F3; }
-        .type-badge.ajus { background: #9C27B0; }
-        .type-badge.reng { background: #FF6B00; }
-        .type-badge.asbt { background: #4CAF50; }
-        .phase-badge { font-size: 0.65rem; padding: 0.15rem 0.35rem; border-radius: 3px; }
-        .phase-badge.pending { background: #e0e0e0; color: #666; }
-        .phase-badge.progress { background: #fff3cd; color: #856404; }
-        .phase-badge.issues { background: #ffe5d0; color: #C65D07; }
-        .phase-badge.approved { background: #d4edda; color: #155724; }
-        .na-row { opacity: 0.5; }
-        .na-cell { font-style: italic; color: #999; }
-        .obs-cell { font-size: 0.7rem; color: #666; max-width: 150px; }
-        .update-info { font-size: 0.7rem; color: #999; text-align: right; }
-        .footer { text-align: center; padding: 1.5rem; color: #888; font-size: 0.8rem; }
-        .btn-print { position: fixed; top: 1rem; right: 1rem; background: #FF6B00; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3); }
-        .btn-print:hover { background: #e55f00; }
-        @media print { .btn-print { display: none; } body { background: white; } .building-section { box-shadow: none; border: 1px solid #ddd; } }
-    </style>
-</head>
-<body>
-    <button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
-    <div class="container">
-        <div class="header">
-            <h1>📊 Relatório de Progresso - Reengenharia de Disciplinas</h1>
-            <div class="subtitle">UNILA Campus Arandu</div>
-            <div class="date">Gerado em: ${now}</div>
-        </div>
-        <div class="summary">
-            <div class="summary-card"><div class="value">${overallProgress}%</div><div class="label">Progresso Geral</div></div>
-            <div class="summary-card progress"><div class="value">${inProgress}</div><div class="label">Em Andamento</div></div>
-            <div class="summary-card issues"><div class="value">${issues}</div><div class="label">Com Pendências</div></div>
-            <div class="summary-card approved"><div class="value">${approved}</div><div class="label">Liberados</div></div>
-        </div>
-        ${buildingsHtml}
-        <div class="footer">
-            <p>Relatório gerado automaticamente pelo Sistema de Controle de Reengenharia - UNILA Campus Arandu</p>
-            <p>Consórcio MPD/Ankara</p>
-        </div>
-    </div>
-</body>
-</html>
-            `;
-
-            reportWindow.document.write(reportHtml);
+            reportWindow.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório - UNILA</title>
+                <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f5f5f5;color:#333;font-size:12px;padding:1.5rem}
+                .header{background:linear-gradient(135deg,#FF6B00,#C65D07);color:white;padding:1.5rem;border-radius:12px;margin-bottom:1.5rem}
+                .header h1{font-size:1.5rem}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+                .summary-card{background:white;padding:1rem;border-radius:10px;text-align:center}.summary-card .value{font-size:2rem;font-weight:700;color:#FF6B00}
+                .summary-card .label{font-size:0.75rem;color:#666;text-transform:uppercase}.building-section{background:white;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
+                .building-section h2{font-size:1.1rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:2px solid #FF6B00;display:flex;align-items:center;gap:0.5rem}
+                .progress-badge{background:#FF6B00;color:white;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.8rem;margin-left:auto}
+                .discipline-block{border:1px solid #eee;border-radius:8px;padding:0.75rem;margin-bottom:0.75rem}
+                .discipline-header-report{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap}
+                .status-badge{font-size:0.7rem;padding:0.2rem 0.5rem;border-radius:4px}.status-badge.pending{background:#e0e0e0;color:#666}
+                .status-badge.progress{background:#fff3cd;color:#856404}.status-badge.approved{background:#d4edda;color:#155724}
+                .progress-small{font-size:0.8rem;color:#FF6B00;font-weight:600}.revision-badge{font-size:0.7rem;background:#ffe5d0;color:#C65D07;padding:0.2rem 0.5rem;border-radius:4px}
+                .model-table{width:100%;border-collapse:collapse;font-size:0.75rem}.model-table th{background:#f8f8f8;padding:0.4rem;text-align:left;border-bottom:1px solid #ddd}
+                .model-table td{padding:0.4rem;border-bottom:1px solid #eee}.type-badge{font-size:0.65rem;padding:0.15rem 0.4rem;border-radius:3px;color:white;font-weight:600}
+                .type-badge.mode{background:#2196F3}.type-badge.ajus{background:#9C27B0}.type-badge.reng{background:#FF6B00}.type-badge.asbt{background:#4CAF50}
+                .phase-badge{font-size:0.65rem;padding:0.15rem 0.35rem;border-radius:3px}.phase-badge.pending{background:#e0e0e0;color:#666}
+                .phase-badge.progress{background:#fff3cd;color:#856404}.phase-badge.issues{background:#ffe5d0;color:#C65D07}.phase-badge.approved{background:#d4edda;color:#155724}
+                .na-row{opacity:0.5}.na-cell{font-style:italic;color:#999}.obs-cell{font-size:0.7rem;color:#666;max-width:150px}.update-info{font-size:0.7rem;color:#999;text-align:right}
+                .footer{text-align:center;padding:1.5rem;color:#888}.btn-print{position:fixed;top:1rem;right:1rem;background:#FF6B00;color:white;border:none;padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600}
+                @media print{.btn-print{display:none}}</style></head>
+                <body><button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
+                <div class="header"><h1>📊 Relatório - Reengenharia de Disciplinas</h1><div>UNILA Campus Arandu</div><div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.8">Gerado em: ${now}</div></div>
+                <div class="summary">
+                    <div class="summary-card"><div class="value">${overallProgress}%</div><div class="label">Progresso</div></div>
+                    <div class="summary-card"><div class="value" style="color:#FFB800">${inProgress}</div><div class="label">Em Andamento</div></div>
+                    <div class="summary-card"><div class="value">${issues}</div><div class="label">Pendências</div></div>
+                    <div class="summary-card"><div class="value" style="color:#4CAF50">${approved}</div><div class="label">Liberados</div></div>
+                </div>${buildingsHtml}
+                <div class="footer"><p>Consórcio MPD/Ankara</p></div></body></html>`);
             reportWindow.document.close();
         }
 
         function renderBuildingTabs() {
             const container = document.getElementById('buildingFilter');
             let html = `<button class="building-tab ${activeBuilding === 'all' ? 'active' : ''}" onclick="setActiveBuilding('all')">Todos</button>`;
-            buildings.forEach(building => {
-                html += `<button class="building-tab ${activeBuilding === building.id ? 'active' : ''}" onclick="setActiveBuilding('${building.id}')">${building.name}</button>`;
-            });
+            buildings.forEach(b => { html += `<button class="building-tab ${activeBuilding === b.id ? 'active' : ''}" onclick="setActiveBuilding('${b.id}')">${b.name}</button>`; });
             container.innerHTML = html;
         }
 
         function renderBuildings() {
             const container = document.getElementById('buildingsContainer');
             let html = '';
+            const toRender = activeBuilding === 'all' ? buildings : buildings.filter(b => b.id === activeBuilding);
 
-            const buildingsToRender = activeBuilding === 'all' 
-                ? buildings 
-                : buildings.filter(b => b.id === activeBuilding);
-
-            buildingsToRender.forEach((building, buildingIndex) => {
+            toRender.forEach((building, bi) => {
                 const buildingData = projectData[building.id];
                 if (!buildingData || !buildingData.disciplines) return;
-
                 const buildingProgress = calculateBuildingProgress(building.id);
 
-                html += `
-                    <div class="building-section">
-                        <div class="building-header">
-                            <h2>🏢 ${building.name}</h2>
-                            <div class="building-progress">Progresso: <strong>${buildingProgress}%</strong></div>
-                        </div>
-                        <div class="disciplines-grid">
-                `;
+                html += `<div class="building-section"><div class="building-header"><h2>🏢 ${building.name}</h2><div class="building-progress">Progresso: <strong>${buildingProgress}%</strong></div></div><div class="disciplines-grid">`;
 
-                disciplineTemplates.forEach((discTemplate, disciplineIndex) => {
+                disciplineTemplates.forEach((discTemplate, di) => {
                     const discipline = buildingData.disciplines[discTemplate.id];
                     if (!discipline) return;
-
                     const progress = calculateDisciplineProgress(discipline);
                     const revisionCount = discipline.revisionCount || 0;
 
-                    html += `
-                        <div class="discipline-card card-${discipline.id}" style="animation-delay: ${(buildingIndex * 6 + disciplineIndex) * 0.05}s">
-                            <div class="card-header">
-                                <div class="discipline-info">
-                                    <span class="discipline-code">${discipline.code}</span>
-                                    <div class="discipline-name">
-                                        <h3>${discipline.name}</h3>
-                                        <span>${discipline.fullName}</span>
-                                    </div>
-                                </div>
-                                <div class="reengineering-status">
-                                    <label>Projeto em Reengenharia:</label>
-                                    <select class="${discipline.reengineeringStatus}" 
-                                        onchange="updateReengineeringStatus('${building.id}', '${discipline.id}', this.value)">
-                                        <option value="pending" ${discipline.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option>
-                                        <option value="progress" ${discipline.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                        <option value="approved" ${discipline.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
-                                    </select>
-                                </div>
+                    html += `<div class="discipline-card card-${discipline.id}" style="animation-delay: ${(bi * 6 + di) * 0.05}s">
+                        <div class="card-header">
+                            <div class="discipline-info">
+                                <span class="discipline-code">${discipline.code}</span>
+                                <div class="discipline-name"><h3>${discipline.name}</h3><span>${discipline.fullName}</span></div>
                             </div>
-
-                            <div class="model-types-container">
-                                <div class="model-types-grid">
-                    `;
+                            <div class="reengineering-status">
+                                <label>Projeto em Reengenharia:</label>
+                                <select class="${discipline.reengineeringStatus}" onchange="updateReengineeringStatus('${building.id}', '${discipline.id}', this.value)">
+                                    <option value="pending" ${discipline.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option>
+                                    <option value="progress" ${discipline.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option>
+                                    <option value="approved" ${discipline.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="model-types-container"><div class="model-types-grid">`;
 
                     modelTypes.forEach(mt => {
                         const mtData = discipline.modelTypes?.[mt.id] || { notApplicable: false, responsible: '', notes: '', phases: {} };
                         const isNA = mtData.notApplicable;
 
-                        html += `
-                            <div class="model-type-card ${isNA ? 'not-applicable' : ''}">
-                                <div class="model-type-header ${mt.id}">
-                                    <div class="model-type-title">
-                                        <span class="model-type-code ${mt.id}">${mt.code}</span>
-                                        <span class="model-type-name">${mt.name}</span>
-                                    </div>
-                                    ${mt.canBeNA ? `
-                                        <div class="na-toggle">
-                                            <label>N/A</label>
-                                            <input type="checkbox" ${isNA ? 'checked' : ''} 
-                                                onchange="toggleNotApplicable('${building.id}', '${discipline.id}', '${mt.id}', this.checked)">
-                                        </div>
-                                    ` : ''}
-                                </div>
-                                <div class="model-type-content ${isNA ? 'disabled' : ''}">
-                                    <div class="projetista-field">
-                                        <label>Projetista Responsável</label>
-                                        <input type="text" value="${mtData.responsible || ''}" 
-                                            placeholder="${mt.defaultResponsible || 'Nome do projetista'}"
-                                            onchange="updateResponsible('${building.id}', '${discipline.id}', '${mt.id}', this.value)"
-                                            ${isNA ? 'disabled' : ''}>
-                                    </div>
-                                    <div class="projetista-field">
-                                        <label>Observações</label>
-                                        <textarea class="model-notes" placeholder="Observações..."
-                                            onchange="updateModelNotes('${building.id}', '${discipline.id}', '${mt.id}', this.value)"
-                                            ${isNA ? 'disabled' : ''}>${mtData.notes || ''}</textarea>
-                                    </div>
-                                    <div class="phases-mini-grid">
-                                        ${phaseTemplates.map(phase => {
-                                            const phaseData = mtData.phases?.[phase.id] || { status: 'pending' };
-                                            return `
-                                                <div class="phase-mini-item">
-                                                    <span class="phase-mini-name">${phase.name}</span>
-                                                    <select class="phase-mini-select ${phaseData.status}"
-                                                        onchange="updatePhaseStatus('${building.id}', '${discipline.id}', '${mt.id}', '${phase.id}', this.value)"
-                                                        ${isNA ? 'disabled' : ''}>
-                                                        <option value="pending" ${phaseData.status === 'pending' ? 'selected' : ''}>Pendente</option>
-                                                        <option value="progress" ${phaseData.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                                        <option value="issues" ${phaseData.status === 'issues' ? 'selected' : ''}>Pendências</option>
-                                                        <option value="approved" ${phaseData.status === 'approved' ? 'selected' : ''}>Concluído</option>
-                                                    </select>
-                                                </div>
-                                            `;
-                                        }).join('')}
-                                    </div>
-                                </div>
+                        html += `<div class="model-type-card ${isNA ? 'not-applicable' : ''}">
+                            <div class="model-type-header ${mt.id}">
+                                <div class="model-type-title"><span class="model-type-code ${mt.id}">${mt.code}</span><span class="model-type-name">${mt.name}</span></div>
+                                ${mt.canBeNA ? `<div class="na-toggle"><label>N/A</label><input type="checkbox" ${isNA ? 'checked' : ''} onchange="toggleNotApplicable('${building.id}', '${discipline.id}', '${mt.id}', this.checked)"></div>` : ''}
                             </div>
-                        `;
+                            <div class="model-type-content ${isNA ? 'disabled' : ''}">
+                                <div class="projetista-field"><label>Projetista Responsável</label><input type="text" value="${mtData.responsible || ''}" placeholder="${mt.defaultResponsible || 'Nome'}" onchange="updateResponsible('${building.id}', '${discipline.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}></div>
+                                <div class="projetista-field"><label>Observações</label><textarea class="model-notes" placeholder="Observações..." onchange="updateModelNotes('${building.id}', '${discipline.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}>${mtData.notes || ''}</textarea></div>
+                                <div class="phases-mini-grid">`;
+
+                        phaseTemplates.forEach(phase => {
+                            const phaseData = mtData.phases?.[phase.id] || { status: 'pending' };
+                            html += `<div class="phase-mini-item"><span class="phase-mini-name">${phase.name}</span>
+                                <select class="phase-mini-select ${phaseData.status}" onchange="updatePhaseStatus('${building.id}', '${discipline.id}', '${mt.id}', '${phase.id}', this.value)" ${isNA ? 'disabled' : ''}>
+                                    <option value="pending" ${phaseData.status === 'pending' ? 'selected' : ''}>Pendente</option>
+                                    <option value="progress" ${phaseData.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
+                                    <option value="issues" ${phaseData.status === 'issues' ? 'selected' : ''}>Pendências</option>
+                                    <option value="approved" ${phaseData.status === 'approved' ? 'selected' : ''}>Concluído</option>
+                                </select></div>`;
+                        });
+
+                        html += `</div></div></div>`;
                     });
 
-                    html += `
-                                </div>
+                    html += `</div></div>
+                        <div class="card-footer"><div class="footer-row">
+                            <div class="revision-info" id="revision-${building.id}-${discipline.id}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                                <span>Ciclos de revisão: <span class="revision-count">${revisionCount}</span></span>
+                                <button class="revision-edit-btn" onclick="editRevisionCount('${building.id}', '${discipline.id}')">Editar</button>
                             </div>
-
-                            <div class="card-footer">
-                                <div class="footer-row">
-                                    <div class="revision-info" id="revision-${building.id}-${discipline.id}">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="23 4 23 10 17 10"/>
-                                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
-                                        </svg>
-                                        <span>Ciclos de revisão: <span class="revision-count">${revisionCount}</span></span>
-                                        <button class="revision-edit-btn" onclick="editRevisionCount('${building.id}', '${discipline.id}')">Editar</button>
-                                    </div>
-                                    <div class="card-timestamp">Última atualização: ${formatDate(discipline.lastUpdate)}</div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                            <div class="card-timestamp">Última atualização: ${formatDate(discipline.lastUpdate)}</div>
+                        </div></div></div>`;
                 });
 
-                html += `
-                        </div>
-                    </div>
-                `;
+                html += `</div></div>`;
             });
 
             container.innerHTML = html;
         }
 
-        function render() {
-            renderBuildingTabs()
+        function render() { renderBuildingTabs(); renderBuildings(); updateStats(); }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await initializeData();
+                setupRealtimeListener();
+            } catch (error) {
+                console.error('Erro:', error);
+                document.querySelector('.loading-text').textContent = 'Erro: ' + error.message;
+                document.querySelector('.loading-text').style.color = '#FF6B00';
+            }
+        });
+    </script>
+</body>
+</html>
