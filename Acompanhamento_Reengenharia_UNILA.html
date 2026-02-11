@@ -56,80 +56,24 @@
             z-index: 100;
             backdrop-filter: blur(20px);
         }
-        .header-content {
-            max-width: 1800px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+        .header-content { max-width: 1800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
         .logo-section { display: flex; align-items: center; gap: 1rem; }
         .logo-img { height: 50px; width: auto; object-fit: contain; border-radius: 8px; }
         .logo-unila { height: 45px; width: auto; object-fit: contain; margin-right: 0.5rem; }
-        .logo-text h1 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .logo-text span {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            letter-spacing: 2px;
-        }
+        .logo-text h1 { font-size: 1.4rem; font-weight: 700; background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-text span { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); letter-spacing: 2px; }
         .header-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
-        .sync-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            padding: 0.4rem 0.8rem;
-            background: var(--bg-card);
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-        }
+        .sync-status { display: flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); padding: 0.4rem 0.8rem; background: var(--bg-card); border-radius: 6px; border: 1px solid var(--border-color); }
         .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--status-approved); animation: pulse-dot 2s infinite; }
         .sync-dot.offline { background: var(--status-issues); animation: none; }
         .sync-dot.syncing { background: var(--status-progress); animation: pulse-dot 0.5s infinite; }
         @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .btn {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        .btn { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 0.6rem 1.2rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
         .btn:hover { background: var(--border-color); border-color: var(--accent-orange); }
-        .btn-report {
-            background: linear-gradient(135deg, #2196F3, #1565C0);
-            border: none;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.25);
-        }
+        .btn-report { background: linear-gradient(135deg, #2196F3, #1565C0); border: none; font-weight: 600; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.25); }
         .main-content { max-width: 1800px; margin: 0 auto; padding: 2rem; }
         .stats-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden; transition: all 0.3s ease; }
         .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); }
         .stat-card:hover { transform: translateY(-2px); border-color: var(--accent-orange); box-shadow: 0 8px 30px rgba(255, 107, 0, 0.15); }
         .stat-card.progress-card::before { background: var(--status-progress); }
@@ -139,42 +83,15 @@
         .stat-value { font-size: 2.5rem; font-weight: 700; line-height: 1; }
         .stat-value span { font-size: 1.2rem; color: var(--text-muted); }
         .building-section { margin-bottom: 3rem; }
-        .building-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-orange);
-        }
+        .building-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; border-left: 4px solid var(--accent-orange); }
         .building-header h2 { font-size: 1.2rem; font-weight: 600; color: var(--accent-yellow); }
         .building-header .building-progress { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-secondary); }
         .building-header .building-progress strong { color: var(--accent-orange); font-size: 1.1rem; }
         .disciplines-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem; }
-        .discipline-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.5s ease forwards;
-            opacity: 0;
-        }
+        .discipline-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; animation: fadeInUp 0.5s ease forwards; opacity: 0; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .discipline-card:hover { border-color: var(--accent-orange); box-shadow: 0 10px 40px rgba(255, 107, 0, 0.15); }
-        .card-header {
-            padding: 1.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+        .card-header { padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); position: relative; flex-wrap: wrap; gap: 1rem; }
         .card-header::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
         .discipline-info { display: flex; align-items: center; gap: 1rem; }
         .discipline-code { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 8px; letter-spacing: 1px; }
@@ -223,55 +140,14 @@
         .phase-mini-select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.15); }
         .phase-mini-select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
         .phase-mini-select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
-        
-        /* Revision counters inside model type */
-        .revision-counters {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px dashed var(--border-color);
-        }
-        .revision-counter {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.5rem;
-            background: rgba(255, 107, 0, 0.08);
-            border: 1px solid rgba(255, 107, 0, 0.2);
-            border-radius: 6px;
-            font-size: 0.65rem;
-            color: var(--accent-orange);
-        }
+        .revision-counters { display: flex; gap: 0.5rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-color); }
+        .revision-counter { flex: 1; display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.5rem; background: rgba(255, 107, 0, 0.08); border: 1px solid rgba(255, 107, 0, 0.2); border-radius: 6px; font-size: 0.65rem; color: var(--accent-orange); }
         .revision-counter svg { width: 12px; height: 12px; stroke: var(--accent-orange); flex-shrink: 0; }
         .revision-counter-label { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
         .revision-counter-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; margin-left: auto; }
-        .revision-counter-edit {
-            background: transparent;
-            border: 1px solid rgba(255, 107, 0, 0.4);
-            border-radius: 3px;
-            padding: 0.1rem 0.3rem;
-            color: var(--accent-orange);
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.55rem;
-            margin-left: 0.25rem;
-        }
+        .revision-counter-edit { background: transparent; border: 1px solid rgba(255, 107, 0, 0.4); border-radius: 3px; padding: 0.1rem 0.3rem; color: var(--accent-orange); cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; margin-left: 0.25rem; }
         .revision-counter-edit:hover { background: rgba(255, 107, 0, 0.2); }
-        .revision-counter-input {
-            width: 35px;
-            padding: 0.1rem 0.2rem;
-            background: var(--bg-primary);
-            border: 1px solid var(--accent-orange);
-            border-radius: 3px;
-            color: var(--accent-orange);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-align: center;
-        }
-        
+        .revision-counter-input { width: 35px; padding: 0.1rem 0.2rem; background: var(--bg-primary); border: 1px solid var(--accent-orange); border-radius: 3px; color: var(--accent-orange); font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 700; text-align: center; }
         .card-footer { padding: 0.75rem 1.25rem; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: flex-end; }
         .card-timestamp { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); }
         .building-filter { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
@@ -291,7 +167,7 @@
         .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-primary); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; }
         .loading-spinner { width: 50px; height: 50px; border: 4px solid var(--border-color); border-top-color: var(--accent-orange); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text { margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-secondary); }
+        .loading-text { margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text-secondary); text-align: center; }
         .author-signature { text-align: center; padding: 2rem; margin-top: 1.5rem; }
         .author-name { font-size: 1rem; font-weight: 600; color: var(--accent-orange); margin-bottom: 0.25rem; }
         .author-email { font-size: 0.9rem; color: var(--accent-orange); text-decoration: none; }
@@ -326,7 +202,7 @@
 <body>
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Conectando ao servidor...</div>
+        <div class="loading-text" id="loadingText">Conectando ao servidor...</div>
     </div>
 
     <header class="header">
@@ -396,14 +272,14 @@
                 </div>
                 <div class="footer-section">
                     <h3>Ciclos de Revisão</h3>
-                    <p>Cada tipo de modelo possui dois contadores de ciclo: IFC e Documentação 2D. O ciclo incrementa automaticamente quando a fase correspondente é marcada como "Concluído".</p>
+                    <p>Cada tipo de modelo possui dois contadores: IFC e Doc 2D. O ciclo incrementa quando a fase é marcada como "Concluído".</p>
                 </div>
             </div>
         </div>
 
         <div class="author-signature">
             <div class="author-name">Gabriel Aragão Santos</div>
-            <a href="/cdn-cgi/l/email-protection#54333536263d31387a27353a203b2714353a3f352635313a33313a3c35263d357a373b397a3626" class="author-email"><span class="__cf_email__" data-cfemail="cbacaaa9b9a2aea7e5b8aaa5bfa4b88baaa5a0aab9aaaea5acaea5a3aab9a2aae5a8a4a6e5a9b9">[email&#160;protected]</span></a>
+            <a href="mailto:gabriel.santos@ankaraengenharia.com.br" class="author-email">gabriel.santos@ankaraengenharia.com.br</a>
             <div class="author-role">Arquiteto</div>
         </div>
     </main>
@@ -413,11 +289,21 @@
         <span id="toastMessage">Dados sincronizados!</span>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Firebase Config
         const firebaseConfig = { databaseURL: "https://unila-reengenharia-default-rtdb.firebaseio.com" };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        
+        let firebaseApp;
+        let database;
+        
+        try {
+            firebaseApp = firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('Firebase inicializado com sucesso');
+        } catch (e) {
+            console.error('Erro ao inicializar Firebase:', e);
+            document.getElementById('loadingText').textContent = 'Erro ao inicializar Firebase: ' + e.message;
+        }
 
         const buildings = [
             { id: 'salas', name: 'Bloco de Salas de Aula' },
@@ -459,16 +345,13 @@
                 data[building.id] = { name: building.name, disciplines: {} };
                 disciplineTemplates.forEach(disc => {
                     data[building.id].disciplines[disc.id] = {
-                        ...disc, reengineeringStatus: 'pending', lastUpdate: null, modelTypes: {}
+                        id: disc.id, code: disc.code, name: disc.name, fullName: disc.fullName,
+                        reengineeringStatus: 'pending', lastUpdate: null, modelTypes: {}
                     };
                     modelTypes.forEach(mt => {
                         data[building.id].disciplines[disc.id].modelTypes[mt.id] = {
-                            responsible: mt.defaultResponsible, 
-                            notes: '', 
-                            notApplicable: false, 
-                            revisionCountIfc: 0,
-                            revisionCountDocs2d: 0,
-                            phases: {}
+                            responsible: mt.defaultResponsible, notes: '', notApplicable: false,
+                            revisionCountIfc: 0, revisionCountDocs2d: 0, phases: {}
                         };
                         phaseTemplates.forEach(phase => {
                             data[building.id].disciplines[disc.id].modelTypes[mt.id].phases[phase.id] = { name: phase.name, status: 'pending' };
@@ -482,39 +365,62 @@
         function updateSyncStatus(status) {
             const dot = document.getElementById('syncDot');
             const text = document.getElementById('syncText');
+            if (!dot || !text) return;
             dot.className = 'sync-dot';
             if (status === 'connected') { text.textContent = 'Conectado'; }
             else if (status === 'syncing') { dot.classList.add('syncing'); text.textContent = 'Sincronizando...'; }
             else { dot.classList.add('offline'); text.textContent = 'Offline'; }
         }
 
-        function hideLoading() { document.getElementById('loadingOverlay').style.display = 'none'; }
+        function hideLoading() { 
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) overlay.style.display = 'none'; 
+        }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = message;
+            const toastMsg = document.getElementById('toastMessage');
+            if (!toast || !toastMsg) return;
+            toastMsg.textContent = message;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         async function initializeData() {
+            console.log('Verificando dados no Firebase...');
+            document.getElementById('loadingText').textContent = 'Verificando dados...';
+            
             const snapshot = await database.ref('projectData').once('value');
+            console.log('Snapshot recebido, existe:', snapshot.exists());
+            
             if (!snapshot.exists()) {
-                await database.ref('projectData').set(generateInitialData());
+                console.log('Criando estrutura inicial...');
+                document.getElementById('loadingText').textContent = 'Criando estrutura inicial...';
+                const initialData = generateInitialData();
+                await database.ref('projectData').set(initialData);
+                console.log('Estrutura criada com sucesso');
             }
         }
 
         function setupRealtimeListener() {
+            console.log('Configurando listener...');
+            document.getElementById('loadingText').textContent = 'Carregando dados...';
+            
             database.ref('projectData').on('value', (snapshot) => {
+                console.log('Dados recebidos, existe:', snapshot.exists());
+                
                 if (snapshot.exists()) {
                     projectData = snapshot.val();
                     render();
                     updateSyncStatus('connected');
+                } else {
+                    console.log('Dados vazios, criando...');
+                    database.ref('projectData').set(generateInitialData());
                 }
                 hideLoading();
             }, (error) => {
-                console.error('Erro:', error);
-                document.querySelector('.loading-text').textContent = 'Erro: ' + error.message;
+                console.error('Erro no listener:', error);
+                document.getElementById('loadingText').innerHTML = 'Erro: ' + error.message + '<br><br><small>Verifique as regras do Firebase:<br>{"rules": {".read": true, ".write": true}}</small>';
                 updateSyncStatus('offline');
             });
 
@@ -525,13 +431,13 @@
 
         function calculateDisciplineProgress(discipline) {
             let total = 0, completed = 0;
-            if (discipline.modelTypes) {
+            if (discipline && discipline.modelTypes) {
                 Object.keys(discipline.modelTypes).forEach(mtId => {
                     const mt = discipline.modelTypes[mtId];
-                    if (!mt.notApplicable && mt.phases) {
+                    if (mt && !mt.notApplicable && mt.phases) {
                         Object.keys(mt.phases).forEach(phaseId => {
                             total++;
-                            if (mt.phases[phaseId].status === 'approved') completed++;
+                            if (mt.phases[phaseId] && mt.phases[phaseId].status === 'approved') completed++;
                         });
                     }
                 });
@@ -554,31 +460,37 @@
             let totalProgress = 0, inProgress = 0, issues = 0, approved = 0, disciplineCount = 0;
             Object.keys(projectData).forEach(buildingId => {
                 const building = projectData[buildingId];
-                if (building.disciplines) {
+                if (building && building.disciplines) {
                     Object.keys(building.disciplines).forEach(discId => {
                         const d = building.disciplines[discId];
-                        disciplineCount++;
-                        totalProgress += calculateDisciplineProgress(d);
-                        if (d.modelTypes) {
-                            Object.keys(d.modelTypes).forEach(mtId => {
-                                const mt = d.modelTypes[mtId];
-                                if (!mt.notApplicable && mt.phases) {
-                                    Object.keys(mt.phases).forEach(phaseId => {
-                                        const status = mt.phases[phaseId].status;
-                                        if (status === 'progress') inProgress++;
-                                        if (status === 'issues') issues++;
-                                        if (status === 'approved') approved++;
-                                    });
-                                }
-                            });
+                        if (d) {
+                            disciplineCount++;
+                            totalProgress += calculateDisciplineProgress(d);
+                            if (d.modelTypes) {
+                                Object.keys(d.modelTypes).forEach(mtId => {
+                                    const mt = d.modelTypes[mtId];
+                                    if (mt && !mt.notApplicable && mt.phases) {
+                                        Object.keys(mt.phases).forEach(phaseId => {
+                                            const status = mt.phases[phaseId]?.status;
+                                            if (status === 'progress') inProgress++;
+                                            if (status === 'issues') issues++;
+                                            if (status === 'approved') approved++;
+                                        });
+                                    }
+                                });
+                            }
                         }
                     });
                 }
             });
-            document.getElementById('overallProgress').innerHTML = `${disciplineCount > 0 ? Math.round(totalProgress / disciplineCount) : 0}<span>%</span>`;
-            document.getElementById('inProgressCount').textContent = inProgress;
-            document.getElementById('issuesCount').textContent = issues;
-            document.getElementById('approvedCount').textContent = approved;
+            const el1 = document.getElementById('overallProgress');
+            const el2 = document.getElementById('inProgressCount');
+            const el3 = document.getElementById('issuesCount');
+            const el4 = document.getElementById('approvedCount');
+            if (el1) el1.innerHTML = `${disciplineCount > 0 ? Math.round(totalProgress / disciplineCount) : 0}<span>%</span>`;
+            if (el2) el2.textContent = inProgress;
+            if (el3) el3.textContent = issues;
+            if (el4) el4.textContent = approved;
         }
 
         function updateReengineeringStatus(buildingId, disciplineId, status) {
@@ -589,24 +501,17 @@
 
         function updatePhaseStatus(buildingId, disciplineId, modelTypeId, phaseId, newStatus) {
             const basePath = `projectData/${buildingId}/disciplines/${disciplineId}/modelTypes/${modelTypeId}`;
-            
-            // Get current data to check revision cycle
             const mtData = projectData[buildingId]?.disciplines?.[disciplineId]?.modelTypes?.[modelTypeId];
             const oldStatus = mtData?.phases?.[phaseId]?.status;
             
-            // Update phase status
             database.ref(`${basePath}/phases/${phaseId}/status`).set(newStatus);
             database.ref(`projectData/${buildingId}/disciplines/${disciplineId}/lastUpdate`).set(new Date().toISOString());
             
-            // Check if should increment revision count
-            // Only increment when changing TO "approved" (not when already approved)
             if (newStatus === 'approved' && oldStatus !== 'approved') {
                 if (phaseId === 'ifc') {
-                    const currentCount = mtData?.revisionCountIfc || 0;
-                    database.ref(`${basePath}/revisionCountIfc`).set(currentCount + 1);
+                    database.ref(`${basePath}/revisionCountIfc`).set((mtData?.revisionCountIfc || 0) + 1);
                 } else if (phaseId === 'docs2d') {
-                    const currentCount = mtData?.revisionCountDocs2d || 0;
-                    database.ref(`${basePath}/revisionCountDocs2d`).set(currentCount + 1);
+                    database.ref(`${basePath}/revisionCountDocs2d`).set((mtData?.revisionCountDocs2d || 0) + 1);
                 }
             }
         }
@@ -629,21 +534,12 @@
         function editRevisionCount(buildingId, disciplineId, modelTypeId, type) {
             const mtData = projectData[buildingId]?.disciplines?.[disciplineId]?.modelTypes?.[modelTypeId];
             if (!mtData) return;
-            
             const containerId = `revision-${type}-${buildingId}-${disciplineId}-${modelTypeId}`;
             const container = document.getElementById(containerId);
             if (!container) return;
-            
             const currentCount = type === 'ifc' ? (mtData.revisionCountIfc || 0) : (mtData.revisionCountDocs2d || 0);
             const label = type === 'ifc' ? 'IFC' : 'Doc 2D';
-            
-            container.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                <span class="revision-counter-label">${label}:</span>
-                <input type="number" class="revision-counter-input" value="${currentCount}" min="0" 
-                    onchange="saveRevisionCount('${buildingId}', '${disciplineId}', '${modelTypeId}', '${type}', this.value)"
-                    onkeypress="if(event.key==='Enter') this.blur()">
-            `;
+            container.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="revision-counter-label">${label}:</span><input type="number" class="revision-counter-input" value="${currentCount}" min="0" onchange="saveRevisionCount('${buildingId}', '${disciplineId}', '${modelTypeId}', '${type}', this.value)" onkeypress="if(event.key==='Enter') this.blur()">`;
             container.querySelector('input').focus();
         }
 
@@ -659,216 +555,87 @@
         }
 
         function getStatusText(status) {
-            const map = { pending: 'Pendente', progress: 'Em Andamento', issues: 'Pendências', approved: 'Concluído' };
-            return map[status] || status;
+            return { pending: 'Pendente', progress: 'Em Andamento', issues: 'Pendências', approved: 'Concluído' }[status] || status;
         }
 
         function setActiveBuilding(buildingId) { activeBuilding = buildingId; render(); }
 
         function openReport() {
-            const reportWindow = window.open('', '_blank', 'width=1400,height=900');
+            const rw = window.open('', '_blank', 'width=1400,height=900');
             const now = new Date().toLocaleString('pt-BR');
-            let totalProgress = 0, totalDisciplines = 0, inProgress = 0, issues = 0, approved = 0;
-
-            Object.keys(projectData).forEach(buildingId => {
-                const building = projectData[buildingId];
-                if (building.disciplines) {
-                    Object.keys(building.disciplines).forEach(discId => {
-                        const d = building.disciplines[discId];
-                        totalDisciplines++;
-                        totalProgress += calculateDisciplineProgress(d);
-                        if (d.modelTypes) {
-                            Object.keys(d.modelTypes).forEach(mtId => {
-                                const mt = d.modelTypes[mtId];
-                                if (!mt.notApplicable && mt.phases) {
-                                    Object.keys(mt.phases).forEach(phaseId => {
-                                        const status = mt.phases[phaseId].status;
-                                        if (status === 'progress') inProgress++;
-                                        if (status === 'issues') issues++;
-                                        if (status === 'approved') approved++;
-                                    });
-                                }
-                            });
-                        }
+            let tp = 0, td = 0, ip = 0, is = 0, ap = 0;
+            Object.keys(projectData).forEach(bid => {
+                const b = projectData[bid];
+                if (b?.disciplines) Object.keys(b.disciplines).forEach(did => {
+                    const d = b.disciplines[did]; if (!d) return; td++; tp += calculateDisciplineProgress(d);
+                    if (d.modelTypes) Object.keys(d.modelTypes).forEach(mid => {
+                        const m = d.modelTypes[mid]; if (m && !m.notApplicable && m.phases) Object.keys(m.phases).forEach(pid => {
+                            const s = m.phases[pid]?.status; if (s === 'progress') ip++; if (s === 'issues') is++; if (s === 'approved') ap++;
+                        });
                     });
-                }
-            });
-
-            const overallProgress = totalDisciplines > 0 ? Math.round(totalProgress / totalDisciplines) : 0;
-            let buildingsHtml = '';
-
-            buildings.forEach(building => {
-                const buildingData = projectData[building.id];
-                if (!buildingData || !buildingData.disciplines) return;
-                const buildingProgress = calculateBuildingProgress(building.id);
-                buildingsHtml += `<div class="building-section"><h2>🏢 ${building.name} <span class="progress-badge">${buildingProgress}%</span></h2>`;
-
-                disciplineTemplates.forEach(discTemplate => {
-                    const disc = buildingData.disciplines[discTemplate.id];
-                    if (!disc) return;
-                    const progress = calculateDisciplineProgress(disc);
-                    buildingsHtml += `
-                        <div class="discipline-block">
-                            <div class="discipline-header-report">
-                                <strong>${disc.code} - ${disc.fullName}</strong>
-                                <span class="status-badge ${disc.reengineeringStatus}">Reengenharia: ${getStatusText(disc.reengineeringStatus)}</span>
-                                <span class="progress-small">${progress}%</span>
-                            </div>
-                            <table class="model-table">
-                                <thead><tr><th>Tipo</th><th>Projetista</th><th>IFC</th><th>Rev IFC</th><th>Compat.</th><th>Doc 2D</th><th>Rev Doc</th><th>Liberado</th><th>Obs.</th></tr></thead>
-                                <tbody>`;
-
-                    modelTypes.forEach(mt => {
-                        const mtData = disc.modelTypes?.[mt.id];
-                        if (!mtData) return;
-                        if (mtData.notApplicable) {
-                            buildingsHtml += `<tr class="na-row"><td><span class="type-badge ${mt.id}">${mt.code}</span></td><td colspan="8" class="na-cell">Não se aplica</td></tr>`;
-                        } else {
-                            const phases = mtData.phases || {};
-                            buildingsHtml += `<tr>
-                                <td><span class="type-badge ${mt.id}">${mt.code}</span></td>
-                                <td>${mtData.responsible || '-'}</td>
-                                <td><span class="phase-badge ${phases.ifc?.status || 'pending'}">${getStatusText(phases.ifc?.status || 'pending')}</span></td>
-                                <td class="rev-cell">${mtData.revisionCountIfc || 0}</td>
-                                <td><span class="phase-badge ${phases.compatibility?.status || 'pending'}">${getStatusText(phases.compatibility?.status || 'pending')}</span></td>
-                                <td><span class="phase-badge ${phases.docs2d?.status || 'pending'}">${getStatusText(phases.docs2d?.status || 'pending')}</span></td>
-                                <td class="rev-cell">${mtData.revisionCountDocs2d || 0}</td>
-                                <td><span class="phase-badge ${phases.released?.status || 'pending'}">${getStatusText(phases.released?.status || 'pending')}</span></td>
-                                <td class="obs-cell">${mtData.notes || '-'}</td>
-                            </tr>`;
-                        }
-                    });
-                    buildingsHtml += `</tbody></table><div class="update-info">Última atualização: ${formatDate(disc.lastUpdate)}</div></div>`;
                 });
-                buildingsHtml += `</div>`;
             });
-
-            reportWindow.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório - UNILA</title>
-                <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f5f5f5;color:#333;font-size:11px;padding:1.5rem}
-                .header{background:linear-gradient(135deg,#FF6B00,#C65D07);color:white;padding:1.5rem;border-radius:12px;margin-bottom:1.5rem}
-                .header h1{font-size:1.5rem}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
-                .summary-card{background:white;padding:1rem;border-radius:10px;text-align:center}.summary-card .value{font-size:2rem;font-weight:700;color:#FF6B00}
-                .summary-card .label{font-size:0.75rem;color:#666;text-transform:uppercase}.building-section{background:white;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}
-                .building-section h2{font-size:1.1rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:2px solid #FF6B00;display:flex;align-items:center;gap:0.5rem}
-                .progress-badge{background:#FF6B00;color:white;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.8rem;margin-left:auto}
-                .discipline-block{border:1px solid #eee;border-radius:8px;padding:0.75rem;margin-bottom:0.75rem}
-                .discipline-header-report{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap}
-                .status-badge{font-size:0.65rem;padding:0.15rem 0.4rem;border-radius:4px}.status-badge.pending{background:#e0e0e0;color:#666}
-                .status-badge.progress{background:#fff3cd;color:#856404}.status-badge.approved{background:#d4edda;color:#155724}
-                .progress-small{font-size:0.8rem;color:#FF6B00;font-weight:600}
-                .model-table{width:100%;border-collapse:collapse;font-size:0.7rem}.model-table th{background:#f8f8f8;padding:0.35rem;text-align:left;border-bottom:1px solid #ddd;font-size:0.65rem}
-                .model-table td{padding:0.35rem;border-bottom:1px solid #eee}.type-badge{font-size:0.6rem;padding:0.1rem 0.35rem;border-radius:3px;color:white;font-weight:600}
-                .type-badge.mode{background:#2196F3}.type-badge.ajus{background:#9C27B0}.type-badge.reng{background:#FF6B00}.type-badge.asbt{background:#4CAF50}
-                .phase-badge{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:3px}.phase-badge.pending{background:#e0e0e0;color:#666}
-                .phase-badge.progress{background:#fff3cd;color:#856404}.phase-badge.issues{background:#ffe5d0;color:#C65D07}.phase-badge.approved{background:#d4edda;color:#155724}
-                .na-row{opacity:0.5}.na-cell{font-style:italic;color:#999}.obs-cell{font-size:0.65rem;color:#666;max-width:120px}
-                .rev-cell{font-weight:700;color:#FF6B00;text-align:center}
-                .update-info{font-size:0.65rem;color:#999;text-align:right}
-                .footer{text-align:center;padding:1.5rem;color:#888}.btn-print{position:fixed;top:1rem;right:1rem;background:#FF6B00;color:white;border:none;padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600}
-                @media print{.btn-print{display:none}}</style></head>
-                <body><button class="btn-print" onclick="window.print()">🖨️ Imprimir</button>
-                <div class="header"><h1>📊 Relatório - Reengenharia de Disciplinas</h1><div>UNILA Campus Arandu</div><div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.8">Gerado em: ${now}</div></div>
-                <div class="summary">
-                    <div class="summary-card"><div class="value">${overallProgress}%</div><div class="label">Progresso</div></div>
-                    <div class="summary-card"><div class="value" style="color:#FFB800">${inProgress}</div><div class="label">Em Andamento</div></div>
-                    <div class="summary-card"><div class="value">${issues}</div><div class="label">Pendências</div></div>
-                    <div class="summary-card"><div class="value" style="color:#4CAF50">${approved}</div><div class="label">Liberados</div></div>
-                </div>${buildingsHtml}
-                <div class="footer"><p>Consórcio MPD/Ankara</p></div></body></html>`);
-            reportWindow.document.close();
+            const op = td > 0 ? Math.round(tp / td) : 0;
+            let bh = '';
+            buildings.forEach(building => {
+                const bd = projectData[building.id]; if (!bd?.disciplines) return;
+                const bp = calculateBuildingProgress(building.id);
+                bh += `<div class="building-section"><h2>🏢 ${building.name} <span class="progress-badge">${bp}%</span></h2>`;
+                disciplineTemplates.forEach(dt => {
+                    const disc = bd.disciplines[dt.id]; if (!disc) return;
+                    const pr = calculateDisciplineProgress(disc);
+                    bh += `<div class="discipline-block"><div class="discipline-header-report"><strong>${disc.code} - ${disc.fullName}</strong><span class="status-badge ${disc.reengineeringStatus}">Reeng: ${getStatusText(disc.reengineeringStatus)}</span><span class="progress-small">${pr}%</span></div><table class="model-table"><thead><tr><th>Tipo</th><th>Projetista</th><th>IFC</th><th>Rev</th><th>Compat.</th><th>Doc 2D</th><th>Rev</th><th>Liberado</th><th>Obs.</th></tr></thead><tbody>`;
+                    modelTypes.forEach(mt => {
+                        const md = disc.modelTypes?.[mt.id]; if (!md) return;
+                        if (md.notApplicable) { bh += `<tr class="na-row"><td><span class="type-badge ${mt.id}">${mt.code}</span></td><td colspan="8" class="na-cell">N/A</td></tr>`; }
+                        else { const ph = md.phases || {}; bh += `<tr><td><span class="type-badge ${mt.id}">${mt.code}</span></td><td>${md.responsible || '-'}</td><td><span class="phase-badge ${ph.ifc?.status || 'pending'}">${getStatusText(ph.ifc?.status || 'pending')}</span></td><td class="rev-cell">${md.revisionCountIfc || 0}</td><td><span class="phase-badge ${ph.compatibility?.status || 'pending'}">${getStatusText(ph.compatibility?.status || 'pending')}</span></td><td><span class="phase-badge ${ph.docs2d?.status || 'pending'}">${getStatusText(ph.docs2d?.status || 'pending')}</span></td><td class="rev-cell">${md.revisionCountDocs2d || 0}</td><td><span class="phase-badge ${ph.released?.status || 'pending'}">${getStatusText(ph.released?.status || 'pending')}</span></td><td class="obs-cell">${md.notes || '-'}</td></tr>`; }
+                    });
+                    bh += `</tbody></table><div class="update-info">Atualizado: ${formatDate(disc.lastUpdate)}</div></div>`;
+                });
+                bh += `</div>`;
+            });
+            rw.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório UNILA</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f5f5f5;color:#333;font-size:11px;padding:1.5rem}.header{background:linear-gradient(135deg,#FF6B00,#C65D07);color:white;padding:1.5rem;border-radius:12px;margin-bottom:1.5rem}.header h1{font-size:1.5rem}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}.summary-card{background:white;padding:1rem;border-radius:10px;text-align:center}.summary-card .value{font-size:2rem;font-weight:700;color:#FF6B00}.summary-card .label{font-size:0.75rem;color:#666;text-transform:uppercase}.building-section{background:white;border-radius:12px;padding:1.25rem;margin-bottom:1.25rem}.building-section h2{font-size:1.1rem;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:2px solid #FF6B00;display:flex;align-items:center;gap:0.5rem}.progress-badge{background:#FF6B00;color:white;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.8rem;margin-left:auto}.discipline-block{border:1px solid #eee;border-radius:8px;padding:0.75rem;margin-bottom:0.75rem}.discipline-header-report{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap}.status-badge{font-size:0.65rem;padding:0.15rem 0.4rem;border-radius:4px}.status-badge.pending{background:#e0e0e0;color:#666}.status-badge.progress{background:#fff3cd;color:#856404}.status-badge.approved{background:#d4edda;color:#155724}.progress-small{font-size:0.8rem;color:#FF6B00;font-weight:600}.model-table{width:100%;border-collapse:collapse;font-size:0.7rem}.model-table th{background:#f8f8f8;padding:0.35rem;text-align:left;border-bottom:1px solid #ddd;font-size:0.65rem}.model-table td{padding:0.35rem;border-bottom:1px solid #eee}.type-badge{font-size:0.6rem;padding:0.1rem 0.35rem;border-radius:3px;color:white;font-weight:600}.type-badge.mode{background:#2196F3}.type-badge.ajus{background:#9C27B0}.type-badge.reng{background:#FF6B00}.type-badge.asbt{background:#4CAF50}.phase-badge{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:3px}.phase-badge.pending{background:#e0e0e0;color:#666}.phase-badge.progress{background:#fff3cd;color:#856404}.phase-badge.issues{background:#ffe5d0;color:#C65D07}.phase-badge.approved{background:#d4edda;color:#155724}.na-row{opacity:0.5}.na-cell{font-style:italic;color:#999}.obs-cell{font-size:0.65rem;color:#666;max-width:120px}.rev-cell{font-weight:700;color:#FF6B00;text-align:center}.update-info{font-size:0.65rem;color:#999;text-align:right}.footer{text-align:center;padding:1.5rem;color:#888}.btn-print{position:fixed;top:1rem;right:1rem;background:#FF6B00;color:white;border:none;padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600}@media print{.btn-print{display:none}}</style></head><body><button class="btn-print" onclick="window.print()">🖨️ Imprimir</button><div class="header"><h1>📊 Relatório - Reengenharia de Disciplinas</h1><div>UNILA Campus Arandu</div><div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.8">Gerado: ${now}</div></div><div class="summary"><div class="summary-card"><div class="value">${op}%</div><div class="label">Progresso</div></div><div class="summary-card"><div class="value" style="color:#FFB800">${ip}</div><div class="label">Em Andamento</div></div><div class="summary-card"><div class="value">${is}</div><div class="label">Pendências</div></div><div class="summary-card"><div class="value" style="color:#4CAF50">${ap}</div><div class="label">Liberados</div></div></div>${bh}<div class="footer"><p>Consórcio MPD/Ankara</p></div></body></html>`);
+            rw.document.close();
         }
 
         function renderBuildingTabs() {
-            const container = document.getElementById('buildingFilter');
-            let html = `<button class="building-tab ${activeBuilding === 'all' ? 'active' : ''}" onclick="setActiveBuilding('all')">Todos</button>`;
-            buildings.forEach(b => { html += `<button class="building-tab ${activeBuilding === b.id ? 'active' : ''}" onclick="setActiveBuilding('${b.id}')">${b.name}</button>`; });
-            container.innerHTML = html;
+            const c = document.getElementById('buildingFilter'); if (!c) return;
+            let h = `<button class="building-tab ${activeBuilding === 'all' ? 'active' : ''}" onclick="setActiveBuilding('all')">Todos</button>`;
+            buildings.forEach(b => { h += `<button class="building-tab ${activeBuilding === b.id ? 'active' : ''}" onclick="setActiveBuilding('${b.id}')">${b.name}</button>`; });
+            c.innerHTML = h;
         }
 
         function renderBuildings() {
-            const container = document.getElementById('buildingsContainer');
+            const container = document.getElementById('buildingsContainer'); if (!container) return;
             let html = '';
             const toRender = activeBuilding === 'all' ? buildings : buildings.filter(b => b.id === activeBuilding);
 
             toRender.forEach((building, bi) => {
-                const buildingData = projectData[building.id];
-                if (!buildingData || !buildingData.disciplines) return;
-                const buildingProgress = calculateBuildingProgress(building.id);
+                const bd = projectData[building.id]; if (!bd?.disciplines) return;
+                const bp = calculateBuildingProgress(building.id);
+                html += `<div class="building-section"><div class="building-header"><h2>🏢 ${building.name}</h2><div class="building-progress">Progresso: <strong>${bp}%</strong></div></div><div class="disciplines-grid">`;
 
-                html += `<div class="building-section"><div class="building-header"><h2>🏢 ${building.name}</h2><div class="building-progress">Progresso: <strong>${buildingProgress}%</strong></div></div><div class="disciplines-grid">`;
-
-                disciplineTemplates.forEach((discTemplate, di) => {
-                    const discipline = buildingData.disciplines[discTemplate.id];
-                    if (!discipline) return;
-                    const progress = calculateDisciplineProgress(discipline);
-
-                    html += `<div class="discipline-card card-${discipline.id}" style="animation-delay: ${(bi * 6 + di) * 0.05}s">
-                        <div class="card-header">
-                            <div class="discipline-info">
-                                <span class="discipline-code">${discipline.code}</span>
-                                <div class="discipline-name"><h3>${discipline.name}</h3><span>${discipline.fullName}</span></div>
-                            </div>
-                            <div class="reengineering-status">
-                                <label>Projeto em Reengenharia:</label>
-                                <select class="${discipline.reengineeringStatus}" onchange="updateReengineeringStatus('${building.id}', '${discipline.id}', this.value)">
-                                    <option value="pending" ${discipline.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option>
-                                    <option value="progress" ${discipline.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                    <option value="approved" ${discipline.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="model-types-container"><div class="model-types-grid">`;
+                disciplineTemplates.forEach((dt, di) => {
+                    const disc = bd.disciplines[dt.id]; if (!disc) return;
+                    const pr = calculateDisciplineProgress(disc);
+                    html += `<div class="discipline-card card-${disc.id}" style="animation-delay: ${(bi * 7 + di) * 0.05}s"><div class="card-header"><div class="discipline-info"><span class="discipline-code">${disc.code}</span><div class="discipline-name"><h3>${disc.name}</h3><span>${disc.fullName}</span></div></div><div class="reengineering-status"><label>Projeto em Reengenharia:</label><select class="${disc.reengineeringStatus}" onchange="updateReengineeringStatus('${building.id}', '${disc.id}', this.value)"><option value="pending" ${disc.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option><option value="progress" ${disc.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option><option value="approved" ${disc.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option></select></div></div><div class="model-types-container"><div class="model-types-grid">`;
 
                     modelTypes.forEach(mt => {
-                        const mtData = discipline.modelTypes?.[mt.id] || { notApplicable: false, responsible: '', notes: '', phases: {}, revisionCountIfc: 0, revisionCountDocs2d: 0 };
-                        const isNA = mtData.notApplicable;
-                        const revIfc = mtData.revisionCountIfc || 0;
-                        const revDocs = mtData.revisionCountDocs2d || 0;
-
-                        html += `<div class="model-type-card ${isNA ? 'not-applicable' : ''}">
-                            <div class="model-type-header ${mt.id}">
-                                <div class="model-type-title"><span class="model-type-code ${mt.id}">${mt.code}</span><span class="model-type-name">${mt.name}</span></div>
-                                ${mt.canBeNA ? `<div class="na-toggle"><label>N/A</label><input type="checkbox" ${isNA ? 'checked' : ''} onchange="toggleNotApplicable('${building.id}', '${discipline.id}', '${mt.id}', this.checked)"></div>` : ''}
-                            </div>
-                            <div class="model-type-content ${isNA ? 'disabled' : ''}">
-                                <div class="projetista-field"><label>Projetista Responsável</label><input type="text" value="${mtData.responsible || ''}" placeholder="${mt.defaultResponsible || 'Nome'}" onchange="updateResponsible('${building.id}', '${discipline.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}></div>
-                                <div class="projetista-field"><label>Observações</label><textarea class="model-notes" placeholder="Observações..." onchange="updateModelNotes('${building.id}', '${discipline.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}>${mtData.notes || ''}</textarea></div>
-                                <div class="phases-mini-grid">`;
-
-                        phaseTemplates.forEach(phase => {
-                            const phaseData = mtData.phases?.[phase.id] || { status: 'pending' };
-                            html += `<div class="phase-mini-item"><span class="phase-mini-name">${phase.name}</span>
-                                <select class="phase-mini-select ${phaseData.status}" onchange="updatePhaseStatus('${building.id}', '${discipline.id}', '${mt.id}', '${phase.id}', this.value)" ${isNA ? 'disabled' : ''}>
-                                    <option value="pending" ${phaseData.status === 'pending' ? 'selected' : ''}>Pendente</option>
-                                    <option value="progress" ${phaseData.status === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                    <option value="issues" ${phaseData.status === 'issues' ? 'selected' : ''}>Pendências</option>
-                                    <option value="approved" ${phaseData.status === 'approved' ? 'selected' : ''}>Concluído</option>
-                                </select></div>`;
+                        const md = disc.modelTypes?.[mt.id] || { notApplicable: false, responsible: '', notes: '', phases: {}, revisionCountIfc: 0, revisionCountDocs2d: 0 };
+                        const isNA = md.notApplicable;
+                        const rIfc = md.revisionCountIfc || 0;
+                        const rDoc = md.revisionCountDocs2d || 0;
+                        html += `<div class="model-type-card ${isNA ? 'not-applicable' : ''}"><div class="model-type-header ${mt.id}"><div class="model-type-title"><span class="model-type-code ${mt.id}">${mt.code}</span><span class="model-type-name">${mt.name}</span></div>${mt.canBeNA ? `<div class="na-toggle"><label>N/A</label><input type="checkbox" ${isNA ? 'checked' : ''} onchange="toggleNotApplicable('${building.id}', '${disc.id}', '${mt.id}', this.checked)"></div>` : ''}</div><div class="model-type-content ${isNA ? 'disabled' : ''}"><div class="projetista-field"><label>Projetista Responsável</label><input type="text" value="${md.responsible || ''}" placeholder="${mt.defaultResponsible || 'Nome'}" onchange="updateResponsible('${building.id}', '${disc.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}></div><div class="projetista-field"><label>Observações</label><textarea class="model-notes" placeholder="Observações..." onchange="updateModelNotes('${building.id}', '${disc.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}>${md.notes || ''}</textarea></div><div class="phases-mini-grid">`;
+                        
+                        phaseTemplates.forEach(ph => {
+                            const pd = md.phases?.[ph.id] || { status: 'pending' };
+                            html += `<div class="phase-mini-item"><span class="phase-mini-name">${ph.name}</span><select class="phase-mini-select ${pd.status}" onchange="updatePhaseStatus('${building.id}', '${disc.id}', '${mt.id}', '${ph.id}', this.value)" ${isNA ? 'disabled' : ''}><option value="pending" ${pd.status === 'pending' ? 'selected' : ''}>Pendente</option><option value="progress" ${pd.status === 'progress' ? 'selected' : ''}>Em Andamento</option><option value="issues" ${pd.status === 'issues' ? 'selected' : ''}>Pendências</option><option value="approved" ${pd.status === 'approved' ? 'selected' : ''}>Concluído</option></select></div>`;
                         });
 
-                        // Revision counters
-                        html += `</div>
-                                <div class="revision-counters">
-                                    <div class="revision-counter" id="revision-ifc-${building.id}-${discipline.id}-${mt.id}">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                                        <span class="revision-counter-label">IFC:</span>
-                                        <span class="revision-counter-value">${revIfc}</span>
-                                        <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${discipline.id}', '${mt.id}', 'ifc')" ${isNA ? 'disabled' : ''}>Editar</button>
-                                    </div>
-                                    <div class="revision-counter" id="revision-docs2d-${building.id}-${discipline.id}-${mt.id}">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                                        <span class="revision-counter-label">Doc 2D:</span>
-                                        <span class="revision-counter-value">${revDocs}</span>
-                                        <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${discipline.id}', '${mt.id}', 'docs2d')" ${isNA ? 'disabled' : ''}>Editar</button>
-                                    </div>
-                                </div>
-                            </div></div>`;
+                        html += `</div><div class="revision-counters"><div class="revision-counter" id="revision-ifc-${building.id}-${disc.id}-${mt.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="revision-counter-label">IFC:</span><span class="revision-counter-value">${rIfc}</span><button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'ifc')" ${isNA ? 'disabled' : ''}>Editar</button></div><div class="revision-counter" id="revision-docs2d-${building.id}-${disc.id}-${mt.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="revision-counter-label">Doc 2D:</span><span class="revision-counter-value">${rDoc}</span><button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'docs2d')" ${isNA ? 'disabled' : ''}>Editar</button></div></div></div></div>`;
                     });
 
-                    html += `</div></div>
-                        <div class="card-footer">
-                            <div class="card-timestamp">Última atualização: ${formatDate(discipline.lastUpdate)}</div>
-                        </div></div>`;
+                    html += `</div></div><div class="card-footer"><div class="card-timestamp">Última atualização: ${formatDate(disc.lastUpdate)}</div></div></div>`;
                 });
 
                 html += `</div></div>`;
@@ -879,8 +646,33 @@
 
         function render() { renderBuildingTabs(); renderBuildings(); updateStats(); }
 
+        // Inicialização
         document.addEventListener('DOMContentLoaded', async () => {
+            console.log('DOM carregado, iniciando...');
+            
+            if (!database) {
+                document.getElementById('loadingText').textContent = 'Erro: Firebase não foi inicializado';
+                return;
+            }
+            
+            // Timeout de segurança
+            const timeout = setTimeout(() => {
+                const lt = document.getElementById('loadingText');
+                if (lt && lt.textContent.includes('Conectando')) {
+                    lt.innerHTML = 'Timeout - Verifique as regras do Firebase:<br><br><small>{"rules": {".read": true, ".write": true}}</small>';
+                }
+            }, 15000);
+            
             try {
                 await initializeData();
                 setupRealtimeListener();
+                clearTimeout(timeout);
             } catch (error) {
+                clearTimeout(timeout);
+                console.error('Erro na inicialização:', error);
+                document.getElementById('loadingText').innerHTML = 'Erro: ' + error.message + '<br><br><small>Verifique as regras do Firebase</small>';
+            }
+        });
+    </script>
+</body>
+</html>
