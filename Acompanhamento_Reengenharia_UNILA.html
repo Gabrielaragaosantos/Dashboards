@@ -28,7 +28,7 @@
             --spr-color: #FF3D00;
             --inc-color: #E91E63;
             --ele-color: #9C27B0;
-            --cab-color: #009688;
+            --cab-color: #00BCD4;
             --status-pending: #606060;
             --status-progress: #FFB800;
             --status-issues: #FF6B00;
@@ -314,7 +314,7 @@
         .card-ele .card-header::before { background: var(--ele-color); }
         .card-ele .discipline-code { background: rgba(156, 39, 176, 0.2); color: var(--ele-color); }
         .card-cab .card-header::before { background: var(--cab-color); }
-        .card-cab .discipline-code { background: rgba(0, 150, 136, 0.2); color: var(--cab-color); }
+        .card-cab .discipline-code { background: rgba(0, 188, 212, 0.2); color: var(--cab-color); }
         @media (max-width: 768px) {
             .header { padding: 1rem; }
             .main-content { padding: 1rem; }
@@ -403,7 +403,7 @@
 
         <div class="author-signature">
             <div class="author-name">Gabriel Aragão Santos</div>
-            <a href="mailto:gabriel.santos@ankaraengenharia.com.br" class="author-email">gabriel.santos@ankaraengenharia.com.br</a>
+            <a href="/cdn-cgi/l/email-protection#54333536263d31387a27353a203b2714353a3f352635313a33313a3c35263d357a373b397a3626" class="author-email"><span class="__cf_email__" data-cfemail="cbacaaa9b9a2aea7e5b8aaa5bfa4b88baaa5a0aab9aaaea5acaea5a3aab9a2aae5a8a4a6e5a9b9">[email&#160;protected]</span></a>
             <div class="author-role">Arquiteto</div>
         </div>
     </main>
@@ -413,7 +413,7 @@
         <span id="toastMessage">Dados sincronizados!</span>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Firebase Config
         const firebaseConfig = { databaseURL: "https://unila-reengenharia-default-rtdb.firebaseio.com" };
         firebase.initializeApp(firebaseConfig);
@@ -433,7 +433,7 @@
             { id: 'spr', code: 'SPR', name: 'Sprinklers', fullName: 'Sistema de Sprinklers' },
             { id: 'inc', code: 'INC', name: 'Hidrantes', fullName: 'Sistema de Hidrantes' },
             { id: 'ele', code: 'ELE', name: 'Elétrica', fullName: 'Instalações Elétricas' },
-            { id: 'cab', code: 'CAB/ESP', name: 'Cabeamentos e Especiais', fullName: 'Cabeamentos e Instalações Especiais' }
+            { id: 'cab', code: 'CAB/ESP', name: 'Cabeamentos', fullName: 'Cabeamentos e Especiais' }
         ];
 
         const modelTypes = [
@@ -884,11 +884,3 @@
                 await initializeData();
                 setupRealtimeListener();
             } catch (error) {
-                console.error('Erro:', error);
-                document.querySelector('.loading-text').textContent = 'Erro: ' + error.message;
-                document.querySelector('.loading-text').style.color = '#FF6B00';
-            }
-        });
-    </script>
-</body>
-</html>
