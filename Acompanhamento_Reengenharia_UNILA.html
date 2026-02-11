@@ -28,6 +28,7 @@
             --spr-color: #FF3D00;
             --inc-color: #E91E63;
             --ele-color: #9C27B0;
+            --cab-color: #009688;
             --status-pending: #606060;
             --status-progress: #FFB800;
             --status-issues: #FF6B00;
@@ -312,6 +313,8 @@
         .card-inc .discipline-code { background: rgba(233, 30, 99, 0.2); color: var(--inc-color); }
         .card-ele .card-header::before { background: var(--ele-color); }
         .card-ele .discipline-code { background: rgba(156, 39, 176, 0.2); color: var(--ele-color); }
+        .card-cab .card-header::before { background: var(--cab-color); }
+        .card-cab .discipline-code { background: rgba(0, 150, 136, 0.2); color: var(--cab-color); }
         @media (max-width: 768px) {
             .header { padding: 1rem; }
             .main-content { padding: 1rem; }
@@ -429,7 +432,8 @@
             { id: 'esg', code: 'ESG', name: 'Esgoto', fullName: 'Instalações de Esgoto' },
             { id: 'spr', code: 'SPR', name: 'Sprinklers', fullName: 'Sistema de Sprinklers' },
             { id: 'inc', code: 'INC', name: 'Hidrantes', fullName: 'Sistema de Hidrantes' },
-            { id: 'ele', code: 'ELE', name: 'Elétrica', fullName: 'Instalações Elétricas' }
+            { id: 'ele', code: 'ELE', name: 'Elétrica', fullName: 'Instalações Elétricas' },
+            { id: 'cab', code: 'CAB/ESP', name: 'Cabeamentos e Especiais', fullName: 'Cabeamentos e Instalações Especiais' }
         ];
 
         const modelTypes = [
