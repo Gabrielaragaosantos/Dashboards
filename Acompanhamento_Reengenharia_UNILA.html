@@ -119,7 +119,7 @@
         .projetista-field input { width: 100%; padding: 0.4rem 0.6rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; }
         .projetista-field input:focus { outline: none; border-color: var(--accent-orange); }
         
-        /* Níveis */
+        
         .niveis-container { margin-top: 0.75rem; }
         .nivel-item { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
         .nivel-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: rgba(255, 107, 0, 0.05); cursor: pointer; }
@@ -132,7 +132,7 @@
         .nivel-content { padding: 0.75rem; display: none; border-top: 1px solid var(--border-color); }
         .nivel-content.open { display: block; }
         
-        /* Fases com botão copiar */
+        
         .nivel-phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
         .nivel-phase { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; position: relative; }
         .nivel-phase-header { display: flex; align-items: center; gap: 0.25rem; }
@@ -146,7 +146,7 @@
         .nivel-phase select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
         .nivel-phase select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
         
-        /* Observações */
+        
         .nivel-obs { width: 100%; }
         .nivel-obs-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
         .nivel-obs-header label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
@@ -169,7 +169,7 @@
         .building-tab:hover { border-color: var(--accent-orange); color: var(--text-primary); }
         .building-tab.active { background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta)); border-color: transparent; color: var(--text-primary); font-weight: 600; }
         
-        /* Modal de Copiar */
+        
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 2000; }
         .modal-overlay.show { display: flex; }
         .modal { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; }
@@ -244,7 +244,7 @@
         <div class="loading-text" id="loadingText">Conectando ao servidor...</div>
     </div>
 
-    <!-- Modal de Copiar -->
+    
     <div class="modal-overlay" id="copyModal">
         <div class="modal">
             <h3 id="modalTitle">Copiar para outros níveis</h3>
@@ -510,7 +510,7 @@
             });
         }
 
-        // Sync level name across ALL disciplines and model types
+        
         function updateLevelName(buildingId, levelIndex, newName) {
             const building = projectData[buildingId];
             if (!building) return;
@@ -577,7 +577,7 @@
             textarea.style.height = textarea.scrollHeight + 'px';
         }
 
-        // Copy Modal Functions
+        
         function openCopyModal(buildingId, discId, mtId, levelId, type, value) {
             const building = projectData[buildingId];
             const mtData = building?.disciplines?.[discId]?.modelTypes?.[mtId];
@@ -948,7 +948,7 @@
             catch (e) { clearTimeout(timeout); document.getElementById('loadingText').innerHTML = 'Erro: ' + e.message; }
         });
 
-        // Close modal on outside click
+        
         document.getElementById('copyModal').addEventListener('click', (e) => {
             if (e.target.id === 'copyModal') closeModal();
         });
