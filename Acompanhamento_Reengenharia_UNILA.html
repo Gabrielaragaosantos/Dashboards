@@ -94,7 +94,7 @@
         .reengineering-status select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.1); }
         .reengineering-status select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.1); }
         .model-types-container { padding: 1.25rem; }
-        .model-types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+        .model-types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem; }
         .model-type-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
         .model-type-card.not-applicable { opacity: 0.5; }
         .model-type-header { padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
@@ -119,7 +119,7 @@
         .projetista-field input { width: 100%; padding: 0.4rem 0.6rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; }
         .projetista-field input:focus { outline: none; border-color: var(--accent-orange); }
         
-        /* Níveis (Pavimentos) */
+        /* Níveis */
         .niveis-container { margin-top: 0.75rem; }
         .nivel-item { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
         .nivel-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0.75rem; background: rgba(255, 107, 0, 0.05); cursor: pointer; }
@@ -132,10 +132,13 @@
         .nivel-content { padding: 0.75rem; display: none; border-top: 1px solid var(--border-color); }
         .nivel-content.open { display: block; }
         
-        /* Fases - Layout vertical */
+        /* Fases com botão copiar */
         .nivel-phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
-        .nivel-phase { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; }
+        .nivel-phase { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; position: relative; }
+        .nivel-phase-header { display: flex; align-items: center; gap: 0.25rem; }
         .nivel-phase-name { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 600; color: var(--text-secondary); text-align: center; }
+        .copy-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 0.1rem; font-size: 0.6rem; opacity: 0.6; transition: all 0.2s; }
+        .copy-btn:hover { color: var(--accent-orange); opacity: 1; }
         .nivel-phase select { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; padding: 0.25rem 0.3rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); cursor: pointer; width: 100%; text-align: center; }
         .nivel-phase select:focus { outline: none; border-color: var(--accent-orange); }
         .nivel-phase select.pending { border-color: var(--status-pending); }
@@ -143,23 +146,11 @@
         .nivel-phase select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
         .nivel-phase select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
         
-        /* Observações auto-expansível */
+        /* Observações */
         .nivel-obs { width: 100%; }
-        .nivel-obs label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); display: block; margin-bottom: 0.25rem; }
-        .nivel-obs textarea { 
-            width: 100%; 
-            padding: 0.4rem; 
-            background: var(--bg-secondary); 
-            border: 1px solid var(--border-color); 
-            border-radius: 4px; 
-            color: var(--text-primary); 
-            font-size: 0.75rem; 
-            font-family: 'Space Grotesk', sans-serif;
-            resize: none; 
-            min-height: 36px; 
-            overflow: hidden;
-            line-height: 1.4;
-        }
+        .nivel-obs-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+        .nivel-obs-header label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .nivel-obs textarea { width: 100%; padding: 0.4rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; color: var(--text-primary); font-size: 0.75rem; font-family: 'Space Grotesk', sans-serif; resize: none; min-height: 36px; overflow: hidden; line-height: 1.4; }
         .nivel-obs textarea:focus { outline: none; border-color: var(--accent-orange); }
         
         .revision-counters { display: flex; gap: 0.5rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-color); }
@@ -177,6 +168,30 @@
         .building-tab { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 0.6rem 1.2rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; }
         .building-tab:hover { border-color: var(--accent-orange); color: var(--text-primary); }
         .building-tab.active { background: linear-gradient(135deg, var(--accent-orange), var(--accent-terracotta)); border-color: transparent; color: var(--text-primary); font-weight: 600; }
+        
+        /* Modal de Copiar */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.show { display: flex; }
+        .modal { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        .modal h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent-yellow); }
+        .modal-subtitle { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .modal-value { background: var(--bg-secondary); padding: 0.5rem; border-radius: 6px; margin-bottom: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+        .modal-levels { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; max-height: 300px; overflow-y: auto; }
+        .modal-level-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .modal-level-item:hover { background: var(--border-color); }
+        .modal-level-item input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .modal-level-item label { font-size: 0.8rem; cursor: pointer; flex: 1; }
+        .modal-level-item.current { opacity: 0.5; pointer-events: none; }
+        .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+        .modal-btn { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+        .modal-btn-cancel { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
+        .modal-btn-cancel:hover { background: var(--border-color); }
+        .modal-btn-confirm { background: var(--accent-orange); border: none; color: white; font-weight: 600; }
+        .modal-btn-confirm:hover { background: var(--accent-terracotta); }
+        .select-all-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: rgba(255, 107, 0, 0.1); border-radius: 6px; margin-bottom: 0.5rem; }
+        .select-all-row input { width: 18px; height: 18px; cursor: pointer; }
+        .select-all-row label { font-size: 0.75rem; font-weight: 600; color: var(--accent-orange); cursor: pointer; }
+        
         .footer-info { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-top: 2rem; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
         .footer-section h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--accent-yellow); }
@@ -227,6 +242,24 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <div class="loading-text" id="loadingText">Conectando ao servidor...</div>
+    </div>
+
+    <!-- Modal de Copiar -->
+    <div class="modal-overlay" id="copyModal">
+        <div class="modal">
+            <h3 id="modalTitle">Copiar para outros níveis</h3>
+            <div class="modal-subtitle" id="modalSubtitle">Selecione os níveis de destino:</div>
+            <div class="modal-value" id="modalValue"></div>
+            <div class="select-all-row">
+                <input type="checkbox" id="selectAllLevels" onchange="toggleSelectAll()">
+                <label for="selectAllLevels">Selecionar todos</label>
+            </div>
+            <div class="modal-levels" id="modalLevels"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" onclick="confirmCopy()">Copiar</button>
+            </div>
+        </div>
     </div>
 
     <header class="header">
@@ -295,8 +328,8 @@
                     <div class="legend-item"><div class="legend-color" style="background: var(--status-approved)"></div><span>Concluído</span></div>
                 </div>
                 <div class="footer-section">
-                    <h3>Níveis</h3>
-                    <p>Cada edificação possui níveis configuráveis. Clique no nome do nível para editá-lo (ex: Terraço, Cobertura). Os ciclos incrementam quando IFC ou Doc 2D de cada nível é concluído.</p>
+                    <h3>Dicas</h3>
+                    <p>• Alterar nome de um nível sincroniza em todas as disciplinas<br>• Clique em 📋 para copiar status ou observações para outros níveis</p>
                 </div>
             </div>
         </div>
@@ -344,10 +377,11 @@
         ];
 
         const phaseTemplates = ['ifc', 'compatibility', 'docs2d', 'released'];
-        const phaseNames = { ifc: 'IFC', compatibility: 'Compatibilização', docs2d: 'Doc 2D', released: 'Liberado' };
+        const phaseNames = { ifc: 'IFC', compatibility: 'Compat.', docs2d: 'Doc 2D', released: 'Liberado' };
 
         let projectData = {};
         let activeBuilding = 'salas';
+        let copyContext = null; // Stores info about what we're copying
 
         function generateLevelName(index) {
             if (index === 0) return 'Térreo';
@@ -409,6 +443,13 @@
             if (overlay) overlay.style.display = 'none'; 
         }
 
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
         async function initializeData() {
             document.getElementById('loadingText').textContent = 'Verificando dados...';
             const snapshot = await database.ref('projectData').once('value');
@@ -449,8 +490,7 @@
                 Object.keys(disc.modelTypes || {}).forEach(mtId => {
                     const mt = disc.modelTypes[mtId];
                     const currentLevels = mt.levels || {};
-                    const levelKeys = Object.keys(currentLevels);
-                    const actualCurrentCount = levelKeys.length;
+                    const actualCurrentCount = Object.keys(currentLevels).length;
 
                     if (newCount > actualCurrentCount) {
                         for (let i = actualCurrentCount; i < newCount; i++) {
@@ -470,9 +510,19 @@
             });
         }
 
-        function updateLevelName(buildingId, discId, mtId, levelId, newName) {
-            database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/levels/${levelId}/name`).set(newName);
-            database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+        // Sync level name across ALL disciplines and model types
+        function updateLevelName(buildingId, levelIndex, newName) {
+            const building = projectData[buildingId];
+            if (!building) return;
+
+            // Update in ALL disciplines and model types
+            Object.keys(building.disciplines || {}).forEach(discId => {
+                const disc = building.disciplines[discId];
+                Object.keys(disc.modelTypes || {}).forEach(mtId => {
+                    database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/levels/level_${levelIndex}/name`).set(newName);
+                });
+            });
+            showToast(`Nome "${newName}" aplicado em todas as disciplinas`);
         }
 
         function updateLevelPhase(buildingId, discId, mtId, levelId, phase, newStatus) {
@@ -525,6 +575,83 @@
         function autoResizeTextarea(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        // Copy Modal Functions
+        function openCopyModal(buildingId, discId, mtId, levelId, type, value) {
+            const building = projectData[buildingId];
+            const mtData = building?.disciplines?.[discId]?.modelTypes?.[mtId];
+            if (!mtData) return;
+
+            const levels = Object.entries(mtData.levels || {}).sort((a, b) => (a[1].order || 0) - (b[1].order || 0));
+            const currentLevelOrder = mtData.levels?.[levelId]?.order;
+
+            copyContext = { buildingId, discId, mtId, levelId, type, value };
+
+            const typeLabels = { ifc: 'IFC', compatibility: 'Compatibilização', docs2d: 'Doc 2D', released: 'Liberado', obs: 'Observações' };
+            document.getElementById('modalTitle').textContent = `Copiar ${typeLabels[type]}`;
+            document.getElementById('modalSubtitle').textContent = `De: ${mtData.levels[levelId].name}`;
+            
+            if (type === 'obs') {
+                document.getElementById('modalValue').textContent = value || '(vazio)';
+            } else {
+                document.getElementById('modalValue').textContent = getStatusText(value);
+            }
+
+            let levelsHtml = '';
+            levels.forEach(([lid, level]) => {
+                const isCurrent = lid === levelId;
+                levelsHtml += `
+                    <div class="modal-level-item ${isCurrent ? 'current' : ''}">
+                        <input type="checkbox" id="copy-${lid}" value="${lid}" ${isCurrent ? 'disabled' : ''}>
+                        <label for="copy-${lid}">${level.name}${isCurrent ? ' (origem)' : ''}</label>
+                    </div>
+                `;
+            });
+            document.getElementById('modalLevels').innerHTML = levelsHtml;
+            document.getElementById('selectAllLevels').checked = false;
+            document.getElementById('copyModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('copyModal').classList.remove('show');
+            copyContext = null;
+        }
+
+        function toggleSelectAll() {
+            const checked = document.getElementById('selectAllLevels').checked;
+            document.querySelectorAll('#modalLevels input[type="checkbox"]:not(:disabled)').forEach(cb => {
+                cb.checked = checked;
+            });
+        }
+
+        function confirmCopy() {
+            if (!copyContext) return;
+
+            const selectedLevels = [];
+            document.querySelectorAll('#modalLevels input[type="checkbox"]:checked').forEach(cb => {
+                selectedLevels.push(cb.value);
+            });
+
+            if (selectedLevels.length === 0) {
+                alert('Selecione pelo menos um nível de destino.');
+                return;
+            }
+
+            const { buildingId, discId, mtId, type, value } = copyContext;
+
+            selectedLevels.forEach(lid => {
+                if (type === 'obs') {
+                    database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/levels/${lid}/obs`).set(value);
+                } else {
+                    database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/levels/${lid}/phases/${type}`).set(value);
+                }
+            });
+
+            database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+            
+            closeModal();
+            showToast(`Copiado para ${selectedLevels.length} nível(is)`);
         }
 
         function editRevisionCount(buildingId, discId, mtId, type) {
@@ -733,11 +860,12 @@
 
                     levels.forEach(([levelId, level], li) => {
                         const nivId = `niv-${building.id}-${disc.id}-${mt.id}-${levelId}`;
+                        const levelIndex = level.order;
                         html += `<div class="nivel-item">
                             <div class="nivel-header" onclick="toggleNivel('${nivId}')">
                                 <div class="nivel-name">
                                     <input type="text" value="${level.name}" onclick="event.stopPropagation()" 
-                                        onchange="updateLevelName('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', this.value)" ${isNA ? 'disabled' : ''}>
+                                        onchange="updateLevelName('${building.id}', ${levelIndex}, this.value)" ${isNA ? 'disabled' : ''}>
                                 </div>
                                 <span class="nivel-toggle ${li === 0 ? 'open' : ''}" id="${nivId}-toggle">▼</span>
                             </div>
@@ -747,7 +875,10 @@
                         phaseTemplates.forEach(phase => {
                             const status = level.phases?.[phase] || 'pending';
                             html += `<div class="nivel-phase">
-                                <span class="nivel-phase-name">${phaseNames[phase]}</span>
+                                <div class="nivel-phase-header">
+                                    <span class="nivel-phase-name">${phaseNames[phase]}</span>
+                                    <button class="copy-btn" onclick="event.stopPropagation(); openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', '${status}')" title="Copiar para outros níveis" ${isNA ? 'disabled' : ''}>📋</button>
+                                </div>
                                 <select class="${status}" onchange="updateLevelPhase('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', this.value)" ${isNA ? 'disabled' : ''}>
                                     <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pendente</option>
                                     <option value="progress" ${status === 'progress' ? 'selected' : ''}>Em Andamento</option>
@@ -757,9 +888,13 @@
                             </div>`;
                         });
 
+                        const obsValue = (level.obs || '').replace(/'/g, "\\'").replace(/\n/g, "\\n");
                         html += `</div>
                                 <div class="nivel-obs">
-                                    <label>Observações</label>
+                                    <div class="nivel-obs-header">
+                                        <label>Observações</label>
+                                        <button class="copy-btn" onclick="openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', 'obs', '${obsValue}')" title="Copiar para outros níveis" ${isNA ? 'disabled' : ''}>📋</button>
+                                    </div>
                                     <textarea placeholder="Observações..." 
                                         oninput="autoResizeTextarea(this)" 
                                         onchange="updateLevelObs('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', this.value)" 
@@ -798,7 +933,6 @@
             html += `</div></div>`;
             container.innerHTML = html;
 
-            // Auto-resize all textareas on load
             document.querySelectorAll('.nivel-obs textarea').forEach(ta => autoResizeTextarea(ta));
         }
 
@@ -812,6 +946,11 @@
             }, 15000);
             try { await initializeData(); setupRealtimeListener(); clearTimeout(timeout); } 
             catch (e) { clearTimeout(timeout); document.getElementById('loadingText').innerHTML = 'Erro: ' + e.message; }
+        });
+
+        // Close modal on outside click
+        document.getElementById('copyModal').addEventListener('click', (e) => {
+            if (e.target.id === 'copyModal') closeModal();
         });
     </script>
 </body>
