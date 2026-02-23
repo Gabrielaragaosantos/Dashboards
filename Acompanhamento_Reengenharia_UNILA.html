@@ -236,6 +236,46 @@
             .model-types-grid { grid-template-columns: 1fr; }
             .nivel-phases { grid-template-columns: repeat(2, 1fr); }
         }
+        /* Report Dropdown */
+        .report-dropdown { position: relative; display: inline-block; }
+        .report-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            min-width: 220px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            z-index: 200;
+            overflow: hidden;
+        }
+        .report-dropdown-content.show { display: block; }
+        .report-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+        .report-dropdown-item:hover { background: rgba(255, 107, 0, 0.15); }
+        .report-dropdown-item + .report-dropdown-item { border-top: 1px solid var(--border-color); }
+        .report-dropdown-item span.item-desc {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 0.15rem;
+        }
     </style>
 </head>
 <body>
@@ -277,13 +317,32 @@
                     <div class="sync-dot" id="syncDot"></div>
                     <span id="syncText">Conectado</span>
                 </div>
-                <button class="btn btn-report" onclick="openReport()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                    Relatório
-                </button>
+                <div class="report-dropdown">
+                    <button class="btn btn-report" onclick="toggleReportDropdown(event)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        Relatórios
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 0.25rem;">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div class="report-dropdown-content" id="reportDropdown">
+                        <button class="report-dropdown-item" onclick="openReport(); closeReportDropdown();">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/>
+                            </svg>
+                            <div>Relatório Tabular<span class="item-desc">Tabela detalhada para impressão</span></div>
+                        </button>
+                        <button class="report-dropdown-item" onclick="openGraphicalReport(); closeReportDropdown();">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                            </svg>
+                            <div>Relatório Gráfico<span class="item-desc">Gráficos interativos e KPIs</span></div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -783,6 +842,322 @@
             <h1 style="text-align:center;margin-bottom:1rem;color:#FF6B00">📊 Relatório - Reengenharia UNILA</h1>
             <p style="text-align:center;margin-bottom:1rem;color:#666">Gerado em: ${now}</p>
             ${bh}</body></html>`);
+            rw.document.close();
+        }
+
+        // ===== DROPDOWN DE RELATÓRIOS =====
+        function toggleReportDropdown(event) {
+            event.stopPropagation();
+            document.getElementById('reportDropdown').classList.toggle('show');
+        }
+        function closeReportDropdown() {
+            document.getElementById('reportDropdown').classList.remove('show');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.report-dropdown')) closeReportDropdown();
+        });
+
+        // ===== AGREGAÇÃO DE DADOS PARA RELATÓRIO GRÁFICO =====
+        function computeReportData() {
+            const result = {
+                overallProgress: 0, totalPhases: 0, approvedPhases: 0,
+                progressPhases: 0, issuesPhases: 0, pendingPhases: 0,
+                buildingProgress: [], disciplineStatus: {},
+                statusDistribution: { pending: 0, progress: 0, issues: 0, approved: 0 },
+                modelTypeProgress: {}, heatmap: []
+            };
+
+            buildings.forEach(b => {
+                const bd = projectData[b.id];
+                if (!bd?.disciplines) return;
+                const bp = calculateProgress(bd);
+                result.buildingProgress.push({ name: b.name, progress: bp });
+
+                disciplineTemplates.forEach(dt => {
+                    const disc = bd.disciplines[dt.id];
+                    if (!disc) return;
+                    if (!result.disciplineStatus[dt.id]) {
+                        result.disciplineStatus[dt.id] = { name: disc.name, code: disc.code, pending: 0, progress: 0, issues: 0, approved: 0 };
+                    }
+                    let discTotal = 0, discApproved = 0;
+
+                    modelTypes.forEach(mt => {
+                        const md = disc.modelTypes?.[mt.id];
+                        if (!md || md.notApplicable) return;
+                        if (!result.modelTypeProgress[mt.id]) {
+                            result.modelTypeProgress[mt.id] = { code: mt.code, total: 0, approved: 0 };
+                        }
+                        Object.values(md.levels || {}).forEach(level => {
+                            Object.values(level.phases || {}).forEach(status => {
+                                result.totalPhases++;
+                                discTotal++;
+                                result.modelTypeProgress[mt.id].total++;
+                                result.statusDistribution[status]++;
+                                result.disciplineStatus[dt.id][status]++;
+                                if (status === 'approved') { result.approvedPhases++; discApproved++; result.modelTypeProgress[mt.id].approved++; }
+                                if (status === 'progress') result.progressPhases++;
+                                if (status === 'issues') result.issuesPhases++;
+                                if (status === 'pending') result.pendingPhases++;
+                            });
+                        });
+                    });
+                    result.heatmap.push({
+                        buildingName: b.name, buildingId: b.id,
+                        disciplineName: disc.name, disciplineCode: disc.code, disciplineId: dt.id,
+                        progress: discTotal > 0 ? Math.round((discApproved / discTotal) * 100) : 0
+                    });
+                });
+            });
+
+            const bc = result.buildingProgress.length;
+            result.overallProgress = bc > 0 ? Math.round(result.buildingProgress.reduce((s, b) => s + b.progress, 0) / bc) : 0;
+            return result;
+        }
+
+        // ===== RELATÓRIO GRÁFICO =====
+        function openGraphicalReport() {
+            const data = computeReportData();
+            const now = new Date().toLocaleString('pt-BR');
+            const rw = window.open('', '_blank', 'width=1400,height=900');
+
+            const colors = JSON.stringify({
+                pending: '#606060', progress: '#FFB800', issues: '#FF6B00', approved: '#4CAF50',
+                mode: '#2196F3', ajus: '#9C27B0', reng: '#FF6B00', asbt: '#4CAF50',
+                hvac: '#FF6B00', hid: '#00A8CC', esg: '#FFB800', spr: '#FF3D00',
+                inc: '#E91E63', ele: '#9C27B0', cab: '#00BCD4'
+            });
+
+            const reportDataJSON = JSON.stringify(data);
+
+            rw.document.write(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório Gráfico - Reengenharia UNILA</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"><\/script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#0D0D0D;color:#F5F5F5;padding:2rem;
+background-image:linear-gradient(rgba(255,107,0,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,0,0.08) 1px,transparent 1px);background-size:50px 50px;}
+.report-header{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #3D3D3D;}
+.report-header h1{font-size:1.6rem;background:linear-gradient(90deg,#FFB800,#FF6B00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem;}
+.report-header p{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#808080;}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem;}
+.kpi-card{background:#242424;border:1px solid #3D3D3D;border-radius:12px;padding:1.25rem;text-align:center;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-card.overall::before{background:linear-gradient(90deg,#FF6B00,#FFB800);}
+.kpi-card.total::before{background:#B8B8B8;}
+.kpi-card.completed::before{background:#4CAF50;}
+.kpi-card.in-progress::before{background:#FFB800;}
+.kpi-card.with-issues::before{background:#FF6B00;}
+.kpi-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:#808080;margin-bottom:0.4rem;}
+.kpi-value{font-size:2.2rem;font-weight:700;}
+.kpi-value span{font-size:1rem;color:#808080;}
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
+.chart-card{background:#242424;border:1px solid #3D3D3D;border-radius:12px;padding:1.25rem;}
+.chart-card h3{font-size:0.95rem;color:#FFB800;margin-bottom:1rem;font-family:'JetBrains Mono',monospace;}
+.chart-card.full-width{grid-column:1/-1;}
+.chart-wrapper{position:relative;height:350px;}
+.chart-wrapper-tall{position:relative;height:400px;}
+.heatmap-card{background:#242424;border:1px solid #3D3D3D;border-radius:12px;padding:1.25rem;margin-bottom:2rem;}
+.heatmap-card h3{font-size:0.95rem;color:#FFB800;margin-bottom:1rem;font-family:'JetBrains Mono',monospace;}
+.heatmap-table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.heatmap-table th,.heatmap-table td{padding:0.6rem 0.75rem;text-align:center;border:1px solid #3D3D3D;}
+.heatmap-table th{background:#1A1A1A;color:#B8B8B8;font-family:'JetBrains Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;}
+.heatmap-table td{font-family:'JetBrains Mono',monospace;font-weight:600;}
+.heatmap-table td.building-name{text-align:left;color:#FFB800;font-weight:600;}
+.btn-print{position:fixed;top:1rem;right:1rem;background:linear-gradient(135deg,#FF6B00,#C65D07);color:white;border:none;padding:0.6rem 1.2rem;border-radius:8px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:600;z-index:100;display:flex;align-items:center;gap:0.5rem;box-shadow:0 4px 15px rgba(255,107,0,0.3);}
+.btn-print:hover{opacity:0.9;}
+.footer-sig{text-align:center;padding:2rem;color:#808080;font-size:0.75rem;font-family:'JetBrains Mono',monospace;}
+.footer-sig strong{color:#FF6B00;}
+@media print{
+.btn-print{display:none;}
+body{background:white!important;color:#333!important;background-image:none!important;padding:0.5rem;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.kpi-grid{grid-template-columns:repeat(5,1fr);}
+.charts-grid{grid-template-columns:1fr 1fr;}
+.chart-card,.kpi-card,.heatmap-card{background:white!important;border:1px solid #ddd!important;break-inside:avoid;page-break-inside:avoid;}
+.chart-card h3,.heatmap-card h3,.kpi-label{color:#333!important;}
+.kpi-value{color:#333!important;}
+.report-header h1{-webkit-text-fill-color:#FF6B00;}
+.report-header p{color:#666!important;}
+.heatmap-table th{background:#f5f5f5!important;color:#333!important;}
+.heatmap-table td,.heatmap-table th{border-color:#ddd!important;}
+.chart-wrapper,.chart-wrapper-tall{height:300px;}
+.footer-sig{color:#666!important;}
+.footer-sig strong{color:#FF6B00!important;}
+}
+</style>
+</head>
+<body>
+<button class="btn-print" onclick="window.print()">🖨️ Imprimir / PDF</button>
+<div class="report-header">
+<h1>📊 Relatório Gráfico — Reengenharia UNILA</h1>
+<p>Campus Arandu • Consórcio MPD/Ankara • Gerado em: ${now}</p>
+</div>
+
+<div class="kpi-grid">
+<div class="kpi-card overall"><div class="kpi-label">Progresso Geral</div><div class="kpi-value">${data.overallProgress}<span>%</span></div></div>
+<div class="kpi-card total"><div class="kpi-label">Total de Fases</div><div class="kpi-value">${data.totalPhases}</div></div>
+<div class="kpi-card completed"><div class="kpi-label">Concluídas</div><div class="kpi-value" style="color:#4CAF50">${data.approvedPhases}</div></div>
+<div class="kpi-card in-progress"><div class="kpi-label">Em Andamento</div><div class="kpi-value" style="color:#FFB800">${data.progressPhases}</div></div>
+<div class="kpi-card with-issues"><div class="kpi-label">Com Pendências</div><div class="kpi-value" style="color:#FF6B00">${data.issuesPhases}</div></div>
+</div>
+
+<div class="charts-grid">
+<div class="chart-card"><h3>📊 Progresso por Edificação</h3><div class="chart-wrapper"><canvas id="buildingChart"></canvas></div></div>
+<div class="chart-card"><h3>🍩 Distribuição Geral de Status</h3><div class="chart-wrapper"><canvas id="statusDoughnut"></canvas></div></div>
+<div class="chart-card"><h3>📈 Status por Disciplina</h3><div class="chart-wrapper-tall"><canvas id="disciplineChart"></canvas></div></div>
+<div class="chart-card"><h3>🔧 Progresso por Tipo de Modelo</h3><div class="chart-wrapper"><canvas id="modelTypeChart"></canvas></div></div>
+</div>
+
+<div class="heatmap-card"><h3>🗺️ Mapa de Progresso — Edificação × Disciplina</h3><table class="heatmap-table" id="heatmapTable"></table></div>
+
+<div class="footer-sig"><strong>Gabriel Aragão Santos</strong> • Arquiteto / Coordenador BIM • Ankara Engenharia</div>
+
+<script>
+const reportData = ${reportDataJSON};
+const chartColors = ${colors};
+
+Chart.defaults.color = '#B8B8B8';
+Chart.defaults.borderColor = '#3D3D3D';
+Chart.defaults.font.family = "'JetBrains Mono', monospace";
+Chart.defaults.font.size = 11;
+
+// 1. Progresso por Edificação (barra horizontal)
+new Chart(document.getElementById('buildingChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: reportData.buildingProgress.map(b => b.name),
+        datasets: [{
+            label: 'Progresso (%)',
+            data: reportData.buildingProgress.map(b => b.progress),
+            backgroundColor: reportData.buildingProgress.map(b => b.progress >= 80 ? chartColors.approved : b.progress >= 40 ? chartColors.progress : chartColors.pending),
+            borderRadius: 6,
+            barThickness: 30
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw + '% concluído' } } },
+        scales: {
+            x: { max: 100, ticks: { callback: v => v + '%', color: '#B8B8B8' }, grid: { color: 'rgba(255,107,0,0.08)' } },
+            y: { ticks: { color: '#B8B8B8', font: { size: 11 } }, grid: { display: false } }
+        }
+    }
+});
+
+// 2. Distribuição Geral de Status (doughnut)
+new Chart(document.getElementById('statusDoughnut').getContext('2d'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Pendente', 'Em Andamento', 'Com Pendências', 'Concluído'],
+        datasets: [{
+            data: [reportData.statusDistribution.pending, reportData.statusDistribution.progress, reportData.statusDistribution.issues, reportData.statusDistribution.approved],
+            backgroundColor: [chartColors.pending, chartColors.progress, chartColors.issues, chartColors.approved],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: {
+            legend: { position: 'right', labels: { color: '#B8B8B8', boxWidth: 14, padding: 12, font: { size: 11 } } },
+            tooltip: { callbacks: { label: function(ctx) { const total = ctx.dataset.data.reduce((a, b) => a + b, 0); const pct = ((ctx.raw / total) * 100).toFixed(1); return ctx.label + ': ' + ctx.raw + ' (' + pct + '%)'; } } }
+        }
+    }
+});
+
+// 3. Status por Disciplina (barra empilhada)
+const discIds = Object.keys(reportData.disciplineStatus);
+new Chart(document.getElementById('disciplineChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: discIds.map(id => reportData.disciplineStatus[id].code),
+        datasets: [
+            { label: 'Concluído', data: discIds.map(id => reportData.disciplineStatus[id].approved), backgroundColor: chartColors.approved },
+            { label: 'Em Andamento', data: discIds.map(id => reportData.disciplineStatus[id].progress), backgroundColor: chartColors.progress },
+            { label: 'Com Pendências', data: discIds.map(id => reportData.disciplineStatus[id].issues), backgroundColor: chartColors.issues },
+            { label: 'Pendente', data: discIds.map(id => reportData.disciplineStatus[id].pending), backgroundColor: chartColors.pending }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { position: 'top', labels: { color: '#B8B8B8', boxWidth: 12, padding: 10 } },
+            tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+            x: { stacked: true, ticks: { color: '#B8B8B8' }, grid: { display: false } },
+            y: { stacked: true, ticks: { color: '#B8B8B8' }, grid: { color: 'rgba(255,107,0,0.08)' } }
+        }
+    }
+});
+
+// 4. Progresso por Tipo de Modelo (barra vertical)
+const mtIds = Object.keys(reportData.modelTypeProgress);
+const mtColors = { mode: chartColors.mode, ajus: chartColors.ajus, reng: chartColors.reng, asbt: chartColors.asbt };
+new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: mtIds.map(id => reportData.modelTypeProgress[id].code),
+        datasets: [{
+            label: 'Progresso (%)',
+            data: mtIds.map(id => { const mt = reportData.modelTypeProgress[id]; return mt.total > 0 ? Math.round((mt.approved / mt.total) * 100) : 0; }),
+            backgroundColor: mtIds.map(id => mtColors[id] || '#808080'),
+            borderRadius: 6,
+            barThickness: 50
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: function(ctx) { const mt = reportData.modelTypeProgress[mtIds[ctx.dataIndex]]; return ctx.raw + '% (' + mt.approved + '/' + mt.total + ' fases)'; } } }
+        },
+        scales: {
+            x: { ticks: { color: '#B8B8B8', font: { size: 12, weight: 'bold' } }, grid: { display: false } },
+            y: { max: 100, ticks: { callback: v => v + '%', color: '#B8B8B8' }, grid: { color: 'rgba(255,107,0,0.08)' } }
+        }
+    }
+});
+
+// 5. Heatmap — Edificação × Disciplina
+(function buildHeatmap() {
+    const table = document.getElementById('heatmapTable');
+    const disciplineCodes = [...new Set(reportData.heatmap.map(h => h.disciplineCode))];
+    const buildingNames = [...new Set(reportData.heatmap.map(h => h.buildingName))];
+
+    let headerHtml = '<thead><tr><th>Edificação</th>';
+    disciplineCodes.forEach(code => { headerHtml += '<th>' + code + '</th>'; });
+    headerHtml += '<th>Média</th></tr></thead>';
+
+    let bodyHtml = '<tbody>';
+    buildingNames.forEach(bName => {
+        bodyHtml += '<tr><td class="building-name">' + bName + '</td>';
+        let rowTotal = 0, rowCount = 0;
+        disciplineCodes.forEach(dCode => {
+            const cell = reportData.heatmap.find(h => h.buildingName === bName && h.disciplineCode === dCode);
+            const pct = cell ? cell.progress : 0;
+            rowTotal += pct; rowCount++;
+            const bgColor = pct >= 80 ? 'rgba(76,175,80,0.3)' : pct >= 40 ? 'rgba(255,184,0,0.3)' : pct > 0 ? 'rgba(255,107,0,0.2)' : 'rgba(96,96,96,0.2)';
+            const textColor = pct >= 80 ? '#4CAF50' : pct >= 40 ? '#FFB800' : pct > 0 ? '#FF6B00' : '#808080';
+            bodyHtml += '<td style="background:' + bgColor + ';color:' + textColor + '">' + pct + '%</td>';
+        });
+        const avg = rowCount > 0 ? Math.round(rowTotal / rowCount) : 0;
+        bodyHtml += '<td style="font-weight:700;color:#FFB800">' + avg + '%</td></tr>';
+    });
+    bodyHtml += '</tbody>';
+    table.innerHTML = headerHtml + bodyHtml;
+})();
+<\/script>
+</body>
+</html>`);
             rw.document.close();
         }
 
