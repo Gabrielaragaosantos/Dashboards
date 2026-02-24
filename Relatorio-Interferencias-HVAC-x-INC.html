@@ -25,7 +25,6 @@ header .meta { color: #666; font-size: 0.75rem; margin-top: 0.25rem; }
 .kpi-label { font-size: 0.8rem; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
 .charts-row { display: grid; gap: 1rem; margin: 1rem 0; }
 .charts-row-1 { grid-template-columns: 1fr 1fr; }
-.charts-row-2 { grid-template-columns: 1fr; }
 .chart-card { background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%); border: 1px solid rgba(255, 107, 0, 0.25); border-radius: 12px; padding: 1.5rem; }
 .chart-card h3 { color: white; font-size: 1rem; margin-bottom: 1rem; text-align: center; }
 .filter-bar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 1rem 0; }
@@ -44,9 +43,6 @@ table tbody tr:nth-child(odd) { background: #2d2d2d; }
 table tbody tr:nth-child(even) { background: #333; }
 table tbody tr:hover { background: rgba(255, 107, 0, 0.15); }
 table tbody tr.hidden { display: none; }
-.severity-high { background: rgba(244, 67, 54, 0.25) !important; }
-.severity-med { background: rgba(255, 184, 0, 0.25) !important; }
-.severity-low { background: rgba(76, 175, 80, 0.25) !important; }
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
 .gallery-item { background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%); border: 1px solid rgba(255, 107, 0, 0.25); border-radius: 12px; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
 .gallery-item:hover { transform: translateY(-3px); border-color: #FF6B00; }
@@ -95,17 +91,11 @@ footer p { margin-bottom: 0.25rem; }
 <div class="kpi-grid">
   <div class="kpi-card"><div class="kpi-value" style="color:#FF6B00;">162</div><div class="kpi-label">Total de Interferências</div></div>
   <div class="kpi-card"><div class="kpi-value" style="color:#FFB800; font-size:1.3rem;">Hard (Conservative)</div><div class="kpi-label">Tipo de Teste</div></div>
-  <div class="kpi-card"><div class="kpi-value" style="color:#FFB800;">0.010m</div><div class="kpi-label">Tolerância</div></div>
-  <div class="kpi-card"><div class="kpi-value" style="color:#f44336;">0.375m</div><div class="kpi-label">Severidade Máxima</div></div>
-  <div class="kpi-card"><div class="kpi-value" style="color:#FFB800;">0.067m</div><div class="kpi-label">Severidade Média</div></div>
 </div>
 <h2 class="section-title">Gráficos</h2>
 <div class="charts-row charts-row-1">
   <div class="chart-card"><h3>Interferências por Tipo de Elemento HVAC</h3><canvas id="chartHVAC"></canvas></div>
   <div class="chart-card"><h3>Interferências por Tipo de Elemento INC</h3><canvas id="chartINC"></canvas></div>
-</div>
-<div class="charts-row charts-row-2">
-  <div class="chart-card"><h3>Distribuição por Severidade (Distância)</h3><canvas id="chartSeverity"></canvas></div>
 </div>
 <h2 class="section-title">Tabela Detalhada de Interferências</h2>
 <div class="filter-bar">
@@ -148,7 +138,6 @@ var CLASH_DATA = [{"name":"Interferência 1","originalName":"Clash1","distance":
 
 var IMG_BASE="Interferencias%20exportadas%20-%20Navis/CLASHES%20HVAC%20x%20INC%20FISC/Test%201_files/";
 function getImagePath(c){return IMG_BASE+c.image;}
-function getSeverityClass(d){var a=Math.abs(d);if(a>0.2)return"severity-high";if(a>0.05)return"severity-med";return"severity-low";}
 function buildTable(){
   var t=document.getElementById("clashTableBody"),h="";
   CLASH_DATA.forEach(function(c,i){
@@ -209,7 +198,7 @@ function buildGallery(){
   CLASH_DATA.forEach(function(c,i){
     h+='<div class="gallery-item" id="gallery-item-'+i+'">'
       +'<img src="'+getImagePath(c)+'" alt="'+c.name+'" loading="lazy" onclick="openLightbox('+i+')">'
-      +'<div class="gallery-caption"><strong>'+c.name+'</strong><br>'+c.distance+'</div></div>';
+      +'<div class="gallery-caption"><strong>'+c.name+'</strong></div></div>';
   });g.innerHTML=h;
 }
 function scrollToGallery(idx){
@@ -229,7 +218,7 @@ function updateLightbox(){
   document.getElementById("lightboxImg").src=getImagePath(c);
   document.getElementById("lightboxImg").alt=c.name;
   document.getElementById("lightboxCaption").innerHTML=
-    '<strong>'+c.name+'</strong> ('+c.originalName+') | Distância: '+c.distance
+    '<strong>'+c.name+'</strong> ('+c.originalName+')'
     +'<br>HVAC: '+c.item1Type+' — '+c.item1Name
     +'<br>INC: '+c.item2Type+' — '+c.item2Name;
   document.getElementById("lightboxCounter").textContent=(lbIdx+1)+" / "+CLASH_DATA.length;
@@ -257,13 +246,6 @@ function buildCharts(){
   new Chart(document.getElementById("chartINC"),{
     type:"doughnut",data:{labels:iL,datasets:[{data:iV,backgroundColor:iP.slice(0,iL.length),borderColor:iP.slice(0,iL.length).map(function(c){return c+"80";}),borderWidth:2}]},
     options:{responsive:true,plugins:{legend:{position:"bottom",labels:{color:tc,padding:15}},tooltip:{backgroundColor:"rgba(0,0,0,0.85)",titleColor:"#FF6B00",bodyColor:"#E0E0E0"}}}
-  });
-  var sC=["#4CAF50","#8BC34A","#FFB800","#FF9800","#FF5722","#f44336"];
-  var bins=[{label:"0 – 0.02m",min:0,max:0.02,count:0},{label:"0.02 – 0.05m",min:0.02,max:0.05,count:0},{label:"0.05 – 0.1m",min:0.05,max:0.1,count:0},{label:"0.1 – 0.2m",min:0.1,max:0.2,count:0},{label:"0.2 – 0.3m",min:0.2,max:0.3,count:0},{label:"> 0.3m",min:0.3,max:Infinity,count:0}];
-  CLASH_DATA.forEach(function(c){var a=Math.abs(c.distanceNum);for(var i=bins.length-1;i>=0;i--){if(a>=bins[i].min){bins[i].count++;break;}}});
-  new Chart(document.getElementById("chartSeverity"),{
-    type:"bar",data:{labels:bins.map(function(b){return b.label;}),datasets:[{label:"Interferências",data:bins.map(function(b){return b.count;}),backgroundColor:sC.map(function(c){return c+"DD";}),borderColor:sC,borderWidth:1,borderRadius:6}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{backgroundColor:"rgba(0,0,0,0.85)",titleColor:"#FF6B00",bodyColor:"#E0E0E0"}},scales:{x:{grid:{color:gc},ticks:{color:tc}},y:{grid:{color:gc},ticks:{color:tc}}}}
   });
 }
 buildTable();
