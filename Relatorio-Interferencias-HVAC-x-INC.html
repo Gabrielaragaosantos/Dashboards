@@ -50,6 +50,8 @@ table tbody tr.hidden { display: none; }
 .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
 .gallery-item { background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%); border: 1px solid rgba(255, 107, 0, 0.25); border-radius: 12px; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
 .gallery-item:hover { transform: translateY(-3px); border-color: #FF6B00; }
+.gallery-item.highlight { border-color: #FF6B00; box-shadow: 0 0 20px rgba(255, 107, 0, 0.6); transform: translateY(-3px); animation: highlightPulse 0.6s ease-in-out 3; }
+@keyframes highlightPulse { 0%,100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.6); } 50% { box-shadow: 0 0 35px rgba(255, 107, 0, 0.9); } }
 .gallery-item img { width: 100%; display: block; cursor: pointer; border-radius: 8px 8px 0 0; }
 .gallery-caption { padding: 0.5rem 0.75rem; font-size: 0.75rem; color: #bbb; }
 .gallery-caption strong { color: #FF6B00; }
@@ -78,15 +80,15 @@ footer p { margin-bottom: 0.25rem; }
 <div class="container">
 <header>
   <h1>Relatório de Interferências</h1>
-  <h2>HVAC × Incêndio — Consórcio Fiscalizador</h2>
-  <p class="subtitle">Edifício Central/ADM — UNILA Campus Arandu, Foz do Iguaçu/PR</p>
+  <h2>Reeng. HVAC × Ajus. Incêndio</h2>
+  <p class="subtitle">Edifício Salas de Aulas — UNILA Campus Arandu, Foz do Iguaçu/PR</p>
   <p class="meta">Gerado em: 23/02/2026 | Fonte: Autodesk Navisworks 2025</p>
 </header>
 <h2 class="section-title">Contexto</h2>
 <section class="context-section">
-  <p>O <strong>Consórcio de Obras MPD/Ankara</strong> concebeu e entregou o modelo BIM de HVAC para o Edifício Central/ADM da UNILA — Campus Arandu, em conformidade com o cronograma estabelecido para a disciplina de climatização.</p>
-  <p>Posteriormente, o <strong>Consórcio Fiscalizador</strong> entregou o modelo de <strong>Proteção contra Incêndio (INC)</strong>, contemplando tubulações de sprinklers, eletrodutos e conexões do sistema de combate a incêndio.</p>
-  <p>Com a publicação tardia do modelo de Incêndio, foram identificadas <strong>162 interferências (hard clashes)</strong> com o modelo de HVAC já publicado. Essas interferências implicam na necessidade de <strong>retrabalho no modelo de HVAC</strong>, decorrente exclusivamente da entrega posterior do modelo de Incêndio pelo Consórcio Fiscalizador.</p>
+  <p>O <strong>Consórcio de Obras MPD/Ankara</strong> concebeu e entregou o modelo BIM de HVAC para o <strong>Edifício Salas de Aulas</strong> da UNILA, Campus Arandu, em conformidade com a entrega para a disciplina de climatização.</p>
+  <p>Posteriormente, o <strong>Consórcio Fiscalizador</strong> entregou o modelo de <strong>Proteção contra Incêndio</strong>, contemplando tubulações de sprinklers, eletrodutos e conexões do sistema de combate a incêndio.</p>
+  <p>Com a publicação tardia do modelo de Incêndio, foram identificadas <strong>162 interferências</strong> com o modelo de HVAC já publicado. Essas interferências implicam na necessidade de retrabalho no modelo de HVAC, decorrente exclusivamente da entrega posterior do modelo de Incêndio pelo <strong>Consórcio Fiscalizador</strong>.</p>
   <p>Este relatório documenta e evidencia todas as interferências detectadas via <strong>Clash Detection</strong> no <strong>Autodesk Navisworks 2025</strong>, com tolerância de <strong>0.010m</strong> e tipo <strong>Hard (Conservative)</strong>. Os dados foram extraídos automaticamente do relatório de clashes e processados para gerar este painel interativo.</p>
 </section>
 <h2 class="section-title">Indicadores</h2>
@@ -117,11 +119,9 @@ footer p { margin-bottom: 0.25rem; }
     <thead><tr>
       <th onclick="sortTable(0)"># <span class="sort-arrow">⇅</span></th>
       <th onclick="sortTable(1)">Nome <span class="sort-arrow">⇅</span></th>
-      <th onclick="sortTable(2)">Distância <span class="sort-arrow">⇅</span></th>
-      <th onclick="sortTable(3)">Layer HVAC <span class="sort-arrow">⇅</span></th>
-      <th onclick="sortTable(4)">Elemento HVAC <span class="sort-arrow">⇅</span></th>
-      <th onclick="sortTable(5)">Layer INC <span class="sort-arrow">⇅</span></th>
-      <th onclick="sortTable(6)">Elemento INC <span class="sort-arrow">⇅</span></th>
+      <th onclick="sortTable(2)">Elemento HVAC <span class="sort-arrow">⇅</span></th>
+      <th onclick="sortTable(3)">Nível Entreforros <span class="sort-arrow">⇅</span></th>
+      <th onclick="sortTable(4)">Elemento INC <span class="sort-arrow">⇅</span></th>
     </tr></thead>
     <tbody id="clashTableBody"></tbody>
   </table>
@@ -137,9 +137,9 @@ footer p { margin-bottom: 0.25rem; }
   <div class="lightbox-counter" id="lightboxCounter"></div>
 </div>
 <footer>
-  <p>Elaborado por: Gabriel Aragão Santos — Ankara Engenharia LTDA</p>
   <p>Fonte dos dados: Autodesk Navisworks 2025 — Clash Detection Export</p>
   <p>UNILA — Universidade Federal da Integração Latino-Americana — Campus Arandu</p>
+  <p style="margin-top:1rem;opacity:0.4;font-size:0.65rem;">Gabriel Aragão Santos - gabriel.santos@ankaraengenharia.com.br</p>
 </footer>
 </div>
 <button class="print-btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
@@ -152,12 +152,9 @@ function getSeverityClass(d){var a=Math.abs(d);if(a>0.2)return"severity-high";if
 function buildTable(){
   var t=document.getElementById("clashTableBody"),h="";
   CLASH_DATA.forEach(function(c,i){
-    var s=getSeverityClass(c.distanceNum);
-    h+='<tr data-index="'+i+'">'
+    h+='<tr data-index="'+i+'" onclick="scrollToGallery('+i+')" style="cursor:pointer;" title="Clique para ver a imagem">'
       +'<td>'+(i+1)+'</td>'
       +'<td>'+c.name+'</td>'
-      +'<td class="'+s+'">'+c.distance+'</td>'
-      +'<td>'+c.item1Layer+'</td>'
       +'<td>'+c.item1Type+'</td>'
       +'<td>'+c.item2Layer+'</td>'
       +'<td>'+c.item2Type+'</td></tr>';
@@ -197,11 +194,9 @@ function sortTable(col){
     var ca=CLASH_DATA[ai],cb=CLASH_DATA[bi];var va,vb;
     switch(col){
       case 0:va=ai;vb=bi;break;case 1:va=ca.name;vb=cb.name;break;
-      case 2:va=ca.distanceNum;vb=cb.distanceNum;break;
-      case 3:va=ca.item1Layer;vb=cb.item1Layer;break;
-      case 4:va=ca.item1Type;vb=cb.item1Type;break;
-      case 5:va=ca.item2Layer;vb=cb.item2Layer;break;
-      case 6:va=ca.item2Type;vb=cb.item2Type;break;
+      case 2:va=ca.item1Type;vb=cb.item1Type;break;
+      case 3:va=ca.item2Layer;vb=cb.item2Layer;break;
+      case 4:va=ca.item2Type;vb=cb.item2Type;break;
     }
     if(va<vb)return sortDir[col]?-1:1;
     if(va>vb)return sortDir[col]?1:-1;
@@ -212,10 +207,17 @@ function sortTable(col){
 function buildGallery(){
   var g=document.getElementById("galleryGrid"),h="";
   CLASH_DATA.forEach(function(c,i){
-    h+='<div class="gallery-item">'
+    h+='<div class="gallery-item" id="gallery-item-'+i+'">'
       +'<img src="'+getImagePath(c)+'" alt="'+c.name+'" loading="lazy" onclick="openLightbox('+i+')">'
       +'<div class="gallery-caption"><strong>'+c.name+'</strong><br>'+c.distance+'</div></div>';
   });g.innerHTML=h;
+}
+function scrollToGallery(idx){
+  var el=document.getElementById("gallery-item-"+idx);
+  if(!el)return;
+  el.scrollIntoView({behavior:"smooth",block:"center"});
+  el.classList.add("highlight");
+  setTimeout(function(){el.classList.remove("highlight");},2000);
 }
 var lbIdx=0;
 function openLightbox(i){lbIdx=i;document.getElementById("lightbox").classList.add("active");updateLightbox();}
