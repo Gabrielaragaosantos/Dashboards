@@ -31,7 +31,7 @@
             --cab-color: #00BCD4;
             --status-pending: #606060;
             --status-progress: #FFB800;
-            --status-issues: #FF6B00;
+            --status-issues: #00BCD4;
             --status-approved: #4CAF50;
             --mode-color: #2196F3;
             --ajus-color: #9C27B0;
@@ -50,7 +50,7 @@
         .header-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
         .sync-status { display: flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); padding: 0.4rem 0.8rem; background: var(--bg-card); border-radius: 6px; border: 1px solid var(--border-color); }
         .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--status-approved); animation: pulse-dot 2s infinite; }
-        .sync-dot.offline { background: var(--status-issues); animation: none; }
+        .sync-dot.offline { background: #f44336; animation: none; }
         .sync-dot.syncing { background: var(--status-progress); animation: pulse-dot 0.5s infinite; }
         @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         .btn { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 0.6rem 1.2rem; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 0.5rem; }
@@ -97,6 +97,9 @@
         .model-types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1rem; }
         .model-type-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
         .model-type-card.not-applicable { opacity: 0.5; }
+        .model-type-card.absorbed-by-reng { opacity: 0.6; }
+        .model-type-card.absorbed-by-reng .model-type-header.asbt { background: rgba(255, 107, 0, 0.1); border-left-color: var(--reng-color); }
+        .absorbed-indicator { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--reng-color); background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); border-radius: 4px; padding: 0.2rem 0.5rem; margin-bottom: 0.75rem; }
         .model-type-header { padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
         .model-type-header.mode { background: rgba(33, 150, 243, 0.15); border-left: 3px solid var(--mode-color); }
         .model-type-header.ajus { background: rgba(156, 39, 176, 0.15); border-left: 3px solid var(--ajus-color); }
@@ -143,7 +146,7 @@
         .nivel-phase select:focus { outline: none; border-color: var(--accent-orange); }
         .nivel-phase select.pending { border-color: var(--status-pending); }
         .nivel-phase select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.15); }
-        .nivel-phase select.issues { border-color: var(--status-issues); background: rgba(255, 107, 0, 0.15); }
+        .nivel-phase select.issues { border-color: var(--status-issues); background: rgba(0, 188, 212, 0.15); }
         .nivel-phase select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
         
         
@@ -358,7 +361,7 @@
                 <div class="stat-value" id="inProgressCount">0</div>
             </div>
             <div class="stat-card issues-card">
-                <div class="stat-label">Com Pendências</div>
+                <div class="stat-label">Entregues</div>
                 <div class="stat-value" id="issuesCount">0</div>
             </div>
             <div class="stat-card approved-card">
@@ -383,7 +386,7 @@
                     <h3>Legenda de Status</h3>
                     <div class="legend-item"><div class="legend-color" style="background: var(--status-pending)"></div><span>Pendente</span></div>
                     <div class="legend-item"><div class="legend-color" style="background: var(--status-progress)"></div><span>Em Andamento</span></div>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--status-issues)"></div><span>Com Pendências</span></div>
+                    <div class="legend-item"><div class="legend-color" style="background: var(--status-issues)"></div><span>Entregue</span></div>
                     <div class="legend-item"><div class="legend-color" style="background: var(--status-approved)"></div><span>Concluído</span></div>
                 </div>
                 <div class="footer-section">
@@ -432,7 +435,7 @@
             { id: 'mode', code: 'MODE', name: 'Modelos Originais', defaultResponsible: 'Alto QI' },
             { id: 'ajus', code: 'AJUS', name: 'Ajustes (NERKPE)', defaultResponsible: '', canBeNA: true },
             { id: 'reng', code: 'RENG', name: 'Reengenharia', defaultResponsible: '', canBeNA: true },
-            { id: 'asbt', code: 'ASBT', name: 'As Built', defaultResponsible: '' }
+            { id: 'asbt', code: 'ASBT', name: 'As Built', defaultResponsible: '', canBeAbsorbed: true }
         ];
 
         const phaseTemplates = ['ifc', 'compatibility', 'docs2d', 'released'];
@@ -477,6 +480,7 @@
                         data[building.id].disciplines[disc.id].modelTypes[mt.id] = {
                             responsible: mt.defaultResponsible,
                             notApplicable: false,
+                            absorbedByReng: false,
                             revisionCountIfc: 0,
                             revisionCountDocs2d: 0,
                             levels: generateLevelsData(building.defaultLevels)
@@ -622,6 +626,11 @@
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
         }
 
+        function toggleAbsorbedByReng(buildingId, discId, mtId, isAbsorbed) {
+            database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/absorbedByReng`).set(isAbsorbed);
+            database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+        }
+
         function toggleNivel(id) {
             const el = document.getElementById(id);
             const toggle = document.getElementById(id + '-toggle');
@@ -736,7 +745,7 @@
             let total = 0, completed = 0;
             Object.values(building.disciplines).forEach(disc => {
                 Object.values(disc.modelTypes || {}).forEach(mt => {
-                    if (!mt.notApplicable && mt.levels) {
+                    if (!mt.notApplicable && !mt.absorbedByReng && mt.levels) {
                         Object.values(mt.levels).forEach(level => {
                             Object.values(level.phases || {}).forEach(status => {
                                 total++;
@@ -757,7 +766,7 @@
                 totalProgress += calculateProgress(building);
                 Object.values(building.disciplines).forEach(disc => {
                     Object.values(disc.modelTypes || {}).forEach(mt => {
-                        if (!mt.notApplicable && mt.levels) {
+                        if (!mt.notApplicable && !mt.absorbedByReng && mt.levels) {
                             Object.values(mt.levels).forEach(level => {
                                 Object.values(level.phases || {}).forEach(status => {
                                     if (status === 'progress') inProgress++;
@@ -781,7 +790,7 @@
         }
 
         function getStatusText(status) {
-            return { pending: 'Pendente', progress: 'Em Andamento', issues: 'Pendências', approved: 'Concluído' }[status] || status;
+            return { pending: 'Pendente', progress: 'Em Andamento', issues: 'Entregue', approved: 'Concluído' }[status] || status;
         }
 
         function setActiveBuilding(buildingId) { activeBuilding = buildingId; render(); }
@@ -807,6 +816,8 @@
                         if (!md) return;
                         if (md.notApplicable) {
                             bh += `<div class="mt-block na"><span class="mt-code ${mt.id}">${mt.code}</span> N/A</div>`;
+                        } else if (md.absorbedByReng) {
+                            bh += `<div class="mt-block na"><span class="mt-code ${mt.id}">${mt.code}</span> Absorvido pela RENG</div>`;
                         } else {
                             bh += `<div class="mt-block"><div class="mt-header"><span class="mt-code ${mt.id}">${mt.code}</span><span class="resp">${md.responsible || '-'}</span><span class="rev">IFC: ${md.revisionCountIfc || 0} | Doc: ${md.revisionCountDocs2d || 0}</span></div>`;
                             bh += `<table><thead><tr><th>Nível</th><th>IFC</th><th>Compat.</th><th>Doc 2D</th><th>Liberado</th><th>Obs</th></tr></thead><tbody>`;
@@ -834,7 +845,7 @@
             .mt-code.mode{background:#2196F3}.mt-code.ajus{background:#9C27B0}.mt-code.reng{background:#FF6B00}.mt-code.asbt{background:#4CAF50}
             .resp{color:#666}.rev{margin-left:auto;color:#FF6B00;font-weight:bold}
             table{width:100%;border-collapse:collapse;font-size:0.65rem}th{background:#eee;padding:0.25rem;text-align:left}td{padding:0.25rem;border-bottom:1px solid #eee}
-            td.pending{color:#666}td.progress{color:#856404;background:#fff8e1}td.issues{color:#C65D07;background:#fff3e0}td.approved{color:#155724;background:#e8f5e9}
+            td.pending{color:#666}td.progress{color:#856404;background:#fff8e1}td.issues{color:#00838F;background:#e0f7fa}td.approved{color:#155724;background:#e8f5e9}
             .obs{max-width:100px;font-size:0.6rem;color:#888}.update{font-size:0.6rem;color:#999;text-align:right;margin-top:0.3rem}
             .btn-print{position:fixed;top:0.5rem;right:0.5rem;background:#FF6B00;color:white;border:none;padding:0.4rem 0.8rem;border-radius:4px;cursor:pointer}
             @media print{.btn-print{display:none}}</style></head>
@@ -864,7 +875,8 @@
                 progressPhases: 0, issuesPhases: 0, pendingPhases: 0,
                 buildingProgress: [], disciplineStatus: {},
                 statusDistribution: { pending: 0, progress: 0, issues: 0, approved: 0 },
-                modelTypeProgress: {}, heatmap: []
+                modelTypeProgress: {}, heatmap: [],
+                responsibleProgress: {}
             };
 
             buildings.forEach(b => {
@@ -883,9 +895,14 @@
 
                     modelTypes.forEach(mt => {
                         const md = disc.modelTypes?.[mt.id];
-                        if (!md || md.notApplicable) return;
+                        if (!md || md.notApplicable || md.absorbedByReng) return;
                         if (!result.modelTypeProgress[mt.id]) {
                             result.modelTypeProgress[mt.id] = { code: mt.code, total: 0, approved: 0 };
+                        }
+                        const respName = (md.responsible || '').trim();
+                        const respKey = respName === '' ? '__nao_definido__' : respName.toLowerCase();
+                        if (!result.responsibleProgress[respKey]) {
+                            result.responsibleProgress[respKey] = { name: respName || 'Não definido', totalPhases: 0, approvedPhases: 0 };
                         }
                         Object.values(md.levels || {}).forEach(level => {
                             Object.values(level.phases || {}).forEach(status => {
@@ -894,7 +911,8 @@
                                 result.modelTypeProgress[mt.id].total++;
                                 result.statusDistribution[status]++;
                                 result.disciplineStatus[dt.id][status]++;
-                                if (status === 'approved') { result.approvedPhases++; discApproved++; result.modelTypeProgress[mt.id].approved++; }
+                                result.responsibleProgress[respKey].totalPhases++;
+                                if (status === 'approved') { result.approvedPhases++; discApproved++; result.modelTypeProgress[mt.id].approved++; result.responsibleProgress[respKey].approvedPhases++; }
                                 if (status === 'progress') result.progressPhases++;
                                 if (status === 'issues') result.issuesPhases++;
                                 if (status === 'pending') result.pendingPhases++;
@@ -921,7 +939,7 @@
             const rw = window.open('', '_blank', 'width=1400,height=900');
 
             const colors = JSON.stringify({
-                pending: '#606060', progress: '#FFB800', issues: '#FF6B00', approved: '#4CAF50',
+                pending: '#606060', progress: '#FFB800', issues: '#00BCD4', approved: '#4CAF50',
                 mode: '#2196F3', ajus: '#9C27B0', reng: '#FF6B00', asbt: '#4CAF50',
                 hvac: '#FF6B00', hid: '#00A8CC', esg: '#FFB800', spr: '#FF3D00',
                 inc: '#E91E63', ele: '#9C27B0', cab: '#00BCD4'
@@ -950,7 +968,7 @@ background-image:linear-gradient(rgba(255,107,0,0.08) 1px,transparent 1px),linea
 .kpi-card.total::before{background:#B8B8B8;}
 .kpi-card.completed::before{background:#4CAF50;}
 .kpi-card.in-progress::before{background:#FFB800;}
-.kpi-card.with-issues::before{background:#FF6B00;}
+.kpi-card.with-issues::before{background:#00BCD4;}
 .kpi-label{font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;color:#808080;margin-bottom:0.4rem;}
 .kpi-value{font-size:2.2rem;font-weight:700;}
 .kpi-value span{font-size:1rem;color:#808080;}
@@ -1001,7 +1019,7 @@ body{background:white!important;color:#333!important;background-image:none!impor
 <div class="kpi-card total"><div class="kpi-label">Total de Fases</div><div class="kpi-value">${data.totalPhases}</div></div>
 <div class="kpi-card completed"><div class="kpi-label">Concluídas</div><div class="kpi-value" style="color:#4CAF50">${data.approvedPhases}</div></div>
 <div class="kpi-card in-progress"><div class="kpi-label">Em Andamento</div><div class="kpi-value" style="color:#FFB800">${data.progressPhases}</div></div>
-<div class="kpi-card with-issues"><div class="kpi-label">Com Pendências</div><div class="kpi-value" style="color:#FF6B00">${data.issuesPhases}</div></div>
+<div class="kpi-card with-issues"><div class="kpi-label">Entregues</div><div class="kpi-value" style="color:#00BCD4">${data.issuesPhases}</div></div>
 </div>
 
 <div class="charts-grid">
@@ -1009,6 +1027,7 @@ body{background:white!important;color:#333!important;background-image:none!impor
 <div class="chart-card"><h3>🍩 Distribuição Geral de Status</h3><div class="chart-wrapper"><canvas id="statusDoughnut"></canvas></div></div>
 <div class="chart-card"><h3>📈 Status por Disciplina</h3><div class="chart-wrapper-tall"><canvas id="disciplineChart"></canvas></div></div>
 <div class="chart-card"><h3>🔧 Progresso por Tipo de Modelo</h3><div class="chart-wrapper"><canvas id="modelTypeChart"></canvas></div></div>
+<div class="chart-card full-width"><h3>Progresso por Projetista/Empresa</h3><div class="chart-wrapper-tall" id="responsibleChartWrapper"><canvas id="responsibleChart"></canvas></div></div>
 </div>
 
 <div class="heatmap-card"><h3>🗺️ Mapa de Progresso — Edificação × Disciplina</h3><table class="heatmap-table" id="heatmapTable"></table></div>
@@ -1053,7 +1072,7 @@ new Chart(document.getElementById('buildingChart').getContext('2d'), {
 new Chart(document.getElementById('statusDoughnut').getContext('2d'), {
     type: 'doughnut',
     data: {
-        labels: ['Pendente', 'Em Andamento', 'Com Pendências', 'Concluído'],
+        labels: ['Pendente', 'Em Andamento', 'Entregue', 'Concluído'],
         datasets: [{
             data: [reportData.statusDistribution.pending, reportData.statusDistribution.progress, reportData.statusDistribution.issues, reportData.statusDistribution.approved],
             backgroundColor: [chartColors.pending, chartColors.progress, chartColors.issues, chartColors.approved],
@@ -1080,7 +1099,7 @@ new Chart(document.getElementById('disciplineChart').getContext('2d'), {
         datasets: [
             { label: 'Concluído', data: discIds.map(id => reportData.disciplineStatus[id].approved), backgroundColor: chartColors.approved },
             { label: 'Em Andamento', data: discIds.map(id => reportData.disciplineStatus[id].progress), backgroundColor: chartColors.progress },
-            { label: 'Com Pendências', data: discIds.map(id => reportData.disciplineStatus[id].issues), backgroundColor: chartColors.issues },
+            { label: 'Entregue', data: discIds.map(id => reportData.disciplineStatus[id].issues), backgroundColor: chartColors.issues },
             { label: 'Pendente', data: discIds.map(id => reportData.disciplineStatus[id].pending), backgroundColor: chartColors.pending }
         ]
     },
@@ -1155,6 +1174,45 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
     bodyHtml += '</tbody>';
     table.innerHTML = headerHtml + bodyHtml;
 })();
+
+// 6. Progresso por Projetista/Empresa
+(function buildResponsibleChart() {
+    const respData = reportData.responsibleProgress;
+    if (!respData || Object.keys(respData).length === 0) return;
+    const entries = Object.values(respData).sort((a, b) => {
+        const pctA = a.totalPhases > 0 ? (a.approvedPhases / a.totalPhases) * 100 : 0;
+        const pctB = b.totalPhases > 0 ? (b.approvedPhases / b.totalPhases) * 100 : 0;
+        return pctB - pctA;
+    });
+    const labels = entries.map(e => e.name);
+    const data = entries.map(e => e.totalPhases > 0 ? Math.round((e.approvedPhases / e.totalPhases) * 100) : 0);
+    const tooltipData = entries.map(e => e.approvedPhases + '/' + e.totalPhases);
+    const wrapperEl = document.getElementById('responsibleChartWrapper');
+    if (wrapperEl) { wrapperEl.style.height = Math.max(200, entries.length * 40 + 60) + 'px'; }
+    new Chart(document.getElementById('responsibleChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Progresso (%)',
+                data: data,
+                backgroundColor: data.map(v => v >= 80 ? chartColors.approved : v >= 40 ? chartColors.progress : chartColors.pending),
+                borderRadius: 6, barThickness: 28
+            }]
+        },
+        options: {
+            indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: function(ctx) { return ctx.raw + '% (' + tooltipData[ctx.dataIndex] + ' fases)'; } } }
+            },
+            scales: {
+                x: { max: 100, ticks: { callback: v => v + '%', color: '#B8B8B8' }, grid: { color: 'rgba(255,107,0,0.08)' } },
+                y: { ticks: { color: '#B8B8B8', font: { size: 11 } }, grid: { display: false } }
+            }
+        }
+    });
+})();
 <\/script>
 </body>
 </html>`);
@@ -1213,23 +1271,29 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                     <div class="model-types-container"><div class="model-types-grid">`;
 
                 modelTypes.forEach(mt => {
-                    const md = disc.modelTypes?.[mt.id] || { notApplicable: false, responsible: '', levels: {}, revisionCountIfc: 0, revisionCountDocs2d: 0 };
+                    const md = disc.modelTypes?.[mt.id] || { notApplicable: false, absorbedByReng: false, responsible: '', levels: {}, revisionCountIfc: 0, revisionCountDocs2d: 0 };
                     const isNA = md.notApplicable;
+                    const isAbsorbed = mt.canBeAbsorbed && md.absorbedByReng;
+                    const isDisabled = isNA || isAbsorbed;
                     const levels = Object.entries(md.levels || {}).sort((a, b) => (a[1].order || 0) - (b[1].order || 0));
-                    
-                    html += `<div class="model-type-card ${isNA ? 'not-applicable' : ''}">
+
+                    html += `<div class="model-type-card ${isNA ? 'not-applicable' : ''} ${isAbsorbed ? 'absorbed-by-reng' : ''}">
                         <div class="model-type-header ${mt.id}">
                             <div class="model-type-title">
                                 <span class="model-type-code ${mt.id}">${mt.code}</span>
                                 <span class="model-type-name">${mt.name}</span>
                             </div>
+                            <div style="display:flex;gap:0.75rem;align-items:center;">
                             ${mt.canBeNA ? `<div class="na-toggle"><label>N/A</label><input type="checkbox" ${isNA ? 'checked' : ''} onchange="toggleNotApplicable('${building.id}', '${disc.id}', '${mt.id}', this.checked)"></div>` : ''}
+                            ${mt.canBeAbsorbed ? `<div class="na-toggle"><label>Absorv. RENG</label><input type="checkbox" ${isAbsorbed ? 'checked' : ''} onchange="toggleAbsorbedByReng('${building.id}', '${disc.id}', '${mt.id}', this.checked)"></div>` : ''}
+                            </div>
                         </div>
-                        <div class="model-type-content ${isNA ? 'disabled' : ''}">
+                        <div class="model-type-content ${isDisabled ? 'disabled' : ''}">
+                            ${isAbsorbed ? '<div class="absorbed-indicator">Absorvido pela RENG</div>' : ''}
                             <div class="projetista-field">
                                 <label>Projetista Responsável</label>
-                                <input type="text" value="${md.responsible || ''}" placeholder="${mt.defaultResponsible || 'Nome'}" 
-                                    onchange="updateResponsible('${building.id}', '${disc.id}', '${mt.id}', this.value)" ${isNA ? 'disabled' : ''}>
+                                <input type="text" value="${md.responsible || ''}" placeholder="${mt.defaultResponsible || 'Nome'}"
+                                    onchange="updateResponsible('${building.id}', '${disc.id}', '${mt.id}', this.value)" ${isDisabled ? 'disabled' : ''}>
                             </div>
                             <div class="niveis-container">`;
 
@@ -1240,7 +1304,7 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                             <div class="nivel-header" onclick="toggleNivel('${nivId}')">
                                 <div class="nivel-name">
                                     <input type="text" value="${level.name}" onclick="event.stopPropagation()" 
-                                        onchange="updateLevelName('${building.id}', ${levelIndex}, this.value)" ${isNA ? 'disabled' : ''}>
+                                        onchange="updateLevelName('${building.id}', ${levelIndex}, this.value)" ${isDisabled ? 'disabled' : ''}>
                                 </div>
                                 <span class="nivel-toggle ${li === 0 ? 'open' : ''}" id="${nivId}-toggle">▼</span>
                             </div>
@@ -1252,12 +1316,12 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                             html += `<div class="nivel-phase">
                                 <div class="nivel-phase-header">
                                     <span class="nivel-phase-name">${phaseNames[phase]}</span>
-                                    <button class="copy-btn" onclick="event.stopPropagation(); openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', '${status}')" title="Copiar para outros níveis" ${isNA ? 'disabled' : ''}>📋</button>
+                                    <button class="copy-btn" onclick="event.stopPropagation(); openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', '${status}')" title="Copiar para outros níveis" ${isDisabled ? 'disabled' : ''}>📋</button>
                                 </div>
-                                <select class="${status}" onchange="updateLevelPhase('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', this.value)" ${isNA ? 'disabled' : ''}>
+                                <select class="${status}" onchange="updateLevelPhase('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', this.value)" ${isDisabled ? 'disabled' : ''}>
                                     <option value="pending" ${status === 'pending' ? 'selected' : ''}>Pendente</option>
                                     <option value="progress" ${status === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                    <option value="issues" ${status === 'issues' ? 'selected' : ''}>Pendências</option>
+                                    <option value="issues" ${status === 'issues' ? 'selected' : ''}>Entregue</option>
                                     <option value="approved" ${status === 'approved' ? 'selected' : ''}>Concluído</option>
                                 </select>
                             </div>`;
@@ -1268,12 +1332,12 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                                 <div class="nivel-obs">
                                     <div class="nivel-obs-header">
                                         <label>Observações</label>
-                                        <button class="copy-btn" onclick="openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', 'obs', '${obsValue}')" title="Copiar para outros níveis" ${isNA ? 'disabled' : ''}>📋</button>
+                                        <button class="copy-btn" onclick="openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', 'obs', '${obsValue}')" title="Copiar para outros níveis" ${isDisabled ? 'disabled' : ''}>📋</button>
                                     </div>
                                     <textarea placeholder="Observações..." 
                                         oninput="autoResizeTextarea(this)" 
                                         onchange="updateLevelObs('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', this.value)" 
-                                        ${isNA ? 'disabled' : ''}>${level.obs || ''}</textarea>
+                                        ${isDisabled ? 'disabled' : ''}>${level.obs || ''}</textarea>
                                 </div>
                             </div>
                         </div>`;
@@ -1285,13 +1349,13 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                                     <span class="revision-counter-label">IFC:</span>
                                     <span class="revision-counter-value">${md.revisionCountIfc || 0}</span>
-                                    <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'ifc')" ${isNA ? 'disabled' : ''}>Editar</button>
+                                    <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'ifc')" ${isDisabled ? 'disabled' : ''}>Editar</button>
                                 </div>
                                 <div class="revision-counter" id="revision-docs2d-${building.id}-${disc.id}-${mt.id}">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                                     <span class="revision-counter-label">Doc 2D:</span>
                                     <span class="revision-counter-value">${md.revisionCountDocs2d || 0}</span>
-                                    <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'docs2d')" ${isNA ? 'disabled' : ''}>Editar</button>
+                                    <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'docs2d')" ${isDisabled ? 'disabled' : ''}>Editar</button>
                                 </div>
                             </div>
                         </div>
