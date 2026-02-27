@@ -134,8 +134,32 @@
         .nivel-toggle.open { transform: rotate(180deg); }
         .nivel-content { padding: 0.75rem; display: none; border-top: 1px solid var(--border-color); }
         .nivel-content.open { display: block; }
-        
-        
+
+        .discipline-toggle { font-size: 0.8rem; color: var(--text-muted); transition: transform 0.2s; cursor: pointer; margin-left: 0.5rem; }
+        .discipline-toggle.open { transform: rotate(180deg); }
+        .discipline-body { display: none; }
+        .discipline-body.open { display: block; }
+
+        .user-name-display { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent-orange); padding: 0.3rem 0.6rem; background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.2); border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .user-name-display:hover { background: rgba(255, 107, 0, 0.2); }
+
+        .activity-panel { position: fixed; top: 0; right: -420px; width: 400px; height: 100vh; background: var(--bg-card); border-left: 1px solid var(--border-color); z-index: 1500; transition: right 0.3s ease; display: flex; flex-direction: column; box-shadow: -4px 0 20px rgba(0,0,0,0.3); }
+        .activity-panel.open { right: 0; }
+        .activity-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-color); background: var(--bg-secondary); }
+        .activity-panel-header h3 { font-size: 0.9rem; color: var(--accent-yellow); margin: 0; }
+        .activity-panel-close { background: transparent; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; padding: 0.25rem; }
+        .activity-panel-close:hover { color: var(--text-primary); }
+        .activity-panel-content { flex: 1; overflow-y: auto; }
+        .activity-log-item { padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-color); transition: background 0.2s; }
+        .activity-log-item:hover { background: var(--bg-secondary); }
+        .activity-log-user { font-weight: 600; color: var(--accent-orange); font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
+        .activity-log-action { font-size: 0.8rem; color: var(--text-primary); margin: 0.25rem 0; }
+        .activity-log-details { font-size: 0.7rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+        .activity-log-time { font-size: 0.65rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.25rem; }
+        .activity-panel-empty { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem; }
+        .activity-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); z-index: 1499; display: none; }
+        .activity-overlay.open { display: block; }
+
         .nivel-phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
         .nivel-phase { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; position: relative; }
         .nivel-phase-header { display: flex; align-items: center; gap: 0.25rem; }
@@ -316,10 +340,17 @@
             </div>
             <div class="header-actions">
                 <img src="https://raw.githubusercontent.com/Gabrielaragaosantos/Dashboards/main/Imagens%20Salas%20de%20Aulas/Logo_UNILA.png" alt="Logo UNILA" class="logo-unila">
+                <span class="user-name-display" id="currentUserName" onclick="openUserNameModal()" title="Clique para alterar seu nome"></span>
                 <div class="sync-status">
                     <div class="sync-dot" id="syncDot"></div>
                     <span id="syncText">Conectado</span>
                 </div>
+                <button class="btn btn-report" onclick="openActivityPanel()" title="Registro de Atividades" style="padding:0.5rem 0.75rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Atividades
+                </button>
                 <div class="report-dropdown">
                     <button class="btn btn-report" onclick="toggleReportDropdown(event)">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -571,9 +602,10 @@
                     }
                 });
             });
+            logActivity('Alterou quantidade de niveis', `${getBuildingName(buildingId)} — ${currentCount} → ${newCount} niveis`);
         }
 
-        
+
         function updateLevelName(buildingId, levelIndex, newName) {
             const building = projectData[buildingId];
             if (!building) return;
@@ -586,6 +618,7 @@
                 });
             });
             showToast(`Nome "${newName}" aplicado em todas as disciplinas`);
+            logActivity('Renomeou nivel', `${getBuildingName(buildingId)} — Nivel ${levelIndex + 1} → "${newName}"`);
         }
 
         function updateLevelPhase(buildingId, discId, mtId, levelId, phase, newStatus) {
@@ -603,32 +636,40 @@
                     database.ref(`${basePath}/revisionCountDocs2d`).set((mtData?.revisionCountDocs2d || 0) + 1);
                 }
             }
+            const levelName = mtData?.levels?.[levelId]?.name || levelId;
+            logActivity('Alterou fase', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} / ${levelName} — ${phaseNames[phase]}: ${getStatusText(newStatus)}`);
         }
 
         function updateLevelObs(buildingId, discId, mtId, levelId, obs) {
             database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/levels/${levelId}/obs`).set(obs);
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+            const levelName = projectData[buildingId]?.disciplines?.[discId]?.modelTypes?.[mtId]?.levels?.[levelId]?.name || levelId;
+            logActivity('Alterou observacoes', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} / ${levelName}`);
         }
 
         function updateReengineeringStatus(buildingId, discId, status) {
             database.ref(`projectData/${buildingId}/disciplines/${discId}`).update({
                 reengineeringStatus: status, lastUpdate: new Date().toISOString()
             });
+            logActivity('Alterou status reengenharia', `${getDiscName(buildingId, discId)} → ${getStatusText(status)}`);
         }
 
         function updateResponsible(buildingId, discId, mtId, value) {
             database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/responsible`).set(value);
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+            logActivity('Alterou projetista responsavel', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} → "${value}"`);
         }
 
         function toggleNotApplicable(buildingId, discId, mtId, isNA) {
             database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/notApplicable`).set(isNA);
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+            logActivity(isNA ? 'Marcou N/A' : 'Desmarcou N/A', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)}`);
         }
 
         function toggleAbsorbedByReng(buildingId, discId, mtId, isAbsorbed) {
             database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/absorbedByReng`).set(isAbsorbed);
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+            logActivity(isAbsorbed ? 'Marcou Absorvido pela RENG' : 'Desmarcou Absorvido pela RENG', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)}`);
         }
 
         function toggleNivel(id) {
@@ -638,6 +679,27 @@
                 el.classList.toggle('open');
                 if (toggle) toggle.classList.toggle('open');
             }
+        }
+
+        function toggleDiscipline(id) {
+            const el = document.getElementById(id);
+            const toggle = document.getElementById(id + '-toggle');
+            if (el) {
+                el.classList.toggle('open');
+                if (toggle) toggle.classList.toggle('open');
+            }
+        }
+
+        function getOpenDisciplines() {
+            return [...document.querySelectorAll('.discipline-body.open')].map(el => el.id);
+        }
+
+        function restoreOpenDisciplines(openIds) {
+            openIds.forEach(id => {
+                const el = document.getElementById(id);
+                const toggle = document.getElementById(id + '-toggle');
+                if (el) { el.classList.add('open'); if (toggle) toggle.classList.add('open'); }
+            });
         }
 
         function autoResizeTextarea(textarea) {
@@ -720,6 +782,8 @@
             
             closeModal();
             showToast(`Copiado para ${selectedLevels.length} nível(is)`);
+            const typeLabel = type === 'obs' ? 'Observacoes' : (phaseNames[type] || type);
+            logActivity('Copiou valor para outros niveis', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} — ${typeLabel} → ${selectedLevels.length} nivel(is)`);
         }
 
         function editRevisionCount(buildingId, discId, mtId, type) {
@@ -736,8 +800,10 @@
 
         function saveRevisionCount(buildingId, discId, mtId, type, value) {
             const field = type === 'ifc' ? 'revisionCountIfc' : 'revisionCountDocs2d';
-            database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/${field}`).set(Math.max(0, parseInt(value) || 0));
+            const newVal = Math.max(0, parseInt(value) || 0);
+            database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/${field}`).set(newVal);
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
+            logActivity('Editou contador de revisao', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} — ${type === 'ifc' ? 'IFC' : 'Doc 2D'}: ${newVal}`);
         }
 
         function calculateProgress(building) {
@@ -1230,11 +1296,13 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
         function renderBuildings() {
             const container = document.getElementById('buildingsContainer');
             if (!container) return;
-            
+
+            const openDiscs = getOpenDisciplines();
+
             const building = buildings.find(b => b.id === activeBuilding);
             const bd = projectData[activeBuilding];
             if (!building || !bd) { container.innerHTML = ''; return; }
-            
+
             const bp = calculateProgress(bd);
             const levelCount = bd.levelCount || building.defaultLevels;
             
@@ -1253,21 +1321,26 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                 const disc = bd.disciplines?.[dt.id];
                 if (!disc) return;
                 
+                const discBodyId = `disc-${building.id}-${disc.id}`;
                 html += `<div class="discipline-card card-${disc.id}" style="animation-delay: ${di * 0.05}s">
-                    <div class="card-header">
+                    <div class="card-header" onclick="toggleDiscipline('${discBodyId}')" style="cursor:pointer;">
                         <div class="discipline-info">
                             <span class="discipline-code">${disc.code}</span>
                             <div class="discipline-name"><h3>${disc.name}</h3><span>${disc.fullName}</span></div>
                         </div>
-                        <div class="reengineering-status">
-                            <label>Reengenharia:</label>
-                            <select class="${disc.reengineeringStatus}" onchange="updateReengineeringStatus('${building.id}', '${disc.id}', this.value)">
-                                <option value="pending" ${disc.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option>
-                                <option value="progress" ${disc.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option>
-                                <option value="approved" ${disc.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
-                            </select>
+                        <div style="display:flex;align-items:center;gap:0.75rem;">
+                            <div class="reengineering-status" onclick="event.stopPropagation()">
+                                <label>Reengenharia:</label>
+                                <select class="${disc.reengineeringStatus}" onchange="updateReengineeringStatus('${building.id}', '${disc.id}', this.value)">
+                                    <option value="pending" ${disc.reengineeringStatus === 'pending' ? 'selected' : ''}>Pendente</option>
+                                    <option value="progress" ${disc.reengineeringStatus === 'progress' ? 'selected' : ''}>Em Andamento</option>
+                                    <option value="approved" ${disc.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
+                                </select>
+                            </div>
+                            <span class="discipline-toggle" id="${discBodyId}-toggle">▼</span>
                         </div>
                     </div>
+                    <div class="discipline-body" id="${discBodyId}">
                     <div class="model-types-container"><div class="model-types-grid">`;
 
                 modelTypes.forEach(mt => {
@@ -1366,16 +1439,114 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                     <div class="card-footer">
                         <div class="card-timestamp">Última atualização: ${formatDate(disc.lastUpdate)}</div>
                     </div>
+                    </div>
                 </div>`;
             });
 
             html += `</div></div>`;
+
             container.innerHTML = html;
+            restoreOpenDisciplines(openDiscs);
 
             document.querySelectorAll('.nivel-obs textarea').forEach(ta => autoResizeTextarea(ta));
         }
 
         function render() { renderBuildingTabs(); renderBuildings(); updateStats(); }
+
+        // --- User Identification ---
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function checkUserName() {
+            const name = localStorage.getItem('unila_user_name');
+            const display = document.getElementById('currentUserName');
+            if (name) {
+                if (display) display.textContent = name;
+            } else {
+                openUserNameModal();
+            }
+        }
+
+        function openUserNameModal() {
+            const modal = document.getElementById('userNameModal');
+            const input = document.getElementById('userNameInput');
+            if (modal) {
+                modal.classList.add('show');
+                const current = localStorage.getItem('unila_user_name') || '';
+                if (input) { input.value = current; setTimeout(() => input.focus(), 100); }
+            }
+        }
+
+        function saveUserName() {
+            const input = document.getElementById('userNameInput');
+            const name = (input?.value || '').trim();
+            if (!name) { alert('Por favor, digite seu nome.'); return; }
+            localStorage.setItem('unila_user_name', name);
+            const display = document.getElementById('currentUserName');
+            if (display) display.textContent = name;
+            document.getElementById('userNameModal').classList.remove('show');
+        }
+
+        // --- Activity Logging ---
+        function logActivity(action, details) {
+            const userName = localStorage.getItem('unila_user_name') || 'Anonimo';
+            database.ref('activityLog').push({
+                user: userName,
+                action: action,
+                details: details || '',
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function getBuildingName(buildingId) {
+            const b = buildings.find(x => x.id === buildingId);
+            return b ? b.name : buildingId;
+        }
+
+        function getDiscName(buildingId, discId) {
+            const disc = projectData[buildingId]?.disciplines?.[discId];
+            return disc ? disc.code : discId;
+        }
+
+        function getMtName(mtId) {
+            const mt = modelTypes.find(x => x.id === mtId);
+            return mt ? mt.code : mtId;
+        }
+
+        // --- Activity Panel ---
+        let activityListenerSetup = false;
+
+        function openActivityPanel() {
+            document.getElementById('activityPanel').classList.add('open');
+            document.getElementById('activityOverlay').classList.add('open');
+            if (!activityListenerSetup && database) {
+                activityListenerSetup = true;
+                database.ref('activityLog').orderByChild('timestamp').limitToLast(50).on('value', (snap) => {
+                    const data = snap.val();
+                    const container = document.getElementById('activityLogContent');
+                    if (!data) { container.innerHTML = '<div class="activity-panel-empty">Nenhuma atividade registrada.</div>'; return; }
+                    const entries = Object.values(data).sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+                    container.innerHTML = entries.map(e => {
+                        const d = new Date(e.timestamp);
+                        const timeStr = d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                        return `<div class="activity-log-item">
+                            <div class="activity-log-user">${escapeHtml(e.user)}</div>
+                            <div class="activity-log-action">${escapeHtml(e.action)}</div>
+                            ${e.details ? `<div class="activity-log-details">${escapeHtml(e.details)}</div>` : ''}
+                            <div class="activity-log-time">${timeStr}</div>
+                        </div>`;
+                    }).join('');
+                });
+            }
+        }
+
+        function closeActivityPanel() {
+            document.getElementById('activityPanel').classList.remove('open');
+            document.getElementById('activityOverlay').classList.remove('open');
+        }
 
         document.addEventListener('DOMContentLoaded', async () => {
             if (!database) { document.getElementById('loadingText').textContent = 'Erro: Firebase não inicializado'; return; }
@@ -1383,14 +1554,44 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                 const lt = document.getElementById('loadingText');
                 if (lt && lt.textContent.includes('Conectando')) lt.innerHTML = 'Timeout - Verifique regras do Firebase';
             }, 15000);
-            try { await initializeData(); setupRealtimeListener(); clearTimeout(timeout); } 
-            catch (e) { clearTimeout(timeout); document.getElementById('loadingText').innerHTML = 'Erro: ' + e.message; }
+            try {
+                await initializeData();
+                setupRealtimeListener();
+                clearTimeout(timeout);
+                checkUserName();
+            } catch (e) { clearTimeout(timeout); document.getElementById('loadingText').innerHTML = 'Erro: ' + e.message; }
         });
 
-        
+
         document.getElementById('copyModal').addEventListener('click', (e) => {
             if (e.target.id === 'copyModal') closeModal();
         });
     </script>
+
+    <!-- User Name Modal -->
+    <div class="modal-overlay" id="userNameModal">
+        <div class="modal">
+            <h3>Identificacao</h3>
+            <p class="modal-subtitle">Digite seu nome para registrar suas alteracoes na plataforma:</p>
+            <input type="text" id="userNameInput" placeholder="Seu nome completo"
+                style="width:100%;padding:0.6rem;background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.85rem;font-family:'Space Grotesk',sans-serif;margin-bottom:1rem;"
+                onkeypress="if(event.key==='Enter') saveUserName()">
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-confirm" onclick="saveUserName()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Panel -->
+    <div class="activity-overlay" id="activityOverlay" onclick="closeActivityPanel()"></div>
+    <div class="activity-panel" id="activityPanel">
+        <div class="activity-panel-header">
+            <h3>Registro de Atividades</h3>
+            <button class="activity-panel-close" onclick="closeActivityPanel()">✕</button>
+        </div>
+        <div class="activity-panel-content" id="activityLogContent">
+            <div class="activity-panel-empty">Nenhuma atividade registrada.</div>
+        </div>
+    </div>
 </body>
 </html>
