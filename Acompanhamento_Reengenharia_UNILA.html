@@ -169,6 +169,7 @@
         .nivel-phase select.progress { border-color: var(--status-progress); background: rgba(255, 184, 0, 0.15); }
         .nivel-phase select.issues { border-color: var(--status-issues); background: rgba(0, 188, 212, 0.15); }
         .nivel-phase select.approved { border-color: var(--status-approved); background: rgba(76, 175, 80, 0.15); }
+        .nivel-phase select.na { border-color: var(--border-color); background: rgba(128, 128, 128, 0.12); color: var(--text-muted); font-style: italic; }
         
         
         .nivel-obs { width: 100%; }
@@ -1130,6 +1131,7 @@
                     if (!mt.notApplicable && !mt.absorbedByReng && mt.levels) {
                         Object.values(mt.levels).forEach(level => {
                             Object.values(level.phases || {}).forEach(status => {
+                                if (status === 'na') return;
                                 total++;
                                 if (status === 'approved') completed++;
                             });
@@ -1153,6 +1155,7 @@
                         if (!mt.notApplicable && !mt.absorbedByReng && mt.levels) {
                             Object.values(mt.levels).forEach(level => {
                                 Object.values(level.phases || {}).forEach(status => {
+                                    if (status === 'na') return;
                                     if (status === 'progress') inProgress++;
                                     if (status === 'issues') issues++;
                                     if (status === 'approved') approved++;
@@ -1174,7 +1177,7 @@
         }
 
         function getStatusText(status) {
-            return { pending: 'Pendente', progress: 'Em Andamento', issues: 'Entregue', approved: 'Concluído' }[status] || status;
+            return { pending: 'Pendente', progress: 'Em Andamento', issues: 'Entregue', approved: 'Concluído', na: 'N/A' }[status] || status;
         }
 
         function setActiveBuilding(buildingId) { activeBuilding = buildingId; render(); }
@@ -1245,7 +1248,7 @@
             ${dynMtCss}
             .resp{color:#666}.rev{margin-left:auto;color:#FF6B00;font-weight:bold}
             table{width:100%;border-collapse:collapse;font-size:0.65rem}th{background:#eee;padding:0.25rem;text-align:left}td{padding:0.25rem;border-bottom:1px solid #eee}
-            td.pending{color:#666}td.progress{color:#856404;background:#fff8e1}td.issues{color:#00838F;background:#e0f7fa}td.approved{color:#155724;background:#e8f5e9}
+            td.pending{color:#666}td.progress{color:#856404;background:#fff8e1}td.issues{color:#00838F;background:#e0f7fa}td.approved{color:#155724;background:#e8f5e9}td.na{color:#888;background:#f2f2f2;font-style:italic}
             .obs{max-width:100px;font-size:0.6rem;color:#888}.update{font-size:0.6rem;color:#999;text-align:right;margin-top:0.3rem}
             .btn-print{position:fixed;top:0.5rem;right:0.5rem;background:#FF6B00;color:white;border:none;padding:0.4rem 0.8rem;border-radius:4px;cursor:pointer}
             @media print{.btn-print{display:none}}</style></head>
@@ -1307,6 +1310,7 @@
                         }
                         Object.values(md.levels || {}).forEach(level => {
                             Object.values(level.phases || {}).forEach(status => {
+                                if (status === 'na') return;
                                 result.totalPhases++;
                                 discTotal++;
                                 result.modelTypeProgress[mt.id].total++;
@@ -1740,6 +1744,7 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                                     <option value="progress" ${status === 'progress' ? 'selected' : ''}>Em Andamento</option>
                                     <option value="issues" ${status === 'issues' ? 'selected' : ''}>Entregue</option>
                                     <option value="approved" ${status === 'approved' ? 'selected' : ''}>Concluído</option>
+                                    <option value="na" ${status === 'na' ? 'selected' : ''}>N/A</option>
                                 </select>
                             </div>`;
                         });
