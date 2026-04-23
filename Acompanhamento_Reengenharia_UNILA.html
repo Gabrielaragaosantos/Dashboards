@@ -33,7 +33,6 @@
             --status-progress: #FFB800;
             --status-issues: #00BCD4;
             --status-approved: #4CAF50;
-            --mode-color: #2196F3;
             --ajus-color: #9C27B0;
             --reng-color: #FF6B00;
             --asbt-color: #4CAF50;
@@ -98,16 +97,14 @@
         .model-type-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
         .model-type-card.not-applicable { opacity: 0.5; }
         .model-type-card.absorbed-by-reng { opacity: 0.6; }
-        .model-type-card.absorbed-by-reng .model-type-header.asbt { background: rgba(255, 107, 0, 0.1); border-left-color: var(--reng-color); }
+        .model-type-card.absorbed-by-reng .model-type-header { background: rgba(255, 107, 0, 0.1) !important; border-left-color: var(--reng-color) !important; }
         .absorbed-indicator { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--reng-color); background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); border-radius: 4px; padding: 0.2rem 0.5rem; margin-bottom: 0.75rem; }
         .model-type-header { padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
-        .model-type-header.mode { background: rgba(33, 150, 243, 0.15); border-left: 3px solid var(--mode-color); }
         .model-type-header.ajus { background: rgba(156, 39, 176, 0.15); border-left: 3px solid var(--ajus-color); }
         .model-type-header.reng { background: rgba(255, 107, 0, 0.15); border-left: 3px solid var(--reng-color); }
         .model-type-header.asbt { background: rgba(76, 175, 80, 0.15); border-left: 3px solid var(--asbt-color); }
         .model-type-title { display: flex; align-items: center; gap: 0.5rem; }
         .model-type-code { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .model-type-code.mode { background: var(--mode-color); color: white; }
         .model-type-code.ajus { background: var(--ajus-color); color: white; }
         .model-type-code.reng { background: var(--reng-color); color: white; }
         .model-type-code.asbt { background: var(--asbt-color); color: white; }
@@ -256,6 +253,53 @@
         .card-ele .discipline-code { background: rgba(156, 39, 176, 0.2); color: var(--ele-color); }
         .card-cab .card-header::before { background: var(--cab-color); }
         .card-cab .discipline-code { background: rgba(0, 188, 212, 0.2); color: var(--cab-color); }
+
+        /* ======= CONFIG / DISCIPLINE FORM MODALS ======= */
+        .disc-action-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.3rem 0.45rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+        .disc-action-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); background: rgba(255,107,0,0.08); }
+        .disc-action-btn.disc-action-danger:hover { border-color: #f44336; color: #f44336; background: rgba(244,67,54,0.08); }
+        .config-modal { max-width: 720px; width: 95%; max-height: 90vh; overflow-y: auto; }
+        .config-modal-lg { max-width: 820px; }
+        .config-list { display: flex; flex-direction: column; gap: 0.5rem; margin: 0.75rem 0 1rem 0; }
+        .config-list-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
+        .config-list-row:hover { border-color: var(--accent-orange); }
+        .config-swatch { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
+        .config-code { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.8rem; min-width: 60px; }
+        .config-name { flex: 1; font-size: 0.85rem; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .config-row-actions { display: flex; gap: 0.3rem; }
+        .config-row-actions button { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 0.3rem 0.5rem; border-radius: 5px; font-size: 0.7rem; cursor: pointer; transition: all 0.2s; font-family: 'JetBrains Mono', monospace; }
+        .config-row-actions button:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+        .config-row-actions button.danger:hover { border-color: #f44336; color: #f44336; }
+        .config-add-btn { width: 100%; padding: 0.75rem; background: transparent; border: 1.5px dashed var(--border-color); border-radius: 8px; color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all 0.2s; }
+        .config-add-btn:hover { border-color: var(--accent-orange); color: var(--accent-orange); background: rgba(255,107,0,0.05); }
+        .config-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; margin-bottom: 1rem; }
+        .config-form-field { display: flex; flex-direction: column; gap: 0.3rem; }
+        .config-form-field.full { grid-column: 1 / -1; }
+        .config-form-field label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .config-form-field input[type="text"], .config-form-field input[type="number"], .config-form-field select { padding: 0.55rem 0.7rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 0.85rem; font-family: 'Space Grotesk', sans-serif; }
+        .config-form-field input[type="text"]:focus, .config-form-field input[type="number"]:focus, .config-form-field select:focus { outline: none; border-color: var(--accent-orange); }
+        .config-color-row { display: flex; gap: 0.5rem; align-items: center; }
+        .config-color-row input[type="color"] { width: 42px; height: 36px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); cursor: pointer; padding: 2px; }
+        .config-color-row input[type="color"]:disabled { opacity: 0.4; cursor: not-allowed; }
+        .config-color-auto-label { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; }
+        .config-buildings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem 0.75rem; margin-top: 0.3rem; }
+        .config-buildings-grid label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text-secondary); cursor: pointer; padding: 0.25rem 0; font-family: 'Space Grotesk', sans-serif; text-transform: none; letter-spacing: 0; }
+        .config-section { border-top: 1px solid var(--border-color); margin-top: 1rem; padding-top: 1rem; }
+        .config-section h4 { font-size: 0.85rem; color: var(--accent-yellow); margin-bottom: 0.6rem; font-family: 'JetBrains Mono', monospace; }
+        .config-radio-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.3rem; }
+        .config-radio-row label { display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: var(--text-secondary); cursor: pointer; }
+        .config-form-error { color: #f44336; font-size: 0.75rem; margin-top: 0.4rem; display: none; }
+        .config-form-error.show { display: block; }
+        .config-delete-warning { background: rgba(244,67,54,0.08); border: 1px solid rgba(244,67,54,0.3); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.75rem; color: #ff8a80; font-size: 0.8rem; line-height: 1.5; }
+        .config-delete-confirm-input { width: 100%; padding: 0.55rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-top: 0.4rem; }
+        .config-mt-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 0.4rem; font-size: 0.78rem; }
+        .btn-header-config { background: var(--bg-card); }
+        .config-tabs { display: flex; gap: 0.3rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1rem; }
+        .config-tab { background: transparent; border: none; padding: 0.6rem 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+        .config-tab:hover { color: var(--accent-orange); }
+        .config-tab.active { color: var(--accent-orange); border-bottom-color: var(--accent-orange); }
+        .config-tab-pane { display: none; }
+        .config-tab-pane.active { display: block; }
         @media (max-width: 768px) {
             .header { padding: 1rem; }
             .main-content { padding: 1rem; }
@@ -351,6 +395,12 @@
                     </svg>
                     Atividades
                 </button>
+                <button class="btn btn-header-config" onclick="openConfigModal()" title="Configurar Disciplinas" style="padding:0.5rem 0.75rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    Configurar
+                </button>
                 <div class="report-dropdown">
                     <button class="btn btn-report" onclick="toggleReportDropdown(event)">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -408,10 +458,11 @@
             <div class="footer-grid">
                 <div class="footer-section">
                     <h3>Tipos de Modelo</h3>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--mode-color)"></div><span><strong>MODE</strong> - Modelos originais</span></div>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--ajus-color)"></div><span><strong>AJUS</strong> - Ajustes</span></div>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--reng-color)"></div><span><strong>RENG</strong> - Reengenharia</span></div>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--asbt-color)"></div><span><strong>ASBT</strong> - As Built</span></div>
+                    <div id="modelTypeLegend">
+                        <div class="legend-item"><div class="legend-color" style="background: var(--ajus-color)"></div><span><strong>AJUS</strong> - Ajustes</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: var(--reng-color)"></div><span><strong>RENG</strong> - Reengenharia</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: var(--asbt-color)"></div><span><strong>ASBT</strong> - As Built</span></div>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h3>Legenda de Status</h3>
@@ -463,7 +514,6 @@
         ];
 
         const modelTypes = [
-            { id: 'mode', code: 'MODE', name: 'Modelos Originais', defaultResponsible: 'Alto QI' },
             { id: 'ajus', code: 'AJUS', name: 'Ajustes (NERKPE)', defaultResponsible: '', canBeNA: true },
             { id: 'reng', code: 'RENG', name: 'Reengenharia', defaultResponsible: '', canBeNA: true },
             { id: 'asbt', code: 'ASBT', name: 'As Built', defaultResponsible: '', canBeAbsorbed: true }
@@ -475,6 +525,261 @@
         let projectData = {};
         let activeBuilding = 'salas';
         let copyContext = null; // Stores info about what we're copying
+        let configData = null; // Discipline/model type config (Firebase-persisted)
+
+        // ============= CONFIG LAYER =============
+        const SEED_COLORS = {
+            hvac: '#FF6B00', hid: '#00A8CC', esg: '#FFB800', spr: '#FF3D00',
+            inc: '#E91E63', ele: '#9C27B0', cab: '#00BCD4',
+            ajus: '#9C27B0', reng: '#FF6B00', asbt: '#4CAF50'
+        };
+
+        function buildSeedConfig() {
+            const config = { schemaVersion: 2, disciplines: {}, phases: {} };
+            disciplineTemplates.forEach((d, i) => {
+                config.disciplines[d.id] = {
+                    id: d.id, code: d.code, name: d.name, fullName: d.fullName,
+                    color: SEED_COLORS[d.id] || '#808080', colorMode: 'manual',
+                    order: i,
+                    enabledBuildings: { salas: true, central: true, restaurante: true, utilidades: true },
+                    modelTypes: {}
+                };
+                modelTypes.forEach((mt, j) => {
+                    config.disciplines[d.id].modelTypes[mt.id] = {
+                        id: mt.id, code: mt.code, name: mt.name,
+                        color: SEED_COLORS[mt.id] || '#808080', colorMode: 'manual',
+                        order: j,
+                        canBeNA: !!mt.canBeNA,
+                        canBeAbsorbed: !!mt.canBeAbsorbed,
+                        defaultResponsible: mt.defaultResponsible || ''
+                    };
+                });
+            });
+            const seedPhases = [
+                { id: 'ifc', code: 'IFC', name: 'IFC', hasRevisionCounter: true },
+                { id: 'compatibility', code: 'COMPAT', name: 'Compat.', hasRevisionCounter: false },
+                { id: 'docs2d', code: 'DOC2D', name: 'Doc 2D', hasRevisionCounter: true },
+                { id: 'released', code: 'REL', name: 'Liberado', hasRevisionCounter: false }
+            ];
+            seedPhases.forEach((p, i) => {
+                config.phases[p.id] = { id: p.id, code: p.code, name: p.name, order: i, hasRevisionCounter: p.hasRevisionCounter };
+            });
+            return config;
+        }
+
+        function setupConfigListener() {
+            return new Promise((resolve) => {
+                let firstFire = true;
+                let resolved = false;
+                const safeResolve = () => { if (!resolved) { resolved = true; resolve(); } };
+                // Fallback: if Firebase rules deny or connection stalls, don't block app.
+                const fallbackTimer = setTimeout(() => {
+                    if (!configData) {
+                        console.warn('[config] listener timeout — using local fallback. Verifique regras do Firebase para o no "config/".');
+                        configData = buildSeedConfig();
+                        applyThemeFromConfig();
+                    }
+                    safeResolve();
+                }, 6000);
+                database.ref('config').on('value', async (snap) => {
+                    const val = snap.val();
+                    try {
+                        if (!val || !val.disciplines || Object.keys(val.disciplines).length === 0) {
+                            const seed = buildSeedConfig();
+                            try { await database.ref('config').set(seed); }
+                            catch (err) { console.warn('[config] seed write blocked (rules?):', err.message); }
+                            configData = seed;
+                        } else {
+                            configData = val;
+                            // Partial seed for schema upgrades (e.g. phases added in Fase 2)
+                            if (!val.phases || Object.keys(val.phases).length === 0) {
+                                const full = buildSeedConfig();
+                                try { await database.ref('config/phases').set(full.phases); }
+                                catch (err) { console.warn('[config] phases seed blocked:', err.message); }
+                                configData.phases = full.phases;
+                            }
+                        }
+                        applyThemeFromConfig();
+                    } catch (e) {
+                        console.error('[config] handler error:', e);
+                        if (!configData) configData = buildSeedConfig();
+                        applyThemeFromConfig();
+                    }
+                    clearTimeout(fallbackTimer);
+                    if (firstFire) { firstFire = false; safeResolve(); }
+                    else if (Object.keys(projectData).length) { render(); }
+                }, (err) => {
+                    console.warn('[config] read blocked (rules?):', err.message);
+                    if (!configData) {
+                        configData = buildSeedConfig();
+                        applyThemeFromConfig();
+                    }
+                    clearTimeout(fallbackTimer);
+                    safeResolve();
+                });
+            });
+        }
+
+        // ============= ACCESSORS =============
+        function getDisciplines() {
+            if (configData?.disciplines) {
+                return Object.values(configData.disciplines).sort((a, b) => (a.order || 0) - (b.order || 0));
+            }
+            return disciplineTemplates.map((d, i) => ({
+                ...d, order: i, color: SEED_COLORS[d.id] || '#808080',
+                enabledBuildings: { salas: true, central: true, restaurante: true, utilidades: true },
+                modelTypes: modelTypes.reduce((acc, mt, j) => { acc[mt.id] = { ...mt, order: j, color: SEED_COLORS[mt.id] || '#808080' }; return acc; }, {})
+            }));
+        }
+
+        function getDiscipline(discId) {
+            if (configData?.disciplines?.[discId]) return configData.disciplines[discId];
+            return getDisciplines().find(d => d.id === discId);
+        }
+
+        function getOrderedModelTypes(discId) {
+            const disc = configData?.disciplines?.[discId];
+            if (disc?.modelTypes) {
+                return Object.values(disc.modelTypes).sort((a, b) => (a.order || 0) - (b.order || 0));
+            }
+            return modelTypes.map((mt, j) => ({ ...mt, order: j, color: SEED_COLORS[mt.id] || '#808080' }));
+        }
+
+        function getModelType(discId, mtId) {
+            const disc = configData?.disciplines?.[discId];
+            if (disc?.modelTypes?.[mtId]) return disc.modelTypes[mtId];
+            return modelTypes.find(m => m.id === mtId);
+        }
+
+        function isDisciplineVisible(disc, buildingId) {
+            if (!disc) return false;
+            if (!disc.enabledBuildings) return true;
+            return disc.enabledBuildings[buildingId] !== false;
+        }
+
+        // ---- Phase accessors ----
+        const LEGACY_PHASES = [
+            { id: 'ifc', code: 'IFC', name: 'IFC', hasRevisionCounter: true },
+            { id: 'compatibility', code: 'COMPAT', name: 'Compat.', hasRevisionCounter: false },
+            { id: 'docs2d', code: 'DOC2D', name: 'Doc 2D', hasRevisionCounter: true },
+            { id: 'released', code: 'REL', name: 'Liberado', hasRevisionCounter: false }
+        ];
+
+        function getPhases() {
+            if (configData?.phases && Object.keys(configData.phases).length) {
+                return Object.values(configData.phases).sort((a, b) => (a.order || 0) - (b.order || 0));
+            }
+            return LEGACY_PHASES.map((p, i) => ({ ...p, order: i }));
+        }
+
+        function getPhaseIds() { return getPhases().map(p => p.id); }
+        function getPhase(id) {
+            if (configData?.phases?.[id]) return configData.phases[id];
+            return LEGACY_PHASES.find(p => p.id === id) || { id, code: id, name: id, hasRevisionCounter: false };
+        }
+        function getPhaseName(id) { return getPhase(id).name || id; }
+
+        // Revision counter: new map-based with legacy field fallback
+        function getRevisionCount(mtData, phaseId) {
+            if (!mtData) return 0;
+            const v = mtData.revisionCounters?.[phaseId];
+            if (v != null) return v;
+            if (phaseId === 'ifc') return mtData.revisionCountIfc || 0;
+            if (phaseId === 'docs2d') return mtData.revisionCountDocs2d || 0;
+            return 0;
+        }
+
+        // ============= COLOR HELPERS =============
+        function hexToRgba(hex, a) {
+            const h = (hex || '#808080').replace('#', '');
+            const n = parseInt(h, 16);
+            const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+            return `rgba(${r},${g},${b},${a})`;
+        }
+
+        function hslToHex(h, s, l) {
+            l /= 100;
+            const a = s * Math.min(l, 1 - l) / 100;
+            const f = n => {
+                const k = (n + h / 30) % 12;
+                const c = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+                return Math.round(255 * c).toString(16).padStart(2, '0');
+            };
+            return `#${f(0)}${f(8)}${f(4)}`;
+        }
+
+        function hexToHue(hex) {
+            const h = hex.replace('#', '');
+            const r = parseInt(h.slice(0, 2), 16) / 255;
+            const g = parseInt(h.slice(2, 4), 16) / 255;
+            const b = parseInt(h.slice(4, 6), 16) / 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            if (max === min) return 0;
+            const d = max - min;
+            let hue;
+            switch (max) {
+                case r: hue = ((g - b) / d + (g < b ? 6 : 0)); break;
+                case g: hue = ((b - r) / d + 2); break;
+                default: hue = ((r - g) / d + 4);
+            }
+            return hue * 60;
+        }
+
+        function generateAutoColor(existingColors) {
+            const count = (existingColors || []).length;
+            const existingHues = (existingColors || []).map(hexToHue);
+            let hue = (count * 137.508) % 360;
+            let attempts = 0;
+            while (attempts < 18) {
+                const minDist = existingHues.length ? Math.min(...existingHues.map(h => Math.min(Math.abs(h - hue), 360 - Math.abs(h - hue)))) : 360;
+                if (minDist >= 20) break;
+                hue = (hue + 20) % 360;
+                attempts++;
+            }
+            return hslToHex(hue, 70, 55);
+        }
+
+        // ============= DYNAMIC THEME =============
+        function applyThemeFromConfig() {
+            let style = document.getElementById('dynamicTheme');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = 'dynamicTheme';
+                document.head.appendChild(style);
+            }
+            let css = '';
+            getDisciplines().forEach(d => {
+                const c = d.color || '#808080';
+                css += `.discipline-card.card-${d.id}{border-color:var(--border-color);}`;
+                css += `.discipline-card.card-${d.id}:hover{border-color:${c};box-shadow:0 10px 40px ${hexToRgba(c, 0.15)};}`;
+                css += `.card-${d.id} .card-header::before{background:${c};}`;
+                css += `.card-${d.id} .discipline-code{background:${hexToRgba(c, 0.2)};color:${c};border:1px solid ${hexToRgba(c, 0.4)};}`;
+                Object.values(d.modelTypes || {}).forEach(mt => {
+                    const mc = mt.color || '#808080';
+                    const cls = `mt-${d.id}-${mt.id}`;
+                    css += `.model-type-header.${cls}{background:${hexToRgba(mc, 0.15)};border-left:3px solid ${mc};}`;
+                    css += `.model-type-code.${cls}{background:${mc};color:white;}`;
+                });
+            });
+            style.textContent = css;
+            renderFooterLegend();
+        }
+
+        function renderFooterLegend() {
+            const seen = new Map();
+            getDisciplines().forEach(d => {
+                Object.values(d.modelTypes || {}).forEach(mt => {
+                    if (!seen.has(mt.code)) {
+                        seen.set(mt.code, { code: mt.code, name: mt.name, color: mt.color });
+                    }
+                });
+            });
+            const container = document.getElementById('modelTypeLegend');
+            if (!container) return;
+            container.innerHTML = [...seen.values()].map(mt =>
+                `<div class="legend-item"><div class="legend-color" style="background: ${mt.color}"></div><span><strong>${mt.code}</strong> - ${mt.name}</span></div>`
+            ).join('');
+        }
 
         function generateLevelName(index) {
             if (index === 0) return 'Térreo';
@@ -483,11 +788,14 @@
 
         function generateLevelsData(count) {
             const levels = {};
+            const phaseIds = getPhaseIds();
             for (let i = 0; i < count; i++) {
+                const phases = {};
+                phaseIds.forEach(pid => { phases[pid] = 'pending'; });
                 levels[`level_${i}`] = {
                     name: generateLevelName(i),
                     order: i,
-                    phases: { ifc: 'pending', compatibility: 'pending', docs2d: 'pending', released: 'pending' },
+                    phases,
                     obs: ''
                 };
             }
@@ -497,19 +805,20 @@
         function generateInitialData() {
             const data = {};
             buildings.forEach(building => {
-                data[building.id] = { 
-                    name: building.name, 
+                data[building.id] = {
+                    name: building.name,
                     levelCount: building.defaultLevels,
-                    disciplines: {} 
+                    disciplines: {}
                 };
-                disciplineTemplates.forEach(disc => {
+                getDisciplines().forEach(disc => {
+                    if (!isDisciplineVisible(disc, building.id)) return;
                     data[building.id].disciplines[disc.id] = {
                         id: disc.id, code: disc.code, name: disc.name, fullName: disc.fullName,
                         reengineeringStatus: 'pending', lastUpdate: null, modelTypes: {}
                     };
-                    modelTypes.forEach(mt => {
+                    getOrderedModelTypes(disc.id).forEach(mt => {
                         data[building.id].disciplines[disc.id].modelTypes[mt.id] = {
-                            responsible: mt.defaultResponsible,
+                            responsible: mt.defaultResponsible || '',
                             notApplicable: false,
                             absorbedByReng: false,
                             revisionCountIfc: 0,
@@ -588,10 +897,12 @@
 
                     if (newCount > actualCurrentCount) {
                         for (let i = actualCurrentCount; i < newCount; i++) {
+                            const phases = {};
+                            getPhaseIds().forEach(pid => { phases[pid] = 'pending'; });
                             database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/levels/level_${i}`).set({
                                 name: generateLevelName(i),
                                 order: i,
-                                phases: { ifc: 'pending', compatibility: 'pending', docs2d: 'pending', released: 'pending' },
+                                phases,
                                 obs: ''
                             });
                         }
@@ -630,14 +941,14 @@
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
 
             if (newStatus === 'approved' && oldStatus !== 'approved') {
-                if (phase === 'ifc') {
-                    database.ref(`${basePath}/revisionCountIfc`).set((mtData?.revisionCountIfc || 0) + 1);
-                } else if (phase === 'docs2d') {
-                    database.ref(`${basePath}/revisionCountDocs2d`).set((mtData?.revisionCountDocs2d || 0) + 1);
+                const phaseCfg = getPhase(phase);
+                if (phaseCfg?.hasRevisionCounter) {
+                    const current = getRevisionCount(mtData, phase);
+                    database.ref(`${basePath}/revisionCounters/${phase}`).set(current + 1);
                 }
             }
             const levelName = mtData?.levels?.[levelId]?.name || levelId;
-            logActivity('Alterou fase', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} / ${levelName} — ${phaseNames[phase]}: ${getStatusText(newStatus)}`);
+            logActivity('Alterou fase', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} / ${levelName} — ${getPhaseName(phase)}: ${getStatusText(newStatus)}`);
         }
 
         function updateLevelObs(buildingId, discId, mtId, levelId, obs) {
@@ -718,8 +1029,8 @@
 
             copyContext = { buildingId, discId, mtId, levelId, type, value };
 
-            const typeLabels = { ifc: 'IFC', compatibility: 'Compatibilização', docs2d: 'Doc 2D', released: 'Liberado', obs: 'Observações' };
-            document.getElementById('modalTitle').textContent = `Copiar ${typeLabels[type]}`;
+            const typeLabel = type === 'obs' ? 'Observações' : getPhaseName(type);
+            document.getElementById('modalTitle').textContent = `Copiar ${typeLabel}`;
             document.getElementById('modalSubtitle').textContent = `De: ${mtData.levels[levelId].name}`;
             
             if (type === 'obs') {
@@ -782,34 +1093,39 @@
             
             closeModal();
             showToast(`Copiado para ${selectedLevels.length} nível(is)`);
-            const typeLabel = type === 'obs' ? 'Observacoes' : (phaseNames[type] || type);
-            logActivity('Copiou valor para outros niveis', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} — ${typeLabel} → ${selectedLevels.length} nivel(is)`);
+            const actLabel = type === 'obs' ? 'Observacoes' : getPhaseName(type);
+            logActivity('Copiou valor para outros niveis', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} — ${actLabel} → ${selectedLevels.length} nivel(is)`);
         }
 
-        function editRevisionCount(buildingId, discId, mtId, type) {
+        function editRevisionCount(buildingId, discId, mtId, phaseId) {
             const mtData = projectData[buildingId]?.disciplines?.[discId]?.modelTypes?.[mtId];
             if (!mtData) return;
-            const containerId = `revision-${type}-${buildingId}-${discId}-${mtId}`;
+            const containerId = `revision-${phaseId}-${buildingId}-${discId}-${mtId}`;
             const container = document.getElementById(containerId);
             if (!container) return;
-            const currentCount = type === 'ifc' ? (mtData.revisionCountIfc || 0) : (mtData.revisionCountDocs2d || 0);
-            const label = type === 'ifc' ? 'IFC' : 'Doc 2D';
-            container.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="revision-counter-label">${label}:</span><input type="number" class="revision-counter-input" value="${currentCount}" min="0" onchange="saveRevisionCount('${buildingId}', '${discId}', '${mtId}', '${type}', this.value)" onkeypress="if(event.key==='Enter') this.blur()">`;
+            const currentCount = getRevisionCount(mtData, phaseId);
+            const label = getPhaseName(phaseId);
+            container.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="revision-counter-label">${label}:</span><input type="number" class="revision-counter-input" value="${currentCount}" min="0" onchange="saveRevisionCount('${buildingId}', '${discId}', '${mtId}', '${phaseId}', this.value)" onkeypress="if(event.key==='Enter') this.blur()">`;
             container.querySelector('input').focus();
         }
 
-        function saveRevisionCount(buildingId, discId, mtId, type, value) {
-            const field = type === 'ifc' ? 'revisionCountIfc' : 'revisionCountDocs2d';
+        function saveRevisionCount(buildingId, discId, mtId, phaseId, value) {
             const newVal = Math.max(0, parseInt(value) || 0);
-            database.ref(`projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}/${field}`).set(newVal);
+            const basePath = `projectData/${buildingId}/disciplines/${discId}/modelTypes/${mtId}`;
+            database.ref(`${basePath}/revisionCounters/${phaseId}`).set(newVal);
+            // Back-compat: keep legacy fields in sync for ifc/docs2d so older clients still see something
+            if (phaseId === 'ifc') database.ref(`${basePath}/revisionCountIfc`).set(newVal);
+            if (phaseId === 'docs2d') database.ref(`${basePath}/revisionCountDocs2d`).set(newVal);
             database.ref(`projectData/${buildingId}/disciplines/${discId}/lastUpdate`).set(new Date().toISOString());
-            logActivity('Editou contador de revisao', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} — ${type === 'ifc' ? 'IFC' : 'Doc 2D'}: ${newVal}`);
+            logActivity('Editou contador de revisao', `${getDiscName(buildingId, discId)} / ${getMtName(mtId)} — ${getPhaseName(phaseId)}: ${newVal}`);
         }
 
-        function calculateProgress(building) {
+        function calculateProgress(building, buildingId) {
             if (!building?.disciplines) return 0;
             let total = 0, completed = 0;
-            Object.values(building.disciplines).forEach(disc => {
+            Object.entries(building.disciplines).forEach(([discId, disc]) => {
+                const cfg = getDiscipline(discId);
+                if (buildingId && cfg && !isDisciplineVisible(cfg, buildingId)) return;
                 Object.values(disc.modelTypes || {}).forEach(mt => {
                     if (!mt.notApplicable && !mt.absorbedByReng && mt.levels) {
                         Object.values(mt.levels).forEach(level => {
@@ -826,11 +1142,13 @@
 
         function updateStats() {
             let totalProgress = 0, buildingCount = 0, inProgress = 0, issues = 0, approved = 0;
-            Object.values(projectData).forEach(building => {
+            Object.entries(projectData).forEach(([bId, building]) => {
                 if (!building?.disciplines) return;
                 buildingCount++;
-                totalProgress += calculateProgress(building);
-                Object.values(building.disciplines).forEach(disc => {
+                totalProgress += calculateProgress(building, bId);
+                Object.entries(building.disciplines).forEach(([discId, disc]) => {
+                    const cfg = getDiscipline(discId);
+                    if (cfg && !isDisciplineVisible(cfg, bId)) return;
                     Object.values(disc.modelTypes || {}).forEach(mt => {
                         if (!mt.notApplicable && !mt.absorbedByReng && mt.levels) {
                             Object.values(mt.levels).forEach(level => {
@@ -865,32 +1183,48 @@
             const rw = window.open('', '_blank', 'width=1400,height=900');
             const now = new Date().toLocaleString('pt-BR');
             let bh = '';
-            
+            let dynMtCss = '';
+            const seenMt = new Set();
+
             buildings.forEach(b => {
                 const bd = projectData[b.id];
                 if (!bd?.disciplines) return;
-                const bp = calculateProgress(bd);
+                const bp = calculateProgress(bd, b.id);
                 bh += `<div class="building-section"><h2>🏢 ${b.name} <span class="badge">${bp}%</span> <small>(${bd.levelCount || 1} níveis)</small></h2>`;
-                
-                disciplineTemplates.forEach(dt => {
+
+                getDisciplines().forEach(dt => {
+                    if (!isDisciplineVisible(dt, b.id)) return;
                     const disc = bd.disciplines[dt.id];
                     if (!disc) return;
-                    bh += `<div class="disc-block"><div class="disc-header"><strong>${disc.code} - ${disc.fullName}</strong><span class="status ${disc.reengineeringStatus}">${getStatusText(disc.reengineeringStatus)}</span></div>`;
-                    
-                    modelTypes.forEach(mt => {
+                    bh += `<div class="disc-block"><div class="disc-header"><strong>${dt.code} - ${dt.fullName}</strong><span class="status ${disc.reengineeringStatus}">${getStatusText(disc.reengineeringStatus)}</span></div>`;
+
+                    getOrderedModelTypes(dt.id).forEach(mt => {
                         const md = disc.modelTypes?.[mt.id];
                         if (!md) return;
+                        const mtCls = `mt-${dt.id}-${mt.id}`;
+                        if (!seenMt.has(mtCls)) {
+                            dynMtCss += `.mt-code.${mtCls}{background:${mt.color};}`;
+                            seenMt.add(mtCls);
+                        }
                         if (md.notApplicable) {
-                            bh += `<div class="mt-block na"><span class="mt-code ${mt.id}">${mt.code}</span> N/A</div>`;
-                        } else if (md.absorbedByReng) {
-                            bh += `<div class="mt-block na"><span class="mt-code ${mt.id}">${mt.code}</span> Absorvido pela RENG</div>`;
+                            bh += `<div class="mt-block na"><span class="mt-code ${mtCls}">${mt.code}</span> N/A</div>`;
+                        } else if (mt.canBeAbsorbed && md.absorbedByReng) {
+                            bh += `<div class="mt-block na"><span class="mt-code ${mtCls}">${mt.code}</span> Absorvido pela RENG</div>`;
                         } else {
-                            bh += `<div class="mt-block"><div class="mt-header"><span class="mt-code ${mt.id}">${mt.code}</span><span class="resp">${md.responsible || '-'}</span><span class="rev">IFC: ${md.revisionCountIfc || 0} | Doc: ${md.revisionCountDocs2d || 0}</span></div>`;
-                            bh += `<table><thead><tr><th>Nível</th><th>IFC</th><th>Compat.</th><th>Doc 2D</th><th>Liberado</th><th>Obs</th></tr></thead><tbody>`;
+                            const revParts = getPhases().filter(p => p.hasRevisionCounter).map(p => `${p.name}: ${getRevisionCount(md, p.id)}`);
+                            const revStr = revParts.length ? revParts.join(' | ') : '';
+                            bh += `<div class="mt-block"><div class="mt-header"><span class="mt-code ${mtCls}">${mt.code}</span><span class="resp">${md.responsible || '-'}</span>${revStr ? `<span class="rev">${revStr}</span>` : ''}</div>`;
+                            const phasesList = getPhases();
+                            const headerCells = phasesList.map(p => `<th>${p.name}</th>`).join('');
+                            bh += `<table><thead><tr><th>Nível</th>${headerCells}<th>Obs</th></tr></thead><tbody>`;
                             const levels = Object.entries(md.levels || {}).sort((a, b) => (a[1].order || 0) - (b[1].order || 0));
                             levels.forEach(([lid, level]) => {
                                 const ph = level.phases || {};
-                                bh += `<tr><td>${level.name}</td><td class="${ph.ifc}">${getStatusText(ph.ifc)}</td><td class="${ph.compatibility}">${getStatusText(ph.compatibility)}</td><td class="${ph.docs2d}">${getStatusText(ph.docs2d)}</td><td class="${ph.released}">${getStatusText(ph.released)}</td><td class="obs">${level.obs || '-'}</td></tr>`;
+                                const phCells = phasesList.map(p => {
+                                    const st = ph[p.id] || 'pending';
+                                    return `<td class="${st}">${getStatusText(st)}</td>`;
+                                }).join('');
+                                bh += `<tr><td>${level.name}</td>${phCells}<td class="obs">${level.obs || '-'}</td></tr>`;
                             });
                             bh += `</tbody></table></div>`;
                         }
@@ -908,7 +1242,7 @@
             .status{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:3px}.status.pending{background:#e0e0e0}.status.progress{background:#fff3cd;color:#856404}.status.approved{background:#d4edda;color:#155724}
             .mt-block{background:#f8f8f8;border-radius:4px;padding:0.4rem;margin-bottom:0.4rem}.mt-block.na{opacity:0.5;font-style:italic}
             .mt-header{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem}.mt-code{font-size:0.6rem;padding:0.1rem 0.3rem;border-radius:2px;color:white;font-weight:bold}
-            .mt-code.mode{background:#2196F3}.mt-code.ajus{background:#9C27B0}.mt-code.reng{background:#FF6B00}.mt-code.asbt{background:#4CAF50}
+            ${dynMtCss}
             .resp{color:#666}.rev{margin-left:auto;color:#FF6B00;font-weight:bold}
             table{width:100%;border-collapse:collapse;font-size:0.65rem}th{background:#eee;padding:0.25rem;text-align:left}td{padding:0.25rem;border-bottom:1px solid #eee}
             td.pending{color:#666}td.progress{color:#856404;background:#fff8e1}td.issues{color:#00838F;background:#e0f7fa}td.approved{color:#155724;background:#e8f5e9}
@@ -948,22 +1282,23 @@
             buildings.forEach(b => {
                 const bd = projectData[b.id];
                 if (!bd?.disciplines) return;
-                const bp = calculateProgress(bd);
+                const bp = calculateProgress(bd, b.id);
                 result.buildingProgress.push({ name: b.name, progress: bp });
 
-                disciplineTemplates.forEach(dt => {
+                getDisciplines().forEach(dt => {
+                    if (!isDisciplineVisible(dt, b.id)) return;
                     const disc = bd.disciplines[dt.id];
                     if (!disc) return;
                     if (!result.disciplineStatus[dt.id]) {
-                        result.disciplineStatus[dt.id] = { name: disc.name, code: disc.code, pending: 0, progress: 0, issues: 0, approved: 0 };
+                        result.disciplineStatus[dt.id] = { name: dt.name, code: dt.code, color: dt.color, pending: 0, progress: 0, issues: 0, approved: 0 };
                     }
                     let discTotal = 0, discApproved = 0;
 
-                    modelTypes.forEach(mt => {
+                    getOrderedModelTypes(dt.id).forEach(mt => {
                         const md = disc.modelTypes?.[mt.id];
                         if (!md || md.notApplicable || md.absorbedByReng) return;
                         if (!result.modelTypeProgress[mt.id]) {
-                            result.modelTypeProgress[mt.id] = { code: mt.code, total: 0, approved: 0 };
+                            result.modelTypeProgress[mt.id] = { code: mt.code, color: mt.color, total: 0, approved: 0 };
                         }
                         const respName = (md.responsible || '').trim();
                         const respKey = respName === '' ? '__nao_definido__' : respName.toLowerCase();
@@ -987,7 +1322,7 @@
                     });
                     result.heatmap.push({
                         buildingName: b.name, buildingId: b.id,
-                        disciplineName: disc.name, disciplineCode: disc.code, disciplineId: dt.id,
+                        disciplineName: dt.name, disciplineCode: dt.code, disciplineId: dt.id,
                         progress: discTotal > 0 ? Math.round((discApproved / discTotal) * 100) : 0
                     });
                 });
@@ -1004,12 +1339,17 @@
             const now = new Date().toLocaleString('pt-BR');
             const rw = window.open('', '_blank', 'width=1400,height=900');
 
-            const colors = JSON.stringify({
-                pending: '#606060', progress: '#FFB800', issues: '#00BCD4', approved: '#4CAF50',
-                mode: '#2196F3', ajus: '#9C27B0', reng: '#FF6B00', asbt: '#4CAF50',
-                hvac: '#FF6B00', hid: '#00A8CC', esg: '#FFB800', spr: '#FF3D00',
-                inc: '#E91E63', ele: '#9C27B0', cab: '#00BCD4'
+            const discColorMap = {};
+            const mtColorMap = {};
+            getDisciplines().forEach(d => {
+                discColorMap[d.id] = d.color;
+                Object.values(d.modelTypes || {}).forEach(mt => {
+                    if (!mtColorMap[mt.id]) mtColorMap[mt.id] = mt.color;
+                });
             });
+            const colors = JSON.stringify(Object.assign({
+                pending: '#606060', progress: '#FFB800', issues: '#00BCD4', approved: '#4CAF50'
+            }, discColorMap, mtColorMap));
 
             const reportDataJSON = JSON.stringify(data);
 
@@ -1185,7 +1525,6 @@ new Chart(document.getElementById('disciplineChart').getContext('2d'), {
 
 // 4. Progresso por Tipo de Modelo (barra vertical)
 const mtIds = Object.keys(reportData.modelTypeProgress);
-const mtColors = { mode: chartColors.mode, ajus: chartColors.ajus, reng: chartColors.reng, asbt: chartColors.asbt };
 new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
     type: 'bar',
     data: {
@@ -1193,7 +1532,7 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
         datasets: [{
             label: 'Progresso (%)',
             data: mtIds.map(id => { const mt = reportData.modelTypeProgress[id]; return mt.total > 0 ? Math.round((mt.approved / mt.total) * 100) : 0; }),
-            backgroundColor: mtIds.map(id => mtColors[id] || '#808080'),
+            backgroundColor: mtIds.map(id => reportData.modelTypeProgress[id].color || chartColors[id] || '#808080'),
             borderRadius: 6,
             barThickness: 50
         }]
@@ -1303,7 +1642,7 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
             const bd = projectData[activeBuilding];
             if (!building || !bd) { container.innerHTML = ''; return; }
 
-            const bp = calculateProgress(bd);
+            const bp = calculateProgress(bd, activeBuilding);
             const levelCount = bd.levelCount || building.defaultLevels;
             
             let html = `<div class="building-section">
@@ -1317,16 +1656,17 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                 </div>
                 <div class="disciplines-grid">`;
 
-            disciplineTemplates.forEach((dt, di) => {
+            getDisciplines().forEach((dt, di) => {
+                if (!isDisciplineVisible(dt, building.id)) return;
                 const disc = bd.disciplines?.[dt.id];
                 if (!disc) return;
-                
+
                 const discBodyId = `disc-${building.id}-${disc.id}`;
                 html += `<div class="discipline-card card-${disc.id}" style="animation-delay: ${di * 0.05}s">
                     <div class="card-header" onclick="toggleDiscipline('${discBodyId}')" style="cursor:pointer;">
                         <div class="discipline-info">
-                            <span class="discipline-code">${disc.code}</span>
-                            <div class="discipline-name"><h3>${disc.name}</h3><span>${disc.fullName}</span></div>
+                            <span class="discipline-code">${dt.code}</span>
+                            <div class="discipline-name"><h3>${dt.name}</h3><span>${dt.fullName}</span></div>
                         </div>
                         <div style="display:flex;align-items:center;gap:0.75rem;">
                             <div class="reengineering-status" onclick="event.stopPropagation()">
@@ -1337,23 +1677,26 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                                     <option value="approved" ${disc.reengineeringStatus === 'approved' ? 'selected' : ''}>Concluído</option>
                                 </select>
                             </div>
+                            <button class="disc-action-btn" title="Editar disciplina" onclick="event.stopPropagation(); openDisciplineForm('${disc.id}')">✏️</button>
+                            <button class="disc-action-btn disc-action-danger" title="Excluir disciplina" onclick="event.stopPropagation(); openDeleteConfirm('${disc.id}')">🗑️</button>
                             <span class="discipline-toggle" id="${discBodyId}-toggle">▼</span>
                         </div>
                     </div>
                     <div class="discipline-body" id="${discBodyId}">
                     <div class="model-types-container"><div class="model-types-grid">`;
 
-                modelTypes.forEach(mt => {
+                getOrderedModelTypes(dt.id).forEach(mt => {
                     const md = disc.modelTypes?.[mt.id] || { notApplicable: false, absorbedByReng: false, responsible: '', levels: {}, revisionCountIfc: 0, revisionCountDocs2d: 0 };
                     const isNA = md.notApplicable;
                     const isAbsorbed = mt.canBeAbsorbed && md.absorbedByReng;
                     const isDisabled = isNA || isAbsorbed;
                     const levels = Object.entries(md.levels || {}).sort((a, b) => (a[1].order || 0) - (b[1].order || 0));
+                    const mtCls = `mt-${dt.id}-${mt.id}`;
 
                     html += `<div class="model-type-card ${isNA ? 'not-applicable' : ''} ${isAbsorbed ? 'absorbed-by-reng' : ''}">
-                        <div class="model-type-header ${mt.id}">
+                        <div class="model-type-header ${mtCls}">
                             <div class="model-type-title">
-                                <span class="model-type-code ${mt.id}">${mt.code}</span>
+                                <span class="model-type-code ${mtCls}">${mt.code}</span>
                                 <span class="model-type-name">${mt.name}</span>
                             </div>
                             <div style="display:flex;gap:0.75rem;align-items:center;">
@@ -1384,11 +1727,12 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                             <div class="nivel-content ${li === 0 ? 'open' : ''}" id="${nivId}">
                                 <div class="nivel-phases">`;
                         
-                        phaseTemplates.forEach(phase => {
+                        getPhases().forEach(ph => {
+                            const phase = ph.id;
                             const status = level.phases?.[phase] || 'pending';
                             html += `<div class="nivel-phase">
                                 <div class="nivel-phase-header">
-                                    <span class="nivel-phase-name">${phaseNames[phase]}</span>
+                                    <span class="nivel-phase-name">${escapeHtmlAttr(ph.name)}</span>
                                     <button class="copy-btn" onclick="event.stopPropagation(); openCopyModal('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', '${status}')" title="Copiar para outros níveis" ${isDisabled ? 'disabled' : ''}>📋</button>
                                 </div>
                                 <select class="${status}" onchange="updateLevelPhase('${building.id}', '${disc.id}', '${mt.id}', '${levelId}', '${phase}', this.value)" ${isDisabled ? 'disabled' : ''}>
@@ -1416,21 +1760,22 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                         </div>`;
                     });
 
-                    html += `</div>
-                            <div class="revision-counters">
-                                <div class="revision-counter" id="revision-ifc-${building.id}-${disc.id}-${mt.id}">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                                    <span class="revision-counter-label">IFC:</span>
-                                    <span class="revision-counter-value">${md.revisionCountIfc || 0}</span>
-                                    <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'ifc')" ${isDisabled ? 'disabled' : ''}>Editar</button>
-                                </div>
-                                <div class="revision-counter" id="revision-docs2d-${building.id}-${disc.id}-${mt.id}">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                                    <span class="revision-counter-label">Doc 2D:</span>
-                                    <span class="revision-counter-value">${md.revisionCountDocs2d || 0}</span>
-                                    <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', 'docs2d')" ${isDisabled ? 'disabled' : ''}>Editar</button>
-                                </div>
-                            </div>
+                    const countedPhases = getPhases().filter(p => p.hasRevisionCounter);
+                    html += `</div>`;
+                    if (countedPhases.length > 0) {
+                        html += `<div class="revision-counters">`;
+                        countedPhases.forEach(ph => {
+                            const cnt = getRevisionCount(md, ph.id);
+                            html += `<div class="revision-counter" id="revision-${ph.id}-${building.id}-${disc.id}-${mt.id}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                                <span class="revision-counter-label">${escapeHtmlAttr(ph.name)}:</span>
+                                <span class="revision-counter-value">${cnt}</span>
+                                <button class="revision-counter-edit" onclick="editRevisionCount('${building.id}', '${disc.id}', '${mt.id}', '${ph.id}')" ${isDisabled ? 'disabled' : ''}>Editar</button>
+                            </div>`;
+                        });
+                        html += `</div>`;
+                    }
+                    html += `
                         </div>
                     </div>`;
                 });
@@ -1512,7 +1857,10 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
         }
 
         function getMtName(mtId) {
-            const mt = modelTypes.find(x => x.id === mtId);
+            for (const disc of getDisciplines()) {
+                if (disc.modelTypes?.[mtId]) return disc.modelTypes[mtId].code;
+            }
+            const mt = (typeof modelTypes !== 'undefined') ? modelTypes.find(x => x.id === mtId) : null;
             return mt ? mt.code : mtId;
         }
 
@@ -1555,6 +1903,7 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                 if (lt && lt.textContent.includes('Conectando')) lt.innerHTML = 'Timeout - Verifique regras do Firebase';
             }, 15000);
             try {
+                await setupConfigListener();
                 await initializeData();
                 setupRealtimeListener();
                 clearTimeout(timeout);
@@ -1566,6 +1915,528 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
         document.getElementById('copyModal').addEventListener('click', (e) => {
             if (e.target.id === 'copyModal') closeModal();
         });
+
+        // ======================================
+        //  CONFIG MODAL / CRUD
+        // ======================================
+        let discFormDraft = null;
+        let pendingDeleteDiscId = null;
+
+        function escapeHtmlAttr(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function openConfigModal() {
+            renderConfigDisciplinesList();
+            document.getElementById('configModal').classList.add('show');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.remove('show');
+        }
+
+        function renderConfigDisciplinesList() {
+            const container = document.getElementById('configDisciplinesList');
+            if (!container) return;
+            const list = getDisciplines();
+            if (!list.length) {
+                container.innerHTML = '<p style="color:var(--text-muted);font-size:0.8rem;">Nenhuma disciplina configurada.</p>';
+                return;
+            }
+            container.innerHTML = list.map((d, i) => {
+                const mtCount = Object.keys(d.modelTypes || {}).length;
+                const enabledCount = Object.values(d.enabledBuildings || {}).filter(v => v !== false).length;
+                return `<div class="config-list-row">
+                    <div class="config-swatch" style="background:${d.color};"></div>
+                    <span class="config-code">${escapeHtmlAttr(d.code)}</span>
+                    <span class="config-name">${escapeHtmlAttr(d.name)}</span>
+                    <span style="font-size:0.7rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">${mtCount} tipo${mtCount===1?'':'s'} · ${enabledCount}/${buildings.length} ed.</span>
+                    <div class="config-row-actions">
+                        <button onclick="moveDisciplineOrder('${d.id}', -1)" ${i === 0 ? 'disabled' : ''} title="Subir">▲</button>
+                        <button onclick="moveDisciplineOrder('${d.id}', 1)" ${i === list.length - 1 ? 'disabled' : ''} title="Descer">▼</button>
+                        <button onclick="openDisciplineForm('${d.id}')">Editar</button>
+                        <button class="danger" onclick="openDeleteConfirm('${d.id}')">Excluir</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function openDisciplineForm(discId) {
+            const existing = discId ? getDiscipline(discId) : null;
+            if (existing) {
+                discFormDraft = JSON.parse(JSON.stringify({
+                    id: existing.id,
+                    code: existing.code || '',
+                    name: existing.name || '',
+                    fullName: existing.fullName || '',
+                    color: existing.color || '#808080',
+                    colorMode: existing.colorMode || 'manual',
+                    order: existing.order ?? 0,
+                    enabledBuildings: existing.enabledBuildings || { salas: true, central: true, restaurante: true, utilidades: true },
+                    modelTypes: Object.values(existing.modelTypes || {}).sort((a,b)=>(a.order||0)-(b.order||0))
+                }));
+            } else {
+                const existingColors = getDisciplines().map(d => d.color);
+                discFormDraft = {
+                    id: null,
+                    code: '', name: '', fullName: '',
+                    color: generateAutoColor(existingColors),
+                    colorMode: 'auto',
+                    order: getDisciplines().length,
+                    enabledBuildings: { salas: true, central: true, restaurante: true, utilidades: true },
+                    modelTypes: []
+                };
+            }
+            document.getElementById('disciplineFormTitle').textContent = existing ? `Editar: ${existing.code}` : 'Nova Disciplina';
+            document.getElementById('discFormCode').value = discFormDraft.code;
+            document.getElementById('discFormName').value = discFormDraft.name;
+            document.getElementById('discFormFullName').value = discFormDraft.fullName;
+            document.getElementById('discFormColor').value = discFormDraft.color;
+            document.getElementById('discFormColor').disabled = discFormDraft.colorMode === 'auto';
+            document.getElementById('discFormColorAuto').checked = discFormDraft.colorMode === 'auto';
+            document.getElementById('discFormOrder').value = discFormDraft.order;
+            document.getElementById('discFormBuildings').innerHTML = buildings.map(b =>
+                `<label><input type="checkbox" data-building="${b.id}" ${discFormDraft.enabledBuildings[b.id] !== false ? 'checked' : ''}> ${escapeHtmlAttr(b.name)}</label>`
+            ).join('');
+            discFormRenderModelTypes();
+            document.getElementById('discFormError').classList.remove('show');
+            document.getElementById('disciplineFormModal').classList.add('show');
+        }
+
+        function closeDisciplineForm() {
+            document.getElementById('disciplineFormModal').classList.remove('show');
+            discFormDraft = null;
+        }
+
+        function onDiscColorAutoToggle() {
+            const auto = document.getElementById('discFormColorAuto').checked;
+            const picker = document.getElementById('discFormColor');
+            picker.disabled = auto;
+            if (discFormDraft) discFormDraft.colorMode = auto ? 'auto' : 'manual';
+            if (auto) {
+                const existing = getDisciplines().filter(d => d.id !== discFormDraft?.id).map(d => d.color);
+                const color = generateAutoColor(existing);
+                picker.value = color;
+                if (discFormDraft) discFormDraft.color = color;
+            }
+        }
+
+        function discFormRenderModelTypes() {
+            const container = document.getElementById('discFormModelTypes');
+            if (!container || !discFormDraft) return;
+            const mts = discFormDraft.modelTypes || [];
+            if (!mts.length) {
+                container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">Nenhum tipo de modelo. Adicione ao menos um.</p>';
+                return;
+            }
+            container.innerHTML = mts.map((mt, idx) => {
+                const flagValue = mt.canBeAbsorbed ? 'absorbed' : (mt.canBeNA ? 'na' : 'none');
+                return `<div class="config-mt-row">
+                    <div class="config-swatch" style="background:${mt.color};"></div>
+                    <input type="text" maxlength="10" placeholder="Sigla" value="${escapeHtmlAttr(mt.code)}" oninput="discFormSetMtField(${idx}, 'code', this.value)" style="width:90px;padding:0.3rem;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-primary);font-family:'JetBrains Mono',monospace;font-size:0.75rem;">
+                    <input type="text" placeholder="Nome" value="${escapeHtmlAttr(mt.name)}" oninput="discFormSetMtField(${idx}, 'name', this.value)" style="flex:1;padding:0.3rem;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-primary);font-size:0.75rem;">
+                    <input type="color" value="${mt.color}" ${mt.colorMode==='auto'?'disabled':''} onchange="discFormSetMtField(${idx}, 'color', this.value); discFormSetMtField(${idx}, 'colorMode', 'manual'); discFormRenderModelTypes();" style="width:34px;height:30px;border:1px solid var(--border-color);border-radius:4px;padding:2px;">
+                    <label style="font-size:0.7rem;color:var(--text-muted);"><input type="checkbox" ${mt.colorMode==='auto'?'checked':''} onchange="discFormSetMtAutoColor(${idx}, this.checked)"> auto</label>
+                    <select onchange="discFormSetMtFlag(${idx}, this.value)" style="padding:0.3rem;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-primary);font-size:0.7rem;font-family:'JetBrains Mono',monospace;">
+                        <option value="none" ${flagValue==='none'?'selected':''}>—</option>
+                        <option value="na" ${flagValue==='na'?'selected':''}>Pode ser N/A</option>
+                        <option value="absorbed" ${flagValue==='absorbed'?'selected':''}>Pode ser Absorvido</option>
+                    </select>
+                    <input type="text" placeholder="Resp. padrão" value="${escapeHtmlAttr(mt.defaultResponsible)}" oninput="discFormSetMtField(${idx}, 'defaultResponsible', this.value)" style="width:130px;padding:0.3rem;background:var(--bg-primary);border:1px solid var(--border-color);border-radius:4px;color:var(--text-primary);font-size:0.75rem;">
+                    <button onclick="discFormRemoveModelType(${idx})" style="background:transparent;border:1px solid var(--border-color);color:var(--text-secondary);padding:0.2rem 0.5rem;border-radius:4px;cursor:pointer;" title="Remover">✕</button>
+                </div>`;
+            }).join('');
+        }
+
+        function discFormAddModelType() {
+            if (!discFormDraft) return;
+            const existing = (discFormDraft.modelTypes || []).map(m => m.color);
+            discFormDraft.modelTypes.push({
+                id: null, code: '', name: '',
+                color: generateAutoColor(existing), colorMode: 'auto',
+                order: (discFormDraft.modelTypes || []).length,
+                canBeNA: false, canBeAbsorbed: false, defaultResponsible: ''
+            });
+            discFormRenderModelTypes();
+        }
+
+        function discFormRemoveModelType(idx) {
+            if (!discFormDraft) return;
+            discFormDraft.modelTypes.splice(idx, 1);
+            discFormDraft.modelTypes.forEach((mt, i) => mt.order = i);
+            discFormRenderModelTypes();
+        }
+
+        function discFormSetMtField(idx, field, value) {
+            if (!discFormDraft?.modelTypes?.[idx]) return;
+            discFormDraft.modelTypes[idx][field] = value;
+        }
+
+        function discFormSetMtAutoColor(idx, isAuto) {
+            if (!discFormDraft?.modelTypes?.[idx]) return;
+            const mt = discFormDraft.modelTypes[idx];
+            mt.colorMode = isAuto ? 'auto' : 'manual';
+            if (isAuto) {
+                const existing = discFormDraft.modelTypes.filter((_, i) => i !== idx).map(m => m.color);
+                mt.color = generateAutoColor(existing);
+            }
+            discFormRenderModelTypes();
+        }
+
+        function discFormSetMtFlag(idx, value) {
+            if (!discFormDraft?.modelTypes?.[idx]) return;
+            const mt = discFormDraft.modelTypes[idx];
+            mt.canBeNA = value === 'na';
+            mt.canBeAbsorbed = value === 'absorbed';
+        }
+
+        async function saveDisciplineForm() {
+            if (!discFormDraft) return;
+            const code = document.getElementById('discFormCode').value.trim();
+            const name = document.getElementById('discFormName').value.trim();
+            const fullName = document.getElementById('discFormFullName').value.trim();
+            const color = document.getElementById('discFormColor').value;
+            const colorMode = document.getElementById('discFormColorAuto').checked ? 'auto' : 'manual';
+            const order = parseInt(document.getElementById('discFormOrder').value) || 0;
+            const enabledBuildings = {};
+            document.querySelectorAll('#discFormBuildings input[type="checkbox"]').forEach(cb => {
+                enabledBuildings[cb.dataset.building] = cb.checked;
+            });
+            const errEl = document.getElementById('discFormError');
+            const showError = (msg) => { errEl.textContent = msg; errEl.classList.add('show'); };
+            errEl.classList.remove('show');
+            if (!code) return showError('Sigla é obrigatória.');
+            if (code.length > 10) return showError('Sigla deve ter até 10 caracteres.');
+            if (!name) return showError('Nome curto é obrigatório.');
+            const slugCode = code.toUpperCase();
+            const others = getDisciplines().filter(d => d.id !== discFormDraft.id);
+            if (others.some(d => (d.code || '').toUpperCase() === slugCode)) return showError('Já existe outra disciplina com essa sigla.');
+            if (!Object.values(enabledBuildings).some(v => v)) return showError('Selecione ao menos uma edificação.');
+            const mts = discFormDraft.modelTypes || [];
+            if (!mts.length) return showError('Adicione ao menos um tipo de modelo.');
+            const mtCodes = new Set();
+            for (let i = 0; i < mts.length; i++) {
+                const mt = mts[i];
+                if (!(mt.code || '').trim()) return showError(`Tipo de modelo ${i+1}: sigla obrigatória.`);
+                if (!(mt.name || '').trim()) return showError(`Tipo de modelo ${i+1}: nome obrigatório.`);
+                const mtKey = (mt.code || '').toUpperCase();
+                if (mtCodes.has(mtKey)) return showError(`Sigla duplicada entre tipos de modelo: ${mt.code}`);
+                mtCodes.add(mtKey);
+            }
+            if (mts.filter(mt => mt.canBeAbsorbed).length > 1) return showError('Apenas um tipo pode ser marcado "Pode ser Absorvido" por disciplina.');
+
+            const isNew = !discFormDraft.id;
+            const discId = discFormDraft.id || `custom_${Date.now()}`;
+            const existingDisc = isNew ? null : getDiscipline(discId);
+            const userName = localStorage.getItem('unila_user_name') || 'Anonimo';
+            const payload = {
+                id: discId, code, name, fullName: fullName || name,
+                color, colorMode, order, enabledBuildings, modelTypes: {},
+                createdAt: existingDisc?.createdAt || new Date().toISOString(),
+                createdBy: existingDisc?.createdBy || userName,
+                lastUpdate: new Date().toISOString(),
+                lastUpdatedBy: userName
+            };
+            mts.forEach((mt, i) => {
+                const mtId = mt.id || `custom_${Date.now()}_${i}`;
+                payload.modelTypes[mtId] = {
+                    id: mtId, code: mt.code.trim(), name: mt.name.trim(),
+                    color: mt.color, colorMode: mt.colorMode || 'manual',
+                    order: i,
+                    canBeNA: !!mt.canBeNA, canBeAbsorbed: !!mt.canBeAbsorbed,
+                    defaultResponsible: mt.defaultResponsible || ''
+                };
+            });
+
+            try {
+                await database.ref(`config/disciplines/${discId}`).set(payload);
+                const prevMtIds = existingDisc ? Object.keys(existingDisc.modelTypes || {}) : [];
+                const newMtIds = Object.keys(payload.modelTypes);
+                const addedMts = newMtIds.filter(id => !prevMtIds.includes(id));
+                const removedMts = prevMtIds.filter(id => !newMtIds.includes(id));
+                for (const bId of Object.keys(enabledBuildings)) {
+                    if (!enabledBuildings[bId]) continue;
+                    const bd = projectData[bId];
+                    if (!bd) continue;
+                    const discPath = `projectData/${bId}/disciplines/${discId}`;
+                    if (isNew || !bd.disciplines?.[discId]) {
+                        const levelCount = bd.levelCount || 1;
+                        const newDisc = {
+                            id: discId, code, name, fullName: payload.fullName,
+                            reengineeringStatus: 'pending', lastUpdate: null, modelTypes: {}
+                        };
+                        newMtIds.forEach(mtId => {
+                            const mt = payload.modelTypes[mtId];
+                            newDisc.modelTypes[mtId] = {
+                                responsible: mt.defaultResponsible,
+                                notApplicable: false, absorbedByReng: false,
+                                revisionCountIfc: 0, revisionCountDocs2d: 0,
+                                levels: generateLevelsData(levelCount)
+                            };
+                        });
+                        await database.ref(discPath).set(newDisc);
+                    } else {
+                        await database.ref(discPath).update({ code, name, fullName: payload.fullName });
+                        const levelCount = bd.levelCount || 1;
+                        for (const mtId of addedMts) {
+                            const mt = payload.modelTypes[mtId];
+                            await database.ref(`${discPath}/modelTypes/${mtId}`).set({
+                                responsible: mt.defaultResponsible,
+                                notApplicable: false, absorbedByReng: false,
+                                revisionCountIfc: 0, revisionCountDocs2d: 0,
+                                levels: generateLevelsData(levelCount)
+                            });
+                        }
+                        for (const mtId of removedMts) {
+                            await database.ref(`${discPath}/modelTypes/${mtId}`).remove();
+                        }
+                    }
+                }
+                logActivity(isNew ? 'Criou disciplina' : 'Editou disciplina', `${code} - ${name}`);
+                showToast(isNew ? 'Disciplina criada' : 'Disciplina atualizada');
+                closeDisciplineForm();
+                renderConfigDisciplinesList();
+            } catch (e) {
+                showError('Erro ao salvar: ' + e.message);
+            }
+        }
+
+        function moveDisciplineOrder(discId, dir) {
+            const list = getDisciplines();
+            const idx = list.findIndex(d => d.id === discId);
+            if (idx < 0) return;
+            const newIdx = idx + dir;
+            if (newIdx < 0 || newIdx >= list.length) return;
+            const a = list[idx], b = list[newIdx];
+            const updates = {};
+            updates[`config/disciplines/${a.id}/order`] = (b.order ?? newIdx);
+            updates[`config/disciplines/${b.id}/order`] = (a.order ?? idx);
+            database.ref().update(updates).then(() => {
+                logActivity('Reordenou disciplina', `${a.code} ↔ ${b.code}`);
+            });
+        }
+
+        function openDeleteConfirm(discId) {
+            const disc = getDiscipline(discId);
+            if (!disc) return;
+            pendingDeleteDiscId = discId;
+            document.getElementById('deleteWarningText').innerHTML = `Você está prestes a excluir <strong>${escapeHtmlAttr(disc.code)} — ${escapeHtmlAttr(disc.name)}</strong>. Esta ação remove a configuração <em>e todos os dados</em> desta disciplina em todas as edificações. Não pode ser desfeita.`;
+            document.getElementById('deleteConfirmInput').value = '';
+            document.getElementById('deleteConfirmModal').classList.add('show');
+        }
+
+        function closeDeleteConfirm() {
+            document.getElementById('deleteConfirmModal').classList.remove('show');
+            pendingDeleteDiscId = null;
+        }
+
+        async function confirmDeleteDiscipline() {
+            if (!pendingDeleteDiscId) return;
+            const disc = getDiscipline(pendingDeleteDiscId);
+            if (!disc) return;
+            const typed = document.getElementById('deleteConfirmInput').value.trim().toUpperCase();
+            if (typed !== (disc.code || '').toUpperCase()) {
+                alert('Sigla digitada não confere. Digite exatamente "' + disc.code + '" para excluir.');
+                return;
+            }
+            const discId = pendingDeleteDiscId;
+            const updates = { [`config/disciplines/${discId}`]: null };
+            buildings.forEach(b => { updates[`projectData/${b.id}/disciplines/${discId}`] = null; });
+            try {
+                await database.ref().update(updates);
+                logActivity('Excluiu disciplina', `${disc.code} - ${disc.name}`);
+                showToast('Disciplina excluída');
+                closeDeleteConfirm();
+                renderConfigDisciplinesList();
+            } catch (e) {
+                alert('Erro ao excluir: ' + e.message);
+            }
+        }
+
+        // ======================================
+        //  PHASE CRUD
+        // ======================================
+        let phaseFormDraft = null;
+        let pendingDeletePhaseId = null;
+
+        function switchConfigTab(tab) {
+            document.querySelectorAll('.config-tab').forEach(el => el.classList.toggle('active', el.dataset.tab === tab));
+            document.getElementById('configTabDisciplines').classList.toggle('active', tab === 'disciplines');
+            document.getElementById('configTabPhases').classList.toggle('active', tab === 'phases');
+            if (tab === 'phases') renderConfigPhasesList();
+        }
+
+        function renderConfigPhasesList() {
+            const container = document.getElementById('configPhasesList');
+            if (!container) return;
+            const list = getPhases();
+            if (!list.length) {
+                container.innerHTML = '<p style="color:var(--text-muted);font-size:0.8rem;">Nenhuma fase configurada.</p>';
+                return;
+            }
+            container.innerHTML = list.map((p, i) => {
+                return `<div class="config-list-row">
+                    <span class="config-code">${escapeHtmlAttr(p.code)}</span>
+                    <span class="config-name">${escapeHtmlAttr(p.name)}${p.hasRevisionCounter ? ' · com contador' : ''}</span>
+                    <span style="font-size:0.7rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">id: ${p.id}</span>
+                    <div class="config-row-actions">
+                        <button onclick="movePhaseOrder('${p.id}', -1)" ${i === 0 ? 'disabled' : ''} title="Subir">▲</button>
+                        <button onclick="movePhaseOrder('${p.id}', 1)" ${i === list.length - 1 ? 'disabled' : ''} title="Descer">▼</button>
+                        <button onclick="openPhaseForm('${p.id}')">Editar</button>
+                        <button class="danger" onclick="openDeletePhaseConfirm('${p.id}')" ${list.length <= 1 ? 'disabled title="Não é possível excluir a última fase"' : ''}>Excluir</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function openPhaseForm(phaseId) {
+            const existing = phaseId ? getPhase(phaseId) : null;
+            phaseFormDraft = existing ? JSON.parse(JSON.stringify({
+                id: existing.id,
+                code: existing.code || '',
+                name: existing.name || '',
+                order: existing.order ?? 0,
+                hasRevisionCounter: !!existing.hasRevisionCounter
+            })) : {
+                id: null, code: '', name: '',
+                order: getPhases().length,
+                hasRevisionCounter: false
+            };
+            document.getElementById('phaseFormTitle').textContent = existing ? `Editar: ${existing.code}` : 'Nova Fase';
+            document.getElementById('phaseFormCode').value = phaseFormDraft.code;
+            document.getElementById('phaseFormName').value = phaseFormDraft.name;
+            document.getElementById('phaseFormOrder').value = phaseFormDraft.order;
+            document.getElementById('phaseFormHasCounter').checked = phaseFormDraft.hasRevisionCounter;
+            document.getElementById('phaseFormError').classList.remove('show');
+            document.getElementById('phaseFormModal').classList.add('show');
+        }
+
+        function closePhaseForm() {
+            document.getElementById('phaseFormModal').classList.remove('show');
+            phaseFormDraft = null;
+        }
+
+        async function savePhaseForm() {
+            if (!phaseFormDraft) return;
+            const code = document.getElementById('phaseFormCode').value.trim();
+            const name = document.getElementById('phaseFormName').value.trim();
+            const order = parseInt(document.getElementById('phaseFormOrder').value) || 0;
+            const hasRevisionCounter = document.getElementById('phaseFormHasCounter').checked;
+
+            const errEl = document.getElementById('phaseFormError');
+            const showError = (msg) => { errEl.textContent = msg; errEl.classList.add('show'); };
+            errEl.classList.remove('show');
+            if (!code) return showError('Sigla é obrigatória.');
+            if (code.length > 15) return showError('Sigla deve ter até 15 caracteres.');
+            if (!name) return showError('Nome (label) é obrigatório.');
+            const slug = code.toUpperCase();
+            const others = getPhases().filter(p => p.id !== phaseFormDraft.id);
+            if (others.some(p => (p.code || '').toUpperCase() === slug)) return showError('Já existe outra fase com essa sigla.');
+
+            const isNew = !phaseFormDraft.id;
+            // ID: for new phases, derive from code (sanitized). Immutable afterwards.
+            const derivedId = isNew ? (slug.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/^_+|_+$/g, '') || `phase_${Date.now()}`) : phaseFormDraft.id;
+            // Avoid id clash
+            let phaseId = derivedId;
+            if (isNew) {
+                let n = 2;
+                while (getPhase(phaseId)?.code && phaseId !== derivedId) { phaseId = `${derivedId}_${n++}`; }
+                // Double-check: if derivedId already exists, suffix
+                if (configData?.phases?.[phaseId]) {
+                    let n2 = 2;
+                    while (configData.phases[`${derivedId}_${n2}`]) n2++;
+                    phaseId = `${derivedId}_${n2}`;
+                }
+            }
+            const payload = { id: phaseId, code, name, order, hasRevisionCounter };
+            try {
+                await database.ref(`config/phases/${phaseId}`).set(payload);
+                // When creating new phase, seed it as 'pending' in all existing levels
+                if (isNew) {
+                    const updates = {};
+                    Object.entries(projectData).forEach(([bId, bd]) => {
+                        Object.entries(bd?.disciplines || {}).forEach(([discId, disc]) => {
+                            Object.entries(disc?.modelTypes || {}).forEach(([mtId, mt]) => {
+                                Object.keys(mt?.levels || {}).forEach(lid => {
+                                    updates[`projectData/${bId}/disciplines/${discId}/modelTypes/${mtId}/levels/${lid}/phases/${phaseId}`] = 'pending';
+                                });
+                            });
+                        });
+                    });
+                    if (Object.keys(updates).length) await database.ref().update(updates);
+                }
+                logActivity(isNew ? 'Criou fase' : 'Editou fase', `${code} - ${name}`);
+                showToast(isNew ? 'Fase criada' : 'Fase atualizada');
+                closePhaseForm();
+                renderConfigPhasesList();
+            } catch (e) {
+                showError('Erro ao salvar: ' + e.message);
+            }
+        }
+
+        function movePhaseOrder(phaseId, dir) {
+            const list = getPhases();
+            const idx = list.findIndex(p => p.id === phaseId);
+            if (idx < 0) return;
+            const newIdx = idx + dir;
+            if (newIdx < 0 || newIdx >= list.length) return;
+            const a = list[idx], b = list[newIdx];
+            const updates = {};
+            updates[`config/phases/${a.id}/order`] = (b.order ?? newIdx);
+            updates[`config/phases/${b.id}/order`] = (a.order ?? idx);
+            database.ref().update(updates).then(() => {
+                logActivity('Reordenou fase', `${a.code} ↔ ${b.code}`);
+            });
+        }
+
+        function openDeletePhaseConfirm(phaseId) {
+            if (getPhases().length <= 1) { alert('Não é possível excluir a última fase.'); return; }
+            const ph = getPhase(phaseId);
+            if (!ph) return;
+            pendingDeletePhaseId = phaseId;
+            document.getElementById('deletePhaseWarningText').innerHTML = `Você está prestes a excluir a fase <strong>${escapeHtmlAttr(ph.code)} — ${escapeHtmlAttr(ph.name)}</strong>. Todos os status desta fase, em todos os níveis de todas as disciplinas/edificações, serão apagados. Não pode ser desfeito.`;
+            document.getElementById('deletePhaseConfirmInput').value = '';
+            document.getElementById('deletePhaseConfirmModal').classList.add('show');
+        }
+
+        function closeDeletePhaseConfirm() {
+            document.getElementById('deletePhaseConfirmModal').classList.remove('show');
+            pendingDeletePhaseId = null;
+        }
+
+        async function confirmDeletePhase() {
+            if (!pendingDeletePhaseId) return;
+            const ph = getPhase(pendingDeletePhaseId);
+            if (!ph) return;
+            const typed = document.getElementById('deletePhaseConfirmInput').value.trim().toUpperCase();
+            if (typed !== (ph.code || '').toUpperCase()) {
+                alert('Sigla digitada não confere.');
+                return;
+            }
+            const phaseId = pendingDeletePhaseId;
+            const updates = { [`config/phases/${phaseId}`]: null };
+            Object.entries(projectData).forEach(([bId, bd]) => {
+                Object.entries(bd?.disciplines || {}).forEach(([discId, disc]) => {
+                    Object.entries(disc?.modelTypes || {}).forEach(([mtId, mt]) => {
+                        Object.keys(mt?.levels || {}).forEach(lid => {
+                            updates[`projectData/${bId}/disciplines/${discId}/modelTypes/${mtId}/levels/${lid}/phases/${phaseId}`] = null;
+                        });
+                        updates[`projectData/${bId}/disciplines/${discId}/modelTypes/${mtId}/revisionCounters/${phaseId}`] = null;
+                    });
+                });
+            });
+            try {
+                await database.ref().update(updates);
+                logActivity('Excluiu fase', `${ph.code} - ${ph.name}`);
+                showToast('Fase excluída');
+                closeDeletePhaseConfirm();
+                renderConfigPhasesList();
+            } catch (e) {
+                alert('Erro ao excluir: ' + e.message);
+            }
+        }
     </script>
 
     <!-- User Name Modal -->
@@ -1578,6 +2449,136 @@ new Chart(document.getElementById('modelTypeChart').getContext('2d'), {
                 onkeypress="if(event.key==='Enter') saveUserName()">
             <div class="modal-actions">
                 <button class="modal-btn modal-btn-confirm" onclick="saveUserName()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config Modal: disciplinas + fases -->
+    <div class="modal-overlay" id="configModal">
+        <div class="modal config-modal">
+            <h3>Configuração</h3>
+            <div class="config-tabs">
+                <button class="config-tab active" data-tab="disciplines" onclick="switchConfigTab('disciplines')">Disciplinas</button>
+                <button class="config-tab" data-tab="phases" onclick="switchConfigTab('phases')">Fases</button>
+            </div>
+            <div class="config-tab-pane active" id="configTabDisciplines">
+                <div class="modal-subtitle">Gerencie disciplinas, tipos de modelo e visibilidade por edificação.</div>
+                <div class="config-list" id="configDisciplinesList"></div>
+                <button class="config-add-btn" onclick="openDisciplineForm(null)">+ Nova Disciplina</button>
+            </div>
+            <div class="config-tab-pane" id="configTabPhases">
+                <div class="modal-subtitle">Fases globais aplicadas a todas as disciplinas. ID interno imutável — editar altera apenas o label visível.</div>
+                <div class="config-list" id="configPhasesList"></div>
+                <button class="config-add-btn" onclick="openPhaseForm(null)">+ Nova Fase</button>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeConfigModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase Form Modal -->
+    <div class="modal-overlay" id="phaseFormModal">
+        <div class="modal">
+            <h3 id="phaseFormTitle">Nova Fase</h3>
+            <div class="config-form-grid">
+                <div class="config-form-field">
+                    <label>Sigla (código)</label>
+                    <input type="text" id="phaseFormCode" maxlength="15" placeholder="Ex: AADM">
+                </div>
+                <div class="config-form-field">
+                    <label>Nome (label)</label>
+                    <input type="text" id="phaseFormName" placeholder="Ex: Aprovado ADM">
+                </div>
+                <div class="config-form-field">
+                    <label>Ordem</label>
+                    <input type="number" id="phaseFormOrder" min="0" step="1" value="0">
+                </div>
+                <div class="config-form-field">
+                    <label>Contador de revisão</label>
+                    <label class="config-color-auto-label" style="margin-top:0.5rem;"><input type="checkbox" id="phaseFormHasCounter"> Esta fase tem contador de revisão</label>
+                </div>
+            </div>
+            <div class="config-form-error" id="phaseFormError"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closePhaseForm()">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" onclick="savePhaseForm()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete phase confirm -->
+    <div class="modal-overlay" id="deletePhaseConfirmModal">
+        <div class="modal">
+            <h3>Excluir Fase</h3>
+            <div class="config-delete-warning" id="deletePhaseWarningText"></div>
+            <p class="modal-subtitle">Para confirmar, digite a sigla da fase:</p>
+            <input type="text" class="config-delete-confirm-input" id="deletePhaseConfirmInput" placeholder="Sigla">
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeDeletePhaseConfirm()">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" style="background:#f44336;" onclick="confirmDeletePhase()">Excluir definitivamente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discipline Form Modal (create/edit) -->
+    <div class="modal-overlay" id="disciplineFormModal">
+        <div class="modal config-modal config-modal-lg">
+            <h3 id="disciplineFormTitle">Nova Disciplina</h3>
+            <div class="config-form-grid">
+                <div class="config-form-field">
+                    <label>Sigla (código)</label>
+                    <input type="text" id="discFormCode" maxlength="10" placeholder="Ex: TEL">
+                </div>
+                <div class="config-form-field">
+                    <label>Nome curto</label>
+                    <input type="text" id="discFormName" placeholder="Ex: Telecom">
+                </div>
+                <div class="config-form-field full">
+                    <label>Nome completo</label>
+                    <input type="text" id="discFormFullName" placeholder="Ex: Instalações de Telecomunicações">
+                </div>
+                <div class="config-form-field">
+                    <label>Cor</label>
+                    <div class="config-color-row">
+                        <input type="color" id="discFormColor" value="#808080">
+                        <label class="config-color-auto-label"><input type="checkbox" id="discFormColorAuto" onchange="onDiscColorAutoToggle()"> Automática</label>
+                    </div>
+                </div>
+                <div class="config-form-field">
+                    <label>Ordem</label>
+                    <input type="number" id="discFormOrder" min="0" step="1" value="0">
+                </div>
+                <div class="config-form-field full">
+                    <label>Edificações em que aparece</label>
+                    <div class="config-buildings-grid" id="discFormBuildings"></div>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <h4>Tipos de Modelo</h4>
+                <div id="discFormModelTypes"></div>
+                <button class="config-add-btn" style="margin-top:0.5rem;" onclick="discFormAddModelType()">+ Adicionar Tipo de Modelo</button>
+            </div>
+
+            <div class="config-form-error" id="discFormError"></div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeDisciplineForm()">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" onclick="saveDisciplineForm()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete confirm modal -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal">
+            <h3>Excluir Disciplina</h3>
+            <div class="config-delete-warning" id="deleteWarningText"></div>
+            <p class="modal-subtitle">Para confirmar, digite a sigla da disciplina:</p>
+            <input type="text" class="config-delete-confirm-input" id="deleteConfirmInput" placeholder="Sigla">
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeDeleteConfirm()">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" style="background:#f44336;" onclick="confirmDeleteDiscipline()">Excluir definitivamente</button>
             </div>
         </div>
     </div>
